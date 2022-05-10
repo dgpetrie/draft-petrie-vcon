@@ -35,7 +35,7 @@ informative:
 
   vCon-white-paper: 
     target: https://example.com
-    title: vCon: an Open Standard for Conversation Data
+    title: "vCon: an Open Standard for Conversation Data"
     author:
       -
         ins: T. Howe
