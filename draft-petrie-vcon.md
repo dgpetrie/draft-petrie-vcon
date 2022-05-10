@@ -1,5 +1,5 @@
 ---
-title: "JSON Conversation Data Container"
+title: "The JSON format for vCon - Conversation Data Container"
 abbrev: "JSON vCon"
 category: std
 
@@ -32,8 +32,9 @@ author:
 normative:
 
 informative:
- 
 
+  white-paper: [vCon White Paper](https:example.com) "vCon: an Open Standard for Conversation Data", Howe, Petrie, Lieberman & Quayle.
+  
 --- abstract
 
 TODO Abstract
