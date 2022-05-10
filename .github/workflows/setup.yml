@@ -64,7 +64,7 @@ jobs:
     - name: "Cleanup"
       if: ${{ steps.first.outputs.first != 'true' }}
       run: |
-        git rm -rf .github/workflows/setup.yml README.md
+        git rm -rf README.md
         git commit -m "Remove setup files"
 
     - name: "Clone the i-d-template Repo"
