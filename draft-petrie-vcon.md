@@ -33,7 +33,26 @@ normative:
 
 informative:
 
-  white-paper: [vCon White Paper](https:example.com) "vCon: an Open Standard for Conversation Data", Howe, Petrie, Lieberman & Quayle.
+  vCon-white-paper: 
+    target: https://example.com
+    title: vCon: an Open Standard for Conversation Data
+    author:
+      -
+        ins: T. Howe
+        name: Thomas Howe
+        org: STROLID Inc.
+      -
+        ins: D. Petrie
+        name: Daniel Petrie
+        org: SIPez LLC
+      -
+        ins: M. Lieberman
+        name: Mitch Lieberman
+        org: Conversational X
+      -
+        ins: A. Quayle
+        name: Alan Quayle
+        org: TADHack and TADSummit
   
 --- abstract
 
