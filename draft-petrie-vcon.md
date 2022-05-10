@@ -53,7 +53,6 @@ normative:
 
 informative:
  
-Add white paper link here.
 
 --- abstract
 
