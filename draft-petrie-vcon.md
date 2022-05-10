@@ -52,8 +52,8 @@ author:
 normative:
 
 informative:
-
- Add white paper link here
+ 
+Add white paper link here.
 
 --- abstract
 
