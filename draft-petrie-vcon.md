@@ -19,17 +19,17 @@
 # Change the file extension to match the format (.xml for XML, etc...)
 #
 ###
-title: "TODO - Your title"
-abbrev: "TODO - Abbreviation"
-category: info
+title: "JSON Conversation Data Container"
+abbrev: "JSON vCon"
+category: std
 
-docname: draft-todo-yourname-protocol-latest
+docname: draft-petrie-vcon-latest
 submissiontype: IETF  # also: "independent", "IAB", or "IRTF"
 number:
 date:
 consensus: true
 v: 3
-area: AREA
+area: ART
 workgroup: WG Working Group
 keyword:
  - next generation
@@ -45,9 +45,9 @@ venue:
 
 author:
  -
-    fullname: Your Name Here
-    organization: Your Organization Here
-    email: your.email@example.com
+    fullname: Daniel G Petrie
+    organization: SIPez LLC
+    email: dan.ietf@sipez.com
 
 normative:
 
@@ -78,7 +78,7 @@ TODO Security
 
 # IANA Considerations
 
-This document has no IANA actions.
+New MIME subtype: TBD
 
 
 --- back
