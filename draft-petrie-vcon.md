@@ -33,7 +33,11 @@ normative:
 
   JSON: RFC8259
   
-  PASSporT:  RFC8225
+  JWS: RFC7515
+  
+  LM-OTS: RFC8554
+  
+  PASSporT: RFC8225
   
 informative:
 
