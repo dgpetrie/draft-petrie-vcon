@@ -181,7 +181,7 @@ SHOULD include either the Inline File or the Externally Reference File Propertie
 ## Attachment Object
 
 ### Type???
-Do we want a type like: contract or presentation 
+Do we want a type like: contract or presentation?
 Or a subject or title.
 
 ### mimetype
