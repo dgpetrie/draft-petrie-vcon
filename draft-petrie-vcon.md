@@ -87,18 +87,141 @@ TODO Introduction
 
 {::boilerplate bcp14-tagged}
 
+## Terminoligy
+
+## JSON Notation
+
+## Inline File
+
+### body
+
+### encoding
+
+## Externally Reference File
+
+## url
+
+## alg
+
+## signature
+
+# vCon JSON Object
+
+2 or 3 forms: unsigned, signed, encrypted???
+
+# Unsigned Form of vCon Object
+
+## Top Level Properties
+
+### vcon
+
+### uuid
+
+### date???
+
+### subject
+
+### redacted
+
+### amended
+
+### group
+
+### parties
+
+### dialog
+
+### analysis
+
+### attachments
+
+## Party Object
+
+### tel URL
+
+### STIR
+
+### email address
+
+### person
+
+### verification
+
+### vCard???
+
+## Dialog Object
+
+### type
+recording or text
+
+### mimetype
+
+### filename
+
+SHOULD include either the Inline File or the Externally Reference File Properties (see section XXXX).
+
+## Analysis Object
+
+### type
+
+### mimetype
+
+### filename
+
+### vendor
+
+### vendorschema
+
+SHOULD include either the Inline File or the Externally Reference File Properties (see section XXXX).
+
+## Attachment Object
+
+### Type???
+Do we want a type like: contract or presentation
+
+### mimetype
+
+### filename
+
+SHOULD include either the Inline File or the Externally Reference File Properties (see section XXXX).
 
 # Security Considerations
 
-TODO Security
+## Signed Form of vCon Object
 
+## Encrypted Form of vCon Object
 
 # IANA Considerations
 
-New MIME subtype: TBD
+New MIME subtype: vcon
 
 
 --- back
+
+# Example vCons
+
+## Simple vCon Inline Recording
+
+```json
+{::include simple-vcon.vcon}
+```
+
+## Text Chat vCon
+
+## Email Thread vCon
+
+## Simple vCon Externally Reference Recording
+
+## Signed vCon
+
+## Encrupted  vCon???
+
+## Redacted Signed vCon
+
+## Ammended Signed vCon
+
+## vCon Group
+
 
 # Acknowledgments
 {:numbered="false"}
