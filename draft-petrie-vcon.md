@@ -36,7 +36,7 @@ normative:
   JWS: RFC7515
 
   LM-OTS: RFC8554
- 
+
   PASSporT: RFC8225
 
 informative:
