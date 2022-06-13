@@ -87,21 +87,21 @@ TODO Introduction
 
 {::boilerplate bcp14-tagged}
 
-## Terminoligy
+## Terminology
 
 ## JSON Notation
 
-## Inline File
+## Inline Files
 
 ### body
 
 ### encoding
 
-## Externally Reference File
+## Externally Referenced Files
 
-## url
+### url
 
-## alg
+### alg
 
 ## signature
 
@@ -121,19 +121,23 @@ TODO Introduction
 
 ### subject
 
-### redacted
+### redacted Object
 
-### amended
+vcon, uuid or externally reference file
 
-### group
+### appended Object
 
-### parties
+vcon, uuid or externally reference file
 
-### dialog
+### group Objects List
 
-### analysis
+### parties Objects List
 
-### attachments
+### dialog Objects List
+
+### analysis Objects List
+
+### attachments Objects List
 
 ## Party Object
 
@@ -143,7 +147,7 @@ TODO Introduction
 
 ### email address
 
-### person
+### name
 
 ### verification
 
@@ -170,14 +174,15 @@ SHOULD include either the Inline File or the Externally Reference File Propertie
 
 ### vendor
 
-### vendorschema
+### schema
 
 SHOULD include either the Inline File or the Externally Reference File Properties (see section XXXX).
 
 ## Attachment Object
 
 ### Type???
-Do we want a type like: contract or presentation
+Do we want a type like: contract or presentation 
+Or a subject or title.
 
 ### mimetype
 
@@ -185,11 +190,15 @@ Do we want a type like: contract or presentation
 
 SHOULD include either the Inline File or the Externally Reference File Properties (see section XXXX).
 
+### Group Object
+
+vcon, uuid or externally reference file
+
 # Security Considerations
 
 ## Signed Form of vCon Object
 
-## Encrypted Form of vCon Object
+## Encrypted Form of vCon Object??
 
 # IANA Considerations
 
@@ -210,11 +219,11 @@ New MIME subtype: vcon
 
 ## Email Thread vCon
 
-## Simple vCon Externally Reference Recording
+## Simple vCon Externally Referenced Recording
 
 ## Signed vCon
 
-## Encrupted  vCon???
+## Encrypted  vCon???
 
 ## Redacted Signed vCon
 
