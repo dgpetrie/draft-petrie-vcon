@@ -32,18 +32,18 @@ author:
 normative:
 
   JSON: RFC8259
-  
+
   JWS: RFC7515
-  
+
   LM-OTS: RFC8554
-  
+ 
   PASSporT: RFC8225
-  
+
 informative:
 
   vCard: RFC7095
-  
-  vCon-white-paper: 
+
+  vCon-white-paper:
     target: https://example.com
     title: "vCon: an Open Standard for Conversation Data"
     author:
@@ -63,14 +63,14 @@ informative:
         ins: A. Quayle
         name: Alan Quayle
         org: TADHack and TADSummit
-  
+
   CDR:
     target: https://www.itu.int/rec/T-REC-Q.825
     title: "Recommendation Q.825: Specification of TMN applications at the Q3 interface: Call detail recording"
     author:
       org: ITU
       date: 1998
-      
+
 --- abstract
 
 A vCon is the container for data and information relating to a conversation.  It is analogous to a {{vCard}} which contains address information for an individual.  A conversation may take the form of a traditional phone call, video conference, SMS or MMS message exchange, webchat or email thread.  The data in the container relating to the conversation may include Call Detail Records ({{CDR}}), call meta data, participant identity information (e.g. {{PASSporT}}), the actual conversational data exchanged (e.g. audio, video, text), realtime or post conversational analysis and attachements of documents exchanged during the conversation.  Having a standardize container for all of the data related to a conversation is useful for many applications (see {{vCon-white-paper}}).  This document specifies the {{JSON}} format for a vCon and a method for signing the document.
