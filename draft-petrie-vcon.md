@@ -10,7 +10,7 @@ date:
 consensus: true
 v: 3
 area: ART
-workgroup: WG Working Group
+workgroup: Dispatch Working Group
 keyword:
  - next generation
  - unicorn
@@ -31,6 +31,8 @@ author:
 
 normative:
 
+  HTTPS: RFC2818
+
   JSON: RFC8259
 
   JWS: RFC7515
@@ -40,6 +42,8 @@ normative:
   PASSporT: RFC8225
 
 informative:
+
+  JMAP: RFC8620
 
   vCard: RFC7095
 
@@ -80,7 +84,10 @@ A vCon is the container for data and information relating to a conversation.  It
 
 # Introduction
 
-TODO Introduction
+Standardizing a container for conversation data (vCon) has numerous advantages.  The use of vCons can ease service integration by using a common container and format for enterprize communications.  A vCon becomes the standardized input to communication analysis tools and machine learning and categorization.  vCons can help normalize data lakes.  For a sales lead organization, a vCon can be the container of assets sold to sales teams.  For conversations of record, the vCon can be a legal instrument.
+
+
+Documents and data inline vs externally referenced.
 
 
 # Conventions and Definitions
@@ -91,19 +98,68 @@ TODO Introduction
 
 ## JSON Notation
 
+The convension for JSON notation used in this document is copied from [JMAP].
+
+datetime
+
+string
+
+
 ## Inline Files
+
+Objects that contain a document or data inline (i.e. within the vCon) MUST have the parameters: body and encoding.
+JSON does not support binary data values.
+For this reason inline documents are base64url (see Section 2 [JWS]) encoded so that they can be included as a string value.
 
 ### body
 
+The body parameter contains the payload of the file to be included inline.  Depending upon the data in the file, it may require encoding to be used as a valid JSON string value.
+
+* body: "String"
+
 ### encoding
+
+The encoding parameter describes the type of encoding that was performed on the string value of the body parameter.
+
+* encoding: "String"
+
+    This MUST be one of the following string:
+
+    + "base64url": The payload of the document has been base64url encoded and provided as the string value of the body parameter.
+
+    + "none": The payload of the document is JSON string safe and can be included without modification as the string value to the pody parameter.
 
 ## Externally Referenced Files
 
+Files and data stored externally from the vCon MUST be signed to ensure that they have not been modified.
+The [LM-OTS] method of signing externally referenced files is described in section XXXX of this document.
+Objects that refer to a document which is externally stored from the vCon MUST have the parameters: url, alg and signature.
+
 ### url
+
+The [HTTPS] URL where the externally referenced document is stored, is provided in the url parameter.
+HTTPS MUST be used for retrieval to protect the privacy of the contents of the document.
+
+* url: "String"
 
 ### alg
 
-## signature
+The alg parameter dsecribed the method used for signing the document payload at the given url.
+Only one method of signing of externally referenced documents is defined in this document.
+So only one value is defined for the alg parameter.
+
+*  alg: "String"
+
+    This MUST be the following string:
+
+    + "lm-ots":  The algorithm used for signing the externally referenced document is [LM-OTS] as described in section XXXX of this document.
+
+### signature
+
+The signature on the externally referenced file is included in the signature parameter.
+The signature is constructed as described in section XXXX of this document.
+
+* signature: "String"
 
 # vCon JSON Object
 
@@ -195,6 +251,12 @@ SHOULD include either the Inline File or the Externally Reference File Propertie
 vcon, uuid or externally reference file
 
 # Security Considerations
+
+PII can be redacted.
+If PII in vCon data, it should be encrypted??
+To be a conversation of record, vCon MUST be signed.
+
+## Signing Externally Referenced Files
 
 ## Signed Form of vCon Object
 
