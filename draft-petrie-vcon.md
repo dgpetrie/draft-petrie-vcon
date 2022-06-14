@@ -41,6 +41,8 @@ normative:
 
   PASSporT: RFC8225
 
+  UUID: RFC4122
+
 informative:
 
   JMAP: RFC8620
@@ -108,15 +110,27 @@ Documents and data inline vs externally referenced.
 
 * payload
 
+* PII
+
+* vCon
+
 ## JSON Notation
 
 The convension for JSON notation used in this document is copied from [JMAP].
 
-datetime
+Date
 
-string
+String
 
-object List
+UnsignedInt
+
+UnsignedFloat
+
+"A[]" object List
+
+All parameters are assumed to be manditory unless other wise noted.
+
+Objects or arrays with no values MAY be excluded from the vCon.
 
 ## Inline Files
 
@@ -184,15 +198,55 @@ The signature is constructed as described in section XXXX of this document.
 
 ### vcon
 
+The syntactic version of the JSON format used in the vCon.
+
+* vcon: "String"
+
+    For syntax defined in this document, the string MUST have the value: "0.0.1"
+
 ### uuid
+
+The [UUID] for the vCon is used to refer to it when privacy or security may not allow for inclusion or URL reference to a vCon. 
+The UUID should be globaly unique.
+The domain creating the vCon should include its fully qualified domain name (FQDN) as part of the UUID and prefix it with a string guarenteed to be unique within it's domain.
+
+* uuid: "String"
+
+    The value of the string MAY be generated using the following:
+        SHA-1 digest of concatenation of (RFC3338 Date" + ":" + value of parties property) + "@" + FQDN
+        Typically the FQDN is the same as that of the signer for the vCon.
+
+    Alteratively if the domain can generate a garenteed unique serial number for all of the vCons created within it's domain, then the UUID may be generated as the concationation of ((serial number) + "@" + FQHN)
 
 ### date???
 
 ### subject
 
+The subject or the topic of the conversation is provided in the subject parameter.
+This parameter is optional as not all conconversations have a defined subject.
+Email threads and prescheduled calls and video conversences typically have a subject which can be captured here.
+
+* subject: String (optional)
+
 ### redacted Object
 
-vcon, uuid or externally reference file
+A redacted vCon MAY provide a reference to the unredacted version of itself.
+For privacy reasons, it may be necessary to redact a vCon to construct another vCon without the PII.
+This allows the non-PII portion of the vCon to still be analysed or used in a broader scope.
+The redacted object SHOULD contain the uuid and MAY include the body and encoding or the url, alg and signature (see sections XXXX and XXXX).
+If the unredacted vCon is included in the body, the unredacted vCon MUST be in the encrypted form.
+If a reference to the unredacted vCon is provided in the url, the access to that URL MUST be restricted to only those who should be allowed to see the PII for the redacted vCon.
+
+* uuid: String (optional)
+
+As defined in section [#name-inline-files]XXXX either:
+* body: String
+* encoding: String
+
+or as defined in section [#name-externally-referenced-files]XXXX MAY be included:
+* url: String
+* alg: String
+* signature
 
 ### appended Object
 
@@ -227,6 +281,12 @@ vcon, uuid or externally reference file
 ### type
 recording or text
 
+### start
+
+### duration
+
+### parties
+
 ### mimetype
 
 ### filename
@@ -236,6 +296,8 @@ SHOULD include either the Inline File or the Externally Reference File Propertie
 ## Analysis Object
 
 ### type
+
+### dialog
 
 ### mimetype
 
@@ -252,6 +314,8 @@ SHOULD include either the Inline File or the Externally Reference File Propertie
 ### Type???
 Do we want a type like: contract or presentation?
 Or a subject or title.
+
+### party
 
 ### mimetype
 
