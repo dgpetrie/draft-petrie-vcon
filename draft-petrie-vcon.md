@@ -77,7 +77,7 @@ informative:
 
 --- abstract
 
-A vCon is the container for data and information relating to a conversation.  It is analogous to a {{vCard}} which contains address information for an individual.  A conversation may take the form of a traditional phone call, video conference, SMS or MMS message exchange, webchat or email thread.  The data in the container relating to the conversation may include Call Detail Records ({{CDR}}), call meta data, participant identity information (e.g. {{PASSporT}}), the actual conversational data exchanged (e.g. audio, video, text), realtime or post conversational analysis and attachements of documents exchanged during the conversation.  Having a standardize container for all of the data related to a conversation is useful for many applications (see {{vCon-white-paper}}).  This document specifies the {{JSON}} format for a vCon and a method for signing the document.
+A vCon is the container for data and information relating to a conversation.  It is analogous to a {{vCard}} which contains address information for an individual.  A conversation may take the form of a traditional phone call, video conference, SMS or MMS message exchange, webchat or email thread.  The data in the container relating to the conversation may include Call Detail Records ({{CDR}}), call meta data, participant identity information (e.g. {{PASSporT}}), the actual conversational data exchanged (e.g. audio, video, text), realtime or post conversational analysis and attachements of files exchanged during the conversation.  Having a standardize container for all of the data related to a conversation is useful for many applications (see {{vCon-white-paper}}).  This document specifies the {{JSON}} format for a vCon and a method for signing vCons.
 
 
 --- middle
@@ -96,6 +96,18 @@ Documents and data inline vs externally referenced.
 
 ## Terminology
 
+* conversation
+
+* file
+
+* list
+
+* object
+
+* parameter
+
+* payload
+
 ## JSON Notation
 
 The convension for JSON notation used in this document is copied from [JMAP].
@@ -104,12 +116,13 @@ datetime
 
 string
 
+object List
 
 ## Inline Files
 
-Objects that contain a document or data inline (i.e. within the vCon) MUST have the parameters: body and encoding.
+Objects that contain a file or data inline (i.e. within the vCon) MUST have the parameters: body and encoding.
 JSON does not support binary data values.
-For this reason inline documents are base64url (see Section 2 [JWS]) encoded so that they can be included as a string value.
+For this reason inline files are base64url (see Section 2 [JWS]) encoded so that they can be included as a string value.
 
 ### body
 
@@ -123,36 +136,36 @@ The encoding parameter describes the type of encoding that was performed on the 
 
 * encoding: "String"
 
-    This MUST be one of the following string:
+    This MUST be one of the following strings:
 
-    + "base64url": The payload of the document has been base64url encoded and provided as the string value of the body parameter.
+    + "base64url": The payload of the file has been base64url encoded and provided as the string value of the body parameter.
 
-    + "none": The payload of the document is JSON string safe and can be included without modification as the string value to the pody parameter.
+    + "none": The payload of the file is JSON string safe and can be included without modification as the string value to the pody parameter.
 
 ## Externally Referenced Files
 
 Files and data stored externally from the vCon MUST be signed to ensure that they have not been modified.
-The [LM-OTS] method of signing externally referenced files is described in section XXXX of this document.
-Objects that refer to a document which is externally stored from the vCon MUST have the parameters: url, alg and signature.
+Use of the [LM-OTS] method of signing externally referenced files is described in section XXXX of this document.
+Objects that refer to a file which is externally stored from the vCon MUST have the parameters: url, alg and signature.
 
 ### url
 
-The [HTTPS] URL where the externally referenced document is stored, is provided in the url parameter.
-HTTPS MUST be used for retrieval to protect the privacy of the contents of the document.
+The [HTTPS] URL where the externally referenced file is stored, is provided in the url parameter.
+HTTPS MUST be used for retrieval to protect the privacy of the contents of the file.
 
 * url: "String"
 
 ### alg
 
-The alg parameter dsecribed the method used for signing the document payload at the given url.
-Only one method of signing of externally referenced documents is defined in this document.
+The alg parameter dsecribed the method used for signing the file payload at the given url.
+Only one method of signing of externally referenced files is defined in this document.
 So only one value is defined for the alg parameter.
 
 *  alg: "String"
 
     This MUST be the following string:
 
-    + "lm-ots":  The algorithm used for signing the externally referenced document is [LM-OTS] as described in section XXXX of this document.
+    + "lm-ots":  The algorithm used for signing the externally referenced file is [LM-OTS] as described in section XXXX of this document.
 
 ### signature
 
@@ -260,6 +273,8 @@ To be a conversation of record, vCon MUST be signed.
 
 ## Signed Form of vCon Object
 
+MUST include x5c or x5u in unprotected header.
+
 ## Encrypted Form of vCon Object??
 
 # IANA Considerations
@@ -273,9 +288,9 @@ New MIME subtype: vcon
 
 ## Simple vCon Inline Recording
 
-```json
+~~~json
 {::include simple-vcon.vcon}
-```
+~~~
 
 ## Text Chat vCon
 
