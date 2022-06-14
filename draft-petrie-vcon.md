@@ -206,7 +206,7 @@ The syntactic version of the JSON format used in the vCon.
 
 ### uuid
 
-The [UUID] for the vCon is used to refer to it when privacy or security may not allow for inclusion or URL reference to a vCon. 
+The [UUID] for the vCon is used to refer to it when privacy or security may not allow for inclusion or URL reference to a vCon.
 The UUID should be globaly unique.
 The domain creating the vCon should include its fully qualified domain name (FQDN) as part of the UUID and prefix it with a string guarenteed to be unique within it's domain.
 
