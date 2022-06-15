@@ -35,6 +35,8 @@ normative:
 
   JSON: RFC8259
 
+  JWK: RFC7516
+
   JWS: RFC7515
 
   LM-OTS: RFC8554
@@ -87,6 +89,19 @@ A vCon is the container for data and information relating to a conversation.  It
 # Introduction
 
 Standardizing a container for conversation data (vCon) has numerous advantages.  The use of vCons can ease service integration by using a common container and format for enterprize communications.  A vCon becomes the standardized input to communication analysis tools and machine learning and categorization.  vCons can help normalize data lakes.  For a sales lead organization, a vCon can be the container of assets sold to sales teams.  For conversations of record, the vCon can be a legal instrument.
+
+
+## What's in a vCon?
+
+### Meta Data
+
+Including the parties involved and their identities
+
+### Conversation Dialog
+
+### Conversation Analysis
+
+### Conversation Documents
 
 
 Documents and data inline vs externally referenced.
@@ -154,6 +169,8 @@ The encoding parameter describes the type of encoding that was performed on the 
 
     + "base64url": The payload of the file has been base64url encoded and provided as the string value of the body parameter.
 
+    + "json": The value of the body string is a JSON object.
+
     + "none": The payload of the file is JSON string safe and can be included without modification as the string value to the pody parameter.
 
 ## Externally Referenced Files
@@ -190,7 +207,7 @@ The signature is constructed as described in section XXXX of this document.
 
 # vCon JSON Object
 
-2 or 3 forms: unsigned, signed, encrypted???
+Three forms: unsigned, signed, encrypted
 
 # Unsigned Form of vCon Object
 
@@ -330,7 +347,7 @@ vcon, uuid or externally reference file
 # Security Considerations
 
 PII can be redacted.
-If PII in vCon data, it should be encrypted??
+If PII in vCon data, it SHOULD be encrypted
 To be a conversation of record, vCon MUST be signed.
 
 ## Signing Externally Referenced Files
@@ -339,7 +356,7 @@ To be a conversation of record, vCon MUST be signed.
 
 MUST include x5c or x5u in unprotected header.
 
-## Encrypted Form of vCon Object??
+## Encrypted Form of vCon Object
 
 # IANA Considerations
 
@@ -364,7 +381,7 @@ New MIME subtype: vcon
 
 ## Signed vCon
 
-## Encrypted  vCon???
+## Encrypted  vCon
 
 ## Redacted Signed vCon
 
