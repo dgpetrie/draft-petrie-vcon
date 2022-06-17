@@ -176,7 +176,7 @@ The encoding parameter describes the type of encoding that was performed on the 
 ## Externally Referenced Files
 
 Files and data stored externally from the vCon MUST be signed to ensure that they have not been modified.
-Use of the [LM-OTS] method of signing externally referenced files is described in section XXXX of this document.
+Use of the [LM-OTS] method of signing externally referenced files is described in [Signing Externally Referenced Files](#signing-extrenally-referenced-files) of this document.
 Objects that refer to a file which is externally stored from the vCon MUST have the parameters: url, alg and signature.
 
 ### url
@@ -196,12 +196,12 @@ So only one value is defined for the alg parameter.
 
     This MUST be the following string:
 
-    + "lm-ots":  The algorithm used for signing the externally referenced file is [LM-OTS] as described in section XXXX of this document.
+    + "lm-ots":  The algorithm used for signing the externally referenced file is [LM-OTS] as described in [Signing Externally Referenced Files](#signing-extrenally-referenced-files) of this document.
 
 ### signature
 
 The signature on the externally referenced file is included in the signature parameter.
-The signature is constructed as described in section XXXX of this document.
+The signature is constructed as described in [Signing Externally Referenced Files](#signing-extrenally-referenced-files) of this document.
 
 * signature: "String"
 
@@ -250,7 +250,7 @@ Email threads and prescheduled calls and video conversences typically have a sub
 A redacted vCon MAY provide a reference to the unredacted version of itself.
 For privacy reasons, it may be necessary to redact a vCon to construct another vCon without the PII.
 This allows the non-PII portion of the vCon to still be analysed or used in a broader scope.
-The redacted object SHOULD contain the uuid and MAY include the body and encoding or the url, alg and signature (see sections XXXX and XXXX).
+The redacted object SHOULD contain the uuid parameter and MAY include the body and encoding parameters or the url, alg and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
 If the unredacted vCon is included in the body, the unredacted vCon MUST be in the encrypted form.
 If a reference to the unredacted vCon is provided in the url, the access to that URL MUST be restricted to only those who should be allowed to see the PII for the redacted vCon.
 
@@ -310,7 +310,9 @@ recording or text
 
 ### filename
 
-SHOULD include either the Inline File or the Externally Reference File Properties (see section XXXX).
+### Dialog Content
+
+The Dialog Object SHOULD contain the body and encoding parameters or the url, alg and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
 
 ## Analysis Object
 
@@ -326,7 +328,9 @@ SHOULD include either the Inline File or the Externally Reference File Propertie
 
 ### schema
 
-SHOULD include either the Inline File or the Externally Reference File Properties (see section XXXX).
+### Analysis Content
+
+The Analysis Object SHOULD contain the body and encoding parameters or the url, alg and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
 
 ## Attachment Object
 
@@ -340,7 +344,9 @@ Or a subject or title.
 
 ### filename
 
-SHOULD include either the Inline File or the Externally Reference File Properties (see section XXXX).
+### Attachment Content
+
+The Attachment Object SHOULD contain the body and encoding parameters or the url, alg and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
 
 ### Group Object
 
