@@ -93,18 +93,30 @@ Standardizing a container for conversation data (vCon) has numerous advantages. 
 
 ## What's in a vCon?
 
+Meta data, dialog, analysis and coversation document
+
+What is the scope of a conversation?
+
+Documents and data inline vs externally referenced.
+
+Different versions of vCon instance for redaction (e.g. for PII or other reasons), added analysis or other content
+
 ### Meta Data
 
 Including the parties involved and their identities
 
 ### Conversation Dialog
 
+Conversation in it's original media form: text, audio or video.
+
 ### Conversation Analysis
+
+Analysis and transformations of the conversation (e.g.  transcriptions, text to speech, summaries, sentiment, translations)
 
 ### Conversation Documents
 
+Documment discussed or exchanged during the conversation
 
-Documents and data inline vs externally referenced.
 
 
 # Conventions and Definitions
@@ -128,6 +140,12 @@ Documents and data inline vs externally referenced.
 * PII
 
 * vCon
+
+* vCon instance
+
+* vCon instance version
+
+* vCon syntax version
 
 ## JSON Notation
 
@@ -291,11 +309,17 @@ vcon, uuid or externally reference file
 
 ### name
 
-### verification
+### validation
 
-### vCard???
+### jCard???
+
+### location???
+
+### timezone???
 
 ## Dialog Object
+
+Is there other signalling data that we want to capture other than start and duration and the media (e.g. from jabber, sms, mms, email, SIP, etc.)?
 
 ### type
 recording or text
@@ -306,7 +330,12 @@ recording or text
 
 ### parties
 
+Single and multi-channel recordings
+
 ### mimetype
+
+SHOULD support mimetype for text, wav, mp3, mp4, ogg
+What about multi-part MIME for email?
 
 ### filename
 
@@ -315,6 +344,8 @@ recording or text
 The Dialog Object SHOULD contain the body and encoding parameters or the url, alg and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
 
 ## Analysis Object
+
+Analysis is a broad and in some cases developing field.  This document does not attempt to suggest a SHOULD support list of types.  That is for research and specification in a follow on document.
 
 ### type
 
@@ -334,13 +365,16 @@ The Analysis Object SHOULD contain the body and encoding parameters or the url, 
 
 ## Attachment Object
 
-### Type???
+No constraint on file types.  As most modes of communication, that allow the exchange of files, do not constrain the file type, any file type may be included here.  It is suggested that a virus scan be run on any files, before including them in a vCon.
+
+### Type or purpose???
 Do we want a type like: contract or presentation?
 Or a subject or title.
 
 ### party
 
 ### mimetype
+
 
 ### filename
 
@@ -363,6 +397,8 @@ To be a conversation of record, vCon MUST be signed.
 ## Signed Form of vCon Object
 
 MUST include x5c or x5u in unprotected header.
+
+How to deal with expired signatures.
 
 ## Encrypted Form of vCon Object
 
