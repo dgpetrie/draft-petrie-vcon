@@ -369,7 +369,7 @@ New MIME subtype: vcon
 
 ## Simple vCon Inline Recording
 
-~~~json
+~~~
 {::include simple-vcon.pp}
 ~~~
 
