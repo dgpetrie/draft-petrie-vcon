@@ -256,11 +256,11 @@ If a reference to the unredacted vCon is provided in the url, the access to that
 
 * uuid: String (optional)
 
-As defined in [section](#inline-files) XXXX either:
+or as defined in [Inline Files](#inline-files) either:
 * body: String
 * encoding: String
 
-or as defined in (#externally-referenced-files) XXXX MAY be included:
+or as defined in [Externally Referenced Files](#externally-referenced-files):
 * url: String
 * alg: String
 * signature
@@ -370,7 +370,7 @@ New MIME subtype: vcon
 ## Simple vCon Inline Recording
 
 ~~~json
-{::include simple-vcon.vcon}
+{::include simple-vcon.pp}
 ~~~
 
 ## Text Chat vCon
