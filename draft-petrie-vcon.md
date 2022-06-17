@@ -256,11 +256,11 @@ If a reference to the unredacted vCon is provided in the url, the access to that
 
 * uuid: String (optional)
 
-As defined in section [#name-inline-files]XXXX either:
+As defined in [section](#name-inline-files) XXXX either:
 * body: String
 * encoding: String
 
-or as defined in section [#name-externally-referenced-files]XXXX MAY be included:
+or as defined in (#name-externally-referenced-files) XXXX MAY be included:
 * url: String
 * alg: String
 * signature
