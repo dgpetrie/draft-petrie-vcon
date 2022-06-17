@@ -380,13 +380,13 @@ Is there other signalling data that we want to capture other than start and dura
 
 ### duration
 
-* duration: UnsignedInt | UnsignedFloat
+* duration: UnsignedInt \| UnsignedFloat
 
     The value MUST be the dialog (usually the recording) duration in seconds.
 
 ### parties
 
-* parties: UnsignedInt | UnsignedInt[] | (UnsignedInt | UnsignedInt[])[]
+* parties: UnsignedInt \| UnsignedInt[] \| (UnsignedInt \| UnsignedInt[])[]
 
 Single and multi-channel recordings
 
