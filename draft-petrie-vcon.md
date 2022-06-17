@@ -41,7 +41,13 @@ normative:
 
   LM-OTS: RFC8554
 
+  MAILTO: RFC2368
+
+  MIME: RFC2045
+
   PASSporT: RFC8225
+
+  TEL: RFC3966
 
   UUID: RFC4122
 
@@ -151,13 +157,16 @@ Documment discussed or exchanged during the conversation
 
 The convension for JSON notation used in this document is copied from [JMAP].
 
-Date
+Date - A string that MUST have the form of an [RFC3339] date string.
 
 String
 
 UnsignedInt
 
 UnsignedFloat
+
+Mime - A String value that SHOULD be of the following form as defined in section 5.1 of [MIME]:
+    type "/" subtype
 
 "A[]" object List
 
@@ -194,7 +203,7 @@ The encoding parameter describes the type of encoding that was performed on the 
 ## Externally Referenced Files
 
 Files and data stored externally from the vCon MUST be signed to ensure that they have not been modified.
-Use of the [LM-OTS] method of signing externally referenced files is described in [Signing Externally Referenced Files](#signing-extrenally-referenced-files) of this document.
+Use of the [LM-OTS] method of signing externally referenced files is described in [Signing Externally Referenced Files](#signing-externally-referenced-files) of this document.
 Objects that refer to a file which is externally stored from the vCon MUST have the parameters: url, alg and signature.
 
 ### url
@@ -203,6 +212,7 @@ The [HTTPS] URL where the externally referenced file is stored, is provided in t
 HTTPS MUST be used for retrieval to protect the privacy of the contents of the file.
 
 * url: "String"
+
 
 ### alg
 
@@ -214,12 +224,12 @@ So only one value is defined for the alg parameter.
 
     This MUST be the following string:
 
-    + "lm-ots":  The algorithm used for signing the externally referenced file is [LM-OTS] as described in [Signing Externally Referenced Files](#signing-extrenally-referenced-files) of this document.
+    + "lm-ots":  The algorithm used for signing the externally referenced file is [LM-OTS] as described in [Signing Externally Referenced Files](#signing-externally-referenced-files) of this document.
 
 ### signature
 
 The signature on the externally referenced file is included in the signature parameter.
-The signature is constructed as described in [Signing Externally Referenced Files](#signing-extrenally-referenced-files) of this document.
+The signature is constructed as described in [Signing Externally Referenced Files](#signing-externally-referenced-files) of this document.
 
 * signature: "String"
 
@@ -231,7 +241,7 @@ Three forms: unsigned, signed, encrypted
 
 ## Top Level Properties
 
-### vcon
+### vcon Object
 
 The syntactic version of the JSON format used in the vCon.
 
@@ -272,6 +282,8 @@ The redacted object SHOULD contain the uuid parameter and MAY include the body a
 If the unredacted vCon is included in the body, the unredacted vCon MUST be in the encrypted form.
 If a reference to the unredacted vCon is provided in the url, the access to that URL MUST be restricted to only those who should be allowed to see the PII for the redacted vCon.
 
+Need to define method(s) for redaction??
+
 * uuid: String (optional)
 
 or as defined in [Inline Files](#inline-files) body and encoding MAY be included:
@@ -291,25 +303,58 @@ vcon, uuid or externally reference file
 
 ### group Objects List
 
+* group: group[] (optional)
+
 ### parties Objects List
+
+* parties: party[]
 
 ### dialog Objects List
 
+* dialog: dialog[] (optional)
+
 ### analysis Objects List
 
+* analysis: analysis[]
+
 ### attachments Objects List
+
+* attachments: attachment[] (optional)
 
 ## Party Object
 
 ### tel URL
 
+* tel: String (optional)
+
+    The value of the tel parameter SHOULD be a valid [TEL] URL.  The URL scheme prefix (i.e. "tel:") is optional.
+
+
 ### STIR
 
-### email address
+* stir: String (optional)
+
+[PASSporT]
+
+### mailto
+
+* mailto: String (optional)
+
+    The value of the mailto parameter is a string of the format of a valid [MAILTO] URL.  The URL scheme prefix (i.e. "mailto:") is optional.
 
 ### name
 
+* name: String (optional)
+
 ### validation
+
+Validation methodologies are enterprise and domain specific.  The validation parameter captures the method used to validate the name parameter.
+For security reasons, it SHOULD NOT contain the data used to validate the name.
+However it MAY name the data used to validate the name (e.g. ssn, user ID and password).
+
+* validation: String (MUST be provided if name is provided)
+
+    The value of the validation string MAY be "none" or enterprise or domain defined token or string.
 
 ### jCard???
 
@@ -322,22 +367,39 @@ vcon, uuid or externally reference file
 Is there other signalling data that we want to capture other than start and duration and the media (e.g. from jabber, sms, mms, email, SIP, etc.)?
 
 ### type
-recording or text
+
+* type: String
+
+    The sting MUST have the value of either "recording" or "text"
+
 
 ### start
 
+* start: Date
+
+
 ### duration
 
+* duration: UnsignedInt | UnsignedFloat
+
+    The value MUST be the dialog (usually the recording) duration in seconds.
+
 ### parties
+
+* parties: UnsignedInt | UnsignedInt[] | (UnsignedInt | UnsignedInt[])[]
 
 Single and multi-channel recordings
 
 ### mimetype
 
+* mimetype: Mime (optional for externally referenced files)
+
 SHOULD support mimetype for text, wav, mp3, mp4, ogg
 What about multi-part MIME for email?
 
 ### filename
+
+* filename: String (optional)
 
 ### Dialog Content
 
@@ -349,15 +411,39 @@ Analysis is a broad and in some cases developing field.  This document does not 
 
 ### type
 
+* type: String
+
+    The string value SHOULD be one of the following:
+
+        + "summary"
+
+        + "transcript"
+
+        + "translation"
+
+        + "tts"
+
 ### dialog
+
+* dialog: UnsignedInt
+
+    The value of the dialog parameter is the index to the dialog in the dialog list to which this analysis object corresponds.
 
 ### mimetype
 
+* mimetype: Mime (optional for externally referenced files)
+
 ### filename
+
+* filename: String (optional)
 
 ### vendor
 
+* vendor: String
+
 ### schema
+
+* schema: String (optional)
 
 ### Analysis Content
 
@@ -373,10 +459,17 @@ Or a subject or title.
 
 ### party
 
+* party: UnsignedInt
+
+    The value of the party parameter is the index into the parties list to the party that contributed the attachment.
+
 ### mimetype
 
+* mimetype: Mime (optional for externally referenced files)
 
 ### filename
+
+* filename: String (optional)
 
 ### Attachment Content
 
@@ -384,7 +477,18 @@ The Attachment Object SHOULD contain the body and encoding parameters or the url
 
 ### Group Object
 
-vcon, uuid or externally reference file
+The Group Object SHOULD contain the uuid or body and encoding parameters or the url, alg and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
+
+* uuid: uuid (optional)
+
+or
+
+* body: vcon (optional)
+* encoding: String
+    The encoding string MUST have the value: "json"
+
+or
+
 
 # Security Considerations
 
