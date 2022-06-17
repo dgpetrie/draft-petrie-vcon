@@ -370,7 +370,7 @@ New MIME subtype: vcon
 ## Simple vCon Inline Recording
 
 ~~~
-{::include simple-vcon.vcon}
+{::include simple-vcon.pp}
 ~~~
 
 ## Text Chat vCon
