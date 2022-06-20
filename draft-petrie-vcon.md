@@ -133,7 +133,7 @@ Documment discussed or exchanged during the conversation
 
 * analysis - analysis, transformations, summary, sentiment, or translation tyically of the dialog data
 
-* conversation -
+* conversation - an exchange of communication using text, audio or video medium between at least one human and one or more bots or humans
 
 * dialog - the captured conversation in its original form (e.g. text, audio or video)
 
@@ -202,7 +202,7 @@ The encoding parameter describes the type of encoding that was performed on the 
 
     + "json": The value of the body string is a JSON object.
 
-    + "none": The payload of the file is JSON string safe and can be included without modification as the string value to the pody parameter.
+    + "none": The payload of the file is a valid JSON string and can be included without modification as the string value to the body parameter.
 
 ## Externally Referenced Files
 
@@ -250,7 +250,7 @@ This top level vCon object is also contained as described in the [signed](#signe
 
 # Unsigned Form of vCon Object
 
-The unsigned form of the top level vCon object is necessary as in many cases, a vCon will be partially conscructed and in process as conversation data is collected.
+The unsigned form of the top level vCon object is necessary as in many cases, a vCon will be partially constructed and in process as conversation data is collected.
 This may change while the conversation is in progress or on-going.
 The vCon may start with only meta data and party information, then progress to contain dialog information.
 It may then get analysis added or it could be passed to another security domain for analysis.
@@ -258,7 +258,7 @@ It may then get analysis added or it could be passed to another security domain 
 A vCon may be constructed across several security domains.
 When a vCon is to be exported from one security domain to another, it SHOULD be signed or encyrpted by the domain that constructed it.
 The subsequent domain may have need to redact or append data to the vCon.
-Alternatively the originating domain may want to redact the vCon before providing to an other domain.
+Alternatively the originating domain may want to redact the vCon before providing it to an other domain.
 The second or subsequent domain, MAY modify the prior vCon instance version and when complete or exporting to another security domain, it SHOULD sign or encrypt the new vCon instance version.
 The new vCon instance version SHOULD refer to the prior vCon instance version via the redacted or appended parameters.
 
@@ -283,7 +283,7 @@ The domain creating the vCon should include its fully qualified domain name (FQD
 * uuid: "String"
 
     The value of the string MAY be generated using the following:
-        SHA-1 digest of concatenation of (RFC3338 Date" + ":" + value of parties property) + "@" + FQDN
+        SHA-1 digest of concatenation of (RFC3338 Date" + ":" + string value of parties array property) + "@" + FQDN
         Typically the FQDN is the same as that of the signer for the vCon.
 
     Alteratively if the domain can generate a garenteed unique serial number for all of the vCons created within it's domain, then the UUID may be generated as the concationation of ((serial number) + "@" + FQHN)
@@ -295,10 +295,12 @@ TODO: Does the vCon need a date of completion/`construction or signing?
 ### subject
 
 The subject or the topic of the conversation is provided in the subject parameter.
-This parameter is optional as not all conconversations have a defined subject.
+This parameter is optional as not all conversations have a defined subject.
 Email threads and prescheduled calls and video conversences typically have a subject which can be captured here.
 
 * subject: String (optional)
+
+    The string value of the subject is a free formed JSON string with no constrained syntax.
 
 ### redacted Object
 
@@ -366,27 +368,41 @@ The scope of a conversation is defined by the observer.  It may be any of the fo
 
 * a series of weekly status calls
 
-In support of these constructs, it may be desirable to aggregate a group of vCons.  The conversations may be over heterogenius or homogenius medium.  A vCon MAY aggregated a group of vCon instances in the group array, using a group Object for each vCon instance.
+In support of these constructs, it may be desirable to aggregate a group of vCons.  The conversations may be over heterogenius or homogenius medium.  A vCon MAY aggregated a group of vCon instances in the group array, using a Group Object for each vCon instance.
 
-* group: group[] (optional)
+* group: Group[] (optional)
 
-    The group array contains a group Object for each vCon.
+    The group array contains a [Group Object](#group-object) for each vCon.
+
+TODO: Alternatively, the Dialog Object could refer to a vCon??
 
 ### parties Objects Array
 
-* parties: party[]
+The name, identity or contact information of all of the parties involved with the conversation are included in the parties object array.
+Whether the parties were observers, passive or active participants in the conversation, they each are included as a Party Object in the parties array.
+
+* parties: Party[]
+
+    The value of the parties parameter is an array of [Party Objects](#party-object).
 
 ### dialog Objects Array
 
-* dialog: dialog[] (optional)
+
+* dialog: Dialog[] (optional)
+
+    The value of the dialog parameter is an array of [Dialog Objects](#dialog-object).
 
 ### analysis Objects Array
 
-* analysis: analysis[]
+* analysis: Analysis[]
+
+    The value of the analysis parameter is an array of [Analysis Objects](#analysis-object).
 
 ### attachments Objects Array
 
-* attachments: attachment[] (optional)
+* attachments: Attachment[] (optional)
+
+    The value of the attachments parameter is an array of [Attachment Objects](#attachment-object).
 
 ## Party Object
 
@@ -542,7 +558,7 @@ Or a subject or title.
 
 The Attachment Object SHOULD contain the body and encoding parameters or the url, alg and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
 
-### Group Object
+## Group Object
 
 The Group Object SHOULD contain the uuid or body and encoding parameters or the url, alg and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
 
