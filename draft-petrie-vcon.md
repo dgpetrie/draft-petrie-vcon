@@ -99,10 +99,7 @@ Standardizing a container for conversation data (vCon) has numerous advantages. 
 
 ## What's in a vCon?
 
-* Meta data
-* Dialog
-* Analysis
-* Conversation Documents
+Meta data , Dialog , Analysis and Conversation Documents
 
 What is the scope of a conversation?
 
