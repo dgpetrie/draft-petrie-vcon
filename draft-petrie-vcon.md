@@ -99,7 +99,10 @@ Standardizing a container for conversation data (vCon) has numerous advantages. 
 
 ## What's in a vCon?
 
-Meta data, dialog, analysis and coversation document
+* Meta data
+* Dialog
+* Analysis
+* Conversation Documents
 
 What is the scope of a conversation?
 
@@ -131,54 +134,58 @@ Documment discussed or exchanged during the conversation
 
 ## Terminology
 
-* conversation
+* analysis - analysis, transformations, summary, sentiment, or translation tyically of the dialog data
 
-* file
+* conversation -
 
-* list
+* dialog - the captured conversation in its original form (e.g. text, audio or video)
 
-* object
+* file - a data block either included or referenced in a vCon
 
-* parameter
+* object - JSON object containing key and value pairs
 
-* payload
+* parameter - JSON key and value pair
 
-* PII
+* party - an observer or participant to the conversation, either passive or active
 
-* vCon
+* payload - the contents or bytes that make up a file
 
-* vCon instance
+* PII - Personal Identifiable Information 
 
-* vCon instance version
+* vCon - container for conversational information
 
-* vCon syntax version
+* vCon instance - a vCon populated with data for a specific conversation
+
+* vCon instance version - a single version of an instance of a convsersation, which may be modified to redact or append additional information  forming a subseqent vCon instance version
+
+* vCon syntax version - the version for the data syntax used for form a vCon
 
 ## JSON Notation
 
-The convension for JSON notation used in this document is copied from [JMAP].
+The convention for JSON notation used in this document is copied from sections 1.1-1.5 of [JMAP].
 
-Date - A string that MUST have the form of an [RFC3339] date string.
+Date - A string that MUST have the form of an [RFC3339] date string as defined for the Date type in section 1.4 of [JMAP].
 
-String
+String - a JSON string type
 
-UnsignedInt
+UnsignedInt - a positive JSON integer as defined in section 1.3 of [JMAP].
 
 UnsignedFloat
 
-Mime - A String value that SHOULD be of the following form as defined in section 5.1 of [MIME]:
+Mime - A String value that MUST be of the following form as defined in section 5.1 of [MIME]:
     type "/" subtype
 
-"A[]" object List
+"A[]" and array of values of type A.
 
 All parameters are assumed to be manditory unless other wise noted.
 
-Objects or arrays with no values MAY be excluded from the vCon.
+Objects or arrays with no or null values MAY be excluded from the vCon.
 
 ## Inline Files
 
 Objects that contain a file or data inline (i.e. within the vCon) MUST have the parameters: body and encoding.
 JSON does not support binary data values.
-For this reason inline files are base64url (see Section 2 [JWS]) encoded so that they can be included as a string value.
+For this reason inline files MUST be base64url (see Section 2 [JWS]) encoded to be included as a valid JSON string value if they are not already valud JSON strings.
 
 ### body
 
@@ -204,11 +211,11 @@ The encoding parameter describes the type of encoding that was performed on the 
 
 Files and data stored externally from the vCon MUST be signed to ensure that they have not been modified.
 Use of the [LM-OTS] method of signing externally referenced files is described in [Signing Externally Referenced Files](#signing-externally-referenced-files) of this document.
-Objects that refer to a file which is externally stored from the vCon MUST have the parameters: url, alg and signature.
+Objects that refer to a file which is externally stored from the vCon MUST have the parameters: url, alg and signature.  These parameters are defined in the following subsections.
 
 ### url
 
-The [HTTPS] URL where the externally referenced file is stored, is provided in the url parameter.
+The url value contains the [HTTPS] URL where the externally referenced file is stored.
 HTTPS MUST be used for retrieval to protect the privacy of the contents of the file.
 
 * url: "String"
@@ -216,7 +223,7 @@ HTTPS MUST be used for retrieval to protect the privacy of the contents of the f
 
 ### alg
 
-The alg parameter dsecribed the method used for signing the file payload at the given url.
+The alg parameter describes the method used for signing the file payload at the given url.
 Only one method of signing of externally referenced files is defined in this document.
 So only one value is defined for the alg parameter.
 
@@ -235,15 +242,36 @@ The signature is constructed as described in [Signing Externally Referenced File
 
 # vCon JSON Object
 
-Three forms: unsigned, signed, encrypted
+The JSON form of a vCon is contained in a JSON object in one of three forms:
+
+* unsigned
+* signed
+* encrypted
+
+The unsigned form of the vCon has a single top level object.
+This top level vCon object is also contained as described in the [signed](#signed-form-of_vcon-object) and [encrypted](#encrypted-form-of-vcon-object) forms of the vCon.
 
 # Unsigned Form of vCon Object
 
-## Top Level Properties
+The unsigned form of the top level vCon object is necessary as in many cases, a vCon will be partially conscructed and in process as conversation data is collected.
+This may change while the conversation is in progress or on-going.
+The vCon may start with only meta data and party information, then progress to contain dialog information.
+It may then get analysis added or it could be passed to another security domain for analysis.
 
-### vcon Object
+A vCon may be constructed across several security domains.
+When a vCon is to be exported from one security domain to another, it SHOULD be signed or encyrpted by the domain that constructed it.
+The subsequent domain may have need to redact or append data to the vCon.
+Alternatively the originating domain may want to redact the vCon before providing to an other domain.
+The second or subsequent domain, MAY modify the prior vCon instance version and when complete or exporting to another security domain, it SHOULD sign or encrypt the new vCon instance version.
+The new vCon instance version SHOULD refer to the prior vCon instance version via the redacted or appended parameters.
 
-The syntactic version of the JSON format used in the vCon.
+## vCon JSON Object Keys and Values
+
+The keys and values for the top level vCon JSON object are defined in the following subsections.
+
+### vcon
+
+The the value of vcon contains the syntactic version of the JSON format used in the vCon.
 
 * vcon: "String"
 
@@ -265,6 +293,8 @@ The domain creating the vCon should include its fully qualified domain name (FQD
 
 ### date???
 
+TODO: Does the vCon need a date of completion/`construction or signing?
+
 ### subject
 
 The subject or the topic of the conversation is provided in the subject parameter.
@@ -275,16 +305,18 @@ Email threads and prescheduled calls and video conversences typically have a sub
 
 ### redacted Object
 
-A redacted vCon MAY provide a reference to the unredacted version of itself.
+A redacted vCon SHOULD provide a reference to the unredacted vCon instance version of itself.
 For privacy reasons, it may be necessary to redact a vCon to construct another vCon without the PII.
 This allows the non-PII portion of the vCon to still be analysed or used in a broader scope.
-The redacted object SHOULD contain the uuid parameter and MAY include the body and encoding parameters or the url, alg and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
+The redacted object SHOULD contain the uuid parameter or alteratively MAY include the body and encoding parameters or alteratively the url, alg and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
 If the unredacted vCon is included in the body, the unredacted vCon MUST be in the encrypted form.
 If a reference to the unredacted vCon is provided in the url, the access to that URL MUST be restricted to only those who should be allowed to see the PII for the redacted vCon.
 
-Need to define method(s) for redaction??
+TODO: Need to define method(s) for redaction??
 
-* uuid: String (optional)
+* uuid: String (optional if inline or external reference provided)
+
+    The value contains the [uuid string value](#uuid) of the unredacted/original vCon instance version.
 
 or as defined in [Inline Files](#inline-files) body and encoding MAY be included:
 
@@ -299,25 +331,64 @@ or as defined in [Externally Referenced Files](#externally-referenced-files) url
 
 ### appended Object
 
-vcon, uuid or externally reference file
+A signed or encrypted vCon cannot be modified without invalidating it.
+In these cases, to allow for adding of additional information a new vCon instance version MUST be created.
+The prior vCon instance version is referenced by the appended object.
+Then the appended information is added to the new vCon instance version (i.e. top level vCon object).
 
-### group Objects List
+The prior vCon instance version SHOULD be referenced via the uuid of the prior vCon instance version, 
+or alteratively MAY include the body and encoding parameters or alteratively the url, alg and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
+
+* uuid: String (optional if inline or external reference provided)
+
+    The value contains the [uuid string value](#uuid) of the unredacted/original vCon instance version.
+
+or as defined in [Inline Files](#inline-files) body and encoding MAY be included:
+
+* body: String
+* encoding: String
+
+or as defined in [Externally Referenced Files](#externally-referenced-files) url, alg and signature MAY be included:
+
+* url: String
+* alg: String
+* signature
+
+### group Objects Array
+
+The scope of a conversation is defined by the observer.  It may be any of the following in this non-exaustive list:
+
+* a quick text exchange
+
+* a simple 2-way call
+
+* an evolving group chat
+
+* a class lecture and question and answer session
+
+* a web chat, evolving to a 2 way call, progressing to a transfered 3-way call transitioning to a video conference
+
+* a series of weekly status calls
+
+In support of these constructs, it may be desirable to aggregate a group of vCons.  The conversations may be over heterogenius or homogenius medium.  A vCon MAY aggregated a group of vCon instances in the group array, using a group Object for each vCon instance.
 
 * group: group[] (optional)
 
-### parties Objects List
+    The group array contains a group Object for each vCon.
+
+### parties Objects Array
 
 * parties: party[]
 
-### dialog Objects List
+### dialog Objects Array
 
 * dialog: dialog[] (optional)
 
-### analysis Objects List
+### analysis Objects Array
 
 * analysis: analysis[]
 
-### attachments Objects List
+### attachments Objects Array
 
 * attachments: attachment[] (optional)
 
@@ -427,7 +498,7 @@ Analysis is a broad and in some cases developing field.  This document does not 
 
 * dialog: UnsignedInt
 
-    The value of the dialog parameter is the index to the dialog in the dialog list to which this analysis object corresponds.
+    The value of the dialog parameter is the index to the dialog in the dialog array to which this analysis object corresponds.
 
 ### mimetype
 
@@ -461,7 +532,7 @@ Or a subject or title.
 
 * party: UnsignedInt
 
-    The value of the party parameter is the index into the parties list to the party that contributed the attachment.
+    The value of the party parameter is the index into the parties array to the party that contributed the attachment.
 
 ### mimetype
 
