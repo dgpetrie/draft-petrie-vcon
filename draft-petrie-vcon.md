@@ -147,7 +147,7 @@ Documment discussed or exchanged during the conversation
 
 * payload - the contents or bytes that make up a file
 
-* PII - Personal Identifiable Information 
+* PII - Personal Identifiable Information
 
 * vCon - container for conversational information
 
@@ -246,7 +246,7 @@ The JSON form of a vCon is contained in a JSON object in one of three forms:
 * encrypted
 
 The unsigned form of the vCon has a single top level object.
-This top level vCon object is also contained as described in the [signed](#signed-form-of_vcon-object) and [encrypted](#encrypted-form-of-vcon-object) forms of the vCon.
+This top level vCon object is also contained as described in the [signed](#signed-form-of-vcon-object) and [encrypted](#encrypted-form-of-vcon-object) forms of the vCon.
 
 # Unsigned Form of vCon Object
 
@@ -333,8 +333,7 @@ In these cases, to allow for adding of additional information a new vCon instanc
 The prior vCon instance version is referenced by the appended object.
 Then the appended information is added to the new vCon instance version (i.e. top level vCon object).
 
-The prior vCon instance version SHOULD be referenced via the uuid of the prior vCon instance version, 
-or alteratively MAY include the body and encoding parameters or alteratively the url, alg and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
+The prior vCon instance version SHOULD be referenced via the uuid of the prior vCon instance version, or alteratively MAY include the body and encoding parameters or alteratively the url, alg and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
 
 * uuid: String (optional if inline or external reference provided)
 
