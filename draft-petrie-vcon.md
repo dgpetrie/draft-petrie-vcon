@@ -163,13 +163,13 @@ The convention for JSON notation used in this document is copied from sections 1
 
 Date - A string that MUST have the form of an [RFC3339] date string as defined for the Date type in section 1.4 of [JMAP].
 
-String - a JSON string type
+"String" - a JSON string type
 
-UnsignedInt - a positive JSON integer as defined in section 1.3 of [JMAP].
+"UnsignedInt" - a positive JSON integer as defined in section 1.3 of [JMAP].
 
-UnsignedFloat
+"UnsignedFloat"
 
-Mime - A String value that MUST be of the following form as defined in section 5.1 of [MIME]:
+"Mime" - A "String" value that MUST be of the following form as defined in section 5.1 of [MIME]:
     type "/" subtype
 
 "A[]" and array of values of type A.
@@ -207,8 +207,10 @@ The encoding parameter describes the type of encoding that was performed on the 
 ## Externally Referenced Files
 
 Files and data stored externally from the vCon MUST be signed to ensure that they have not been modified.
-Use of the [LM-OTS] method of signing externally referenced files is described in [Signing Externally Referenced Files](#signing-externally-referenced-files) of this document.
-Objects that refer to a file which is externally stored from the vCon MUST have the parameters: url, alg and signature.  These parameters are defined in the following subsections.
+Objects that refer to a file which is externally stored from the vCon MUST have the parameters: url, alg key, and signature.  These parameters are defined in the following subsections.
+Section 4 of [LM-OTS] defines the general procedure to sign the bytes which compose the content or payload of the externally referenced file.
+Handling of externally referenced files is described in general in [#signing-externally-referenced-files].
+The following subsections define the specific algoritym used and how that signature information is included in a vCon so that the content can be verified.
 
 ### url
 
@@ -226,16 +228,23 @@ So only one value is defined for the alg parameter.
 
 *  alg: "String"
 
-    This MUST be the following string:
+    This SHOULD be the following string:
 
-    + "lm-ots":  The algorithm used for signing the externally referenced file is [LM-OTS] as described in [Signing Externally Referenced Files](#signing-externally-referenced-files) of this document.
+    + "LMOTS_SHA256_N32_W8":  The algorithm used for signing the externally referenced file is defined in section 4.1 of [LM-OTS].
+
+### key
+
+* key: "String"
+
+    The string value of the key parameter is the Base64Ulr Encoded value of the Public Key as defined in section 4.3 [LM-OTS]
 
 ### signature
 
-The signature on the externally referenced file is included in the signature parameter.
-The signature is constructed as described in [Signing Externally Referenced Files](#signing-externally-referenced-files) of this document.
+The [LM-OTS] signature on the externally referenced file is included in the signature string value.
 
 * signature: "String"
+
+    The string value of signature is the Base64Url Encoded value of the Signature as defined in section 4.5 of [LM-OTS].
 
 # vCon JSON Object
 
@@ -298,7 +307,7 @@ The subject or the topic of the conversation is provided in the subject paramete
 This parameter is optional as not all conversations have a defined subject.
 Email threads and prescheduled calls and video conversences typically have a subject which can be captured here.
 
-* subject: String (optional)
+* subject: "String" (optional)
 
     The string value of the subject is a free formed JSON string with no constrained syntax.
 
@@ -307,26 +316,27 @@ Email threads and prescheduled calls and video conversences typically have a sub
 A redacted vCon SHOULD provide a reference to the unredacted vCon instance version of itself.
 For privacy reasons, it may be necessary to redact a vCon to construct another vCon without the PII.
 This allows the non-PII portion of the vCon to still be analysed or used in a broader scope.
-The redacted object SHOULD contain the uuid parameter or alteratively MAY include the body and encoding parameters or alteratively the url, alg and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
+The redacted object SHOULD contain the uuid parameter or alteratively MAY include the body and encoding parameters or alteratively the url, alg key, and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
 If the unredacted vCon is included in the body, the unredacted vCon MUST be in the encrypted form.
 If a reference to the unredacted vCon is provided in the url, the access to that URL MUST be restricted to only those who should be allowed to see the PII for the redacted vCon.
 
 TODO: Need to define method(s) for redaction??
 
-* uuid: String (optional if inline or external reference provided)
+* uuid: "String" (optional if inline or external reference provided)
 
     The value contains the [uuid string value](#uuid) of the unredacted/original vCon instance version.
 
 or as defined in [Inline Files](#inline-files) body and encoding MAY be included:
 
-* body: String
-* encoding: String
+* body: "String"
+* encoding: "String"
 
-or as defined in [Externally Referenced Files](#externally-referenced-files) url, alg and signature MAY be included:
+or as defined in [Externally Referenced Files](#externally-referenced-files) url, alg, key and signature MAY be included:
 
-* url: String
-* alg: String
-* signature
+* url: "String"
+* alg: "String"
+* key: "String"
+* signature: "String"
 
 ### appended Object
 
@@ -335,22 +345,23 @@ In these cases, to allow for adding of additional information a new vCon instanc
 The prior vCon instance version is referenced by the appended object.
 Then the appended information is added to the new vCon instance version (i.e. top level vCon object).
 
-The prior vCon instance version SHOULD be referenced via the uuid of the prior vCon instance version, or alteratively MAY include the body and encoding parameters or alteratively the url, alg and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
+The prior vCon instance version SHOULD be referenced via the uuid of the prior vCon instance version, or alteratively MAY include the body and encoding parameters or alteratively the url, alg, key and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
 
-* uuid: String (optional if inline or external reference provided)
+* uuid: "String" (optional if inline or external reference provided)
 
     The value contains the [uuid string value](#uuid) of the unredacted/original vCon instance version.
 
 or as defined in [Inline Files](#inline-files) body and encoding MAY be included:
 
-* body: String
-* encoding: String
+* body: "String"
+* encoding: "String"
 
-or as defined in [Externally Referenced Files](#externally-referenced-files) url, alg and signature MAY be included:
+or as defined in [Externally Referenced Files](#externally-referenced-files) url, alg, key and signature MAY be included:
 
-* url: String
-* alg: String
-* signature
+* url: "String"
+* alg: "String"
+* key: "String"
+* signature: "String"
 
 ### group Objects Array
 
@@ -381,26 +392,26 @@ TODO: Alternatively, the Dialog Object could refer to a vCon??
 The name, identity or contact information of all of the parties involved with the conversation are included in the parties object array.
 Whether the parties were observers, passive or active participants in the conversation, they each are included as a Party Object in the parties array.
 
-* parties: Party[]
+* parties: "Party[]"
 
     The value of the parties parameter is an array of [Party Objects](#party-object).
 
 ### dialog Objects Array
 
 
-* dialog: Dialog[] (optional)
+* dialog: "Dialog[]" (optional)
 
     The value of the dialog parameter is an array of [Dialog Objects](#dialog-object).
 
 ### analysis Objects Array
 
-* analysis: Analysis[]
+* analysis: "Analysis[]" (optional)
 
     The value of the analysis parameter is an array of [Analysis Objects](#analysis-object).
 
 ### attachments Objects Array
 
-* attachments: Attachment[] (optional)
+* attachments: "Attachment[]" (optional)
 
     The value of the attachments parameter is an array of [Attachment Objects](#attachment-object).
 
@@ -408,26 +419,26 @@ Whether the parties were observers, passive or active participants in the conver
 
 ### tel URL
 
-* tel: String (optional)
+* tel: "String" (optional)
 
     The value of the tel parameter SHOULD be a valid [TEL] URL.  The URL scheme prefix (i.e. "tel:") is optional.
 
 
 ### STIR
 
-* stir: String (optional)
+* stir: "String" (optional)
 
 [PASSporT]
 
 ### mailto
 
-* mailto: String (optional)
+* mailto: "String" (optional)
 
     The value of the mailto parameter is a string of the format of a valid [MAILTO] URL.  The URL scheme prefix (i.e. "mailto:") is optional.
 
 ### name
 
-* name: String (optional)
+* name: "String" (optional)
 
 ### validation
 
@@ -435,7 +446,7 @@ Validation methodologies are enterprise and domain specific.  The validation par
 For security reasons, it SHOULD NOT contain the data used to validate the name.
 However it MAY name the data used to validate the name (e.g. ssn, user ID and password).
 
-* validation: String (MUST be provided if name is provided)
+* validation: "String" (MUST be provided if name is provided)
 
     The value of the validation string MAY be "none" or enterprise or domain defined token or string.
 
@@ -451,42 +462,42 @@ Is there other signalling data that we want to capture other than start and dura
 
 ### type
 
-* type: String
+* type: "String"
 
     The sting MUST have the value of either "recording" or "text"
 
 
 ### start
 
-* start: Date
+* start: "Date"
 
 
 ### duration
 
-* duration: UnsignedInt \| UnsignedFloat
+* duration: "UnsignedInt" \| "UnsignedFloat"
 
     The value MUST be the dialog (usually the recording) duration in seconds.
 
 ### parties
 
-* parties: UnsignedInt \| UnsignedInt[] \| (UnsignedInt \| UnsignedInt[])[]
+* parties: "UnsignedInt" \| "UnsignedInt"[] \| ("UnsignedInt" \| "UnsignedInt"[])[]
 
 Single and multi-channel recordings
 
 ### mimetype
 
-* mimetype: Mime (optional for externally referenced files)
+* mimetype: "Mime" (optional for externally referenced files)
 
 SHOULD support mimetype for text, wav, mp3, mp4, ogg
 What about multi-part MIME for email?
 
 ### filename
 
-* filename: String (optional)
+* filename: "String" (optional)
 
 ### Dialog Content
 
-The Dialog Object SHOULD contain the body and encoding parameters or the url, alg and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
+The Dialog Object SHOULD contain the body and encoding parameters or the url, alg, key and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
 
 ## Analysis Object
 
@@ -494,7 +505,7 @@ Analysis is a broad and in some cases developing field.  This document does not 
 
 ### type
 
-* type: String
+* type: "String"
 
     The string value SHOULD be one of the following:
 
@@ -504,33 +515,35 @@ Analysis is a broad and in some cases developing field.  This document does not 
 
         + "translation"
 
+        + "sentiment"
+
         + "tts"
 
 ### dialog
 
-* dialog: UnsignedInt
+* dialog: "UnsignedInt"
 
     The value of the dialog parameter is the index to the dialog in the dialog array to which this analysis object corresponds.
 
 ### mimetype
 
-* mimetype: Mime (optional for externally referenced files)
+* mimetype: "Mime" (optional for externally referenced files)
 
 ### filename
 
-* filename: String (optional)
+* filename: "String" (optional)
 
 ### vendor
 
-* vendor: String
+* vendor: "String"
 
 ### schema
 
-* schema: String (optional)
+* schema: "String" (optional)
 
 ### Analysis Content
 
-The Analysis Object SHOULD contain the body and encoding parameters or the url, alg and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
+The Analysis Object SHOULD contain the body and encoding parameters or the url, alg, key and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
 
 ## Attachment Object
 
@@ -542,32 +555,32 @@ Or a subject or title.
 
 ### party
 
-* party: UnsignedInt
+* party: "UnsignedInt"
 
     The value of the party parameter is the index into the parties array to the party that contributed the attachment.
 
 ### mimetype
 
-* mimetype: Mime (optional for externally referenced files)
+* mimetype: "Mime" (optional for externally referenced files)
 
 ### filename
 
-* filename: String (optional)
+* filename: "String" (optional)
 
 ### Attachment Content
 
-The Attachment Object SHOULD contain the body and encoding parameters or the url, alg and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
+The Attachment Object SHOULD contain the body and encoding parameters or the url, alg, key and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
 
 ## Group Object
 
-The Group Object SHOULD contain the uuid or body and encoding parameters or the url, alg and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
+The Group Object SHOULD contain the uuid or body and encoding parameters or the url, alg, key and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
 
 * uuid: uuid (optional)
 
 or
 
 * body: vcon (optional)
-* encoding: String
+* encoding: "String"
     The encoding string MUST have the value: "json"
 
 or
@@ -581,9 +594,56 @@ To be a conversation of record, vCon MUST be signed.
 
 ## Signing Externally Referenced Files
 
+In some deployments, it is not practical to include all of the file contents of a vCon inline.
+In support of that, file may be externally referenced.
+When external files are referenced, the signature on the vCon does not secure the file contents from modification.
+For this reason any externally referenced files MUST also have a signature.
+vCons use the [LM-OTS] method for signing the externally referenced file content and include its url, alg, key and signature in the vCon which are included in the integrety signature for the whole vCon.
+
+
+After retriving externally referenced files, before using its content, the payload of the HTTPS request should be verified using the key and signature for the url using the procedure defined in section 4.6 of [LM-OTS].
+
 ## Signed Form of vCon Object
 
+A signed vCon uses [JWS] and takes the form General JWS JSON Serialization Syntax form as defined in section 7.2.1 of [JWS].
+
 MUST include x5c or x5u in unprotected header.
+
+* payload: "String"
+
+    The value of the payload is the Base64Url Encoded string containing the unsigned vCon.  The general construction of the payload string value is described in section 7.2.1 of [JWK]
+
+* signatures "Signature[]"
+
+    The value of signatures is an array of [Signature Objects](#signature-object)
+
+### Signature Object
+
+The Signature Object MUST contain a header, protected and signature parameter as defined in section 7.2.1 of [JWS].
+
+* header: "Header"
+
+    The value of header is defined in [Header Object](#header-object)
+
+* protected: "String"
+* signature" "String"
+
+
+### Header Object
+
+The Header Object and its contents are defined in section 4 of [JWS].  The Header Object for a signed vCon MUST include the alg and either the x5c or x5u arrays.  The x5c or x5u requirement makes the management and use of vCons easier, allowing the certifcate chain to be found as the vCon is moved.
+
+* alg: "String"
+
+    The string value of alg is defined in section 4.1.1 of [JWS].  For a signed vCon this value SHOULD be "RS256" to maximize interoperablity.
+
+* x5c: "String[]" (MUST provide x5c or x5u)
+
+    The array of string values for x5c are defined in section 4.1.6 of [JWS].
+
+* x5u: "String" (MUST provide x5c or x5u)
+
+    The string value of x5u MUST contain an [HTTPS] URL as defined in section 4.1.5 of [JWS].
 
 How to deal with expired signatures.
 
