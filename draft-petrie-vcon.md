@@ -9,19 +9,19 @@ number:
 date:
 consensus: true
 v: 3
-area: ART
-workgroup: Dispatch Working Group
+# area: ART
+# workgroup: Dispatch Working Group
 keyword:
  - next generation
  - unicorn
  - sparkling distributed ledger
 venue:
-  group: WG
-  type: Working Group
-  mail: WG@example.com
-  arch: https://example.com/WG
-  github: USER/REPO
-  latest: https://example.com/LATEST
+#  group: WG
+#  type: Working Group
+#  mail: WG@example.com
+#  arch: https://example.com/WG
+  github: "dgpetrie/draft-petrie-vcon"
+  latest: "https://dgpetrie.github.io/draft-petrie-vcon/draft-petrie-vcon.html"
 
 author:
  -
