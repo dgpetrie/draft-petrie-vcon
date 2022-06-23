@@ -482,7 +482,9 @@ Is there other signalling data that we want to capture other than start and dura
 
 * parties: "UnsignedInt" \| "UnsignedInt"[] \| ("UnsignedInt" \| "UnsignedInt"[])[]
 
-Single and multi-channel recordings
+    Single channel recordings should have a parties value of the form: "UnisignedInt" or "UnsignedInt[]" where the integer value or array of integer values are the indices to the Party Object(s) in the parties array that contributed to the mix for the single channel recording.  The index for the Party Object SHOULD be included even if the indicated party was silent the entire conversation.
+
+    Multi-channel recordings MUST have a parties value that is an array of the same size as the number of channels in the recording.  The values in that array are either an integer or an array of integers which are the indicies to the parties that contributed to the mix for the associated channel of the recording.  The index for Party Objects SHOULD be included even if the party was silent the entire conversation.
 
 ### mimetype
 
@@ -591,6 +593,12 @@ or
 PII can be redacted.
 If PII in vCon data, it SHOULD be encrypted
 To be a conversation of record, vCon MUST be signed.
+Any time a vCon is shared outside its original security domain, it should be signed or encrypted.
+Files externally referenced by a vCon SHOULD always be signed with the verification information included in the vCon that references the external file as defined in [#externally-referenced-files] and [#signing-exteranlly-referenced-files].
+Externally referenced files SHOULD only be transported over [HTTPS] and SHOULD be access controlled to those who are permitted to read the contents of that entire vCon.
+vCons transported over non-secure channels such as email MUST be in the encrypted form.
+
+Need to explain typical storage contexts which may be more secure and storage contexts which are less secure.
 
 ## Signing Externally Referenced Files
 
@@ -649,9 +657,45 @@ How to deal with expired signatures.
 
 ## Encrypted Form of vCon Object
 
+A encrypted vCon uses [JWE] and takes the form General JWE JSON Serialization Syntax form as defined in section 7.2.1 of [JWE].
+
+* unprotected: "Unprotected"
+
+* recipients: "Recipient[]"
+
+* iv: "String"
+
+    The string value of iv is the Initization Vector as constructed as defined in section 7.2.1 of [JWE].
+
+* ciphertext: "String"
+
+    The string value of ciphertext is constructed as defined in section 7.2.1 of [JWE] using the unsigned form of the vCon as the plaintext input for encryption.
+
+* tag: "String"
+
+    The string value of tag is the the Authentication Tag as defined in section 7.2.1 of [JWE].
+
+### Unprotected Object
+
+MUST include x5c or x5u here or in recipient header???
+
+* x5c
+* x5u
+
+### Recipient Object
+
+* header: "Header"
+
+* encrypted_key: "String"
+
+    The string value of encrypted_key is defined in section 7.2.1 of [JWE].
+
+
 # IANA Considerations
 
-New MIME subtype: vcon
+IANA registration of new media subtype: vcon for media type application:
+
+    application/vcon
 
 
 --- back
