@@ -714,7 +714,7 @@ IANA registration of new media subtype: vcon for media type application:
 
 # Example vCons
 
-## Two Party Call vCon Inline Recording
+## Two Party Call vCon With Inline Recording
 
 ~~~
 {::include examples/ab_call_int_rec.pp}
@@ -724,9 +724,16 @@ IANA registration of new media subtype: vcon for media type application:
 
 ## Email Thread vCon
 
-## Simple vCon Externally Referenced Recording
+## Two Party Call vCon With Externally Referenced Recording
+
+~~~
+{::include examples/ab_call_ext_rec.pp}
+~~~
 
 ## Signed vCon
+~~~
+{::include examples/ab_call_ext_rec_signed.pp}
+~~~
 
 ## Encrypted  vCon
 
