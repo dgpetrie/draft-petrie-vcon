@@ -1,0 +1,17 @@
+{
+  "vcon": "0.0.1", 
+  "parties": 
+  [
+    {
+      "tel": "+12345678901",
+      "name": "Alice"
+    },
+    {
+      "tel": "+19876543210",
+      "name": "Bob"
+    }
+  ], 
+  "dialog": [], 
+  "analysis": [], 
+  "attachments": []
+}
