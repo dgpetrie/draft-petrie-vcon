@@ -137,6 +137,8 @@ Documment discussed or exchanged during the conversation
 
 * dialog - the captured conversation in its original form (e.g. text, audio or video)
 
+* encrypted form - vCon in the signed??? and encrypted form
+
 * file - a data block either included or referenced in a vCon
 
 * object - JSON object containing key and value pairs
@@ -156,6 +158,8 @@ Documment discussed or exchanged during the conversation
 * vCon instance version - a single version of an instance of a convsersation, which may be modified to redact or append additional information  forming a subseqent vCon instance version
 
 * vCon syntax version - the version for the data syntax used for form a vCon
+
+* signed form - vCon in the signed (JWS) form
 
 ## JSON Notation
 
@@ -591,9 +595,9 @@ or
 # Security Considerations
 
 PII can be redacted.
-If PII in vCon data, it SHOULD be encrypted
+If PII in vCon data, it SHOULD be signed?? AND encrypted
 To be a conversation of record, vCon MUST be signed.
-Any time a vCon is shared outside its original security domain, it should be signed or encrypted.
+Any time a vCon is shared outside its original security domain, it SHOULD be signed and optionally encrypted.
 Files externally referenced by a vCon SHOULD always be signed with the verification information included in the vCon that references the external file as defined in [#externally-referenced-files] and [#signing-exteranlly-referenced-files].
 Externally referenced files SHOULD only be transported over [HTTPS] and SHOULD be access controlled to those who are permitted to read the contents of that entire vCon.
 vCons transported over non-secure channels such as email MUST be in the encrypted form.
@@ -659,6 +663,8 @@ How to deal with expired signatures.
 
 A encrypted vCon uses [JWE] and takes the form General JWE JSON Serialization Syntax form as defined in section 7.2.1 of [JWE].
 
+vCon SHOULD be signed first, then signed form of vCon is plaintext to encryption????
+
 * unprotected: "Unprotected"
 
 * recipients: "Recipient[]"
@@ -677,10 +683,11 @@ A encrypted vCon uses [JWE] and takes the form General JWE JSON Serialization Sy
 
 ### Unprotected Object
 
-MUST include x5c or x5u here or in recipient header???
+* cty: "String"
 
-* x5c
-* x5u
+    The string value of cty SHOULD be "application/vcon"
+
+* enc: "String"
 
 ### Recipient Object
 
@@ -690,6 +697,11 @@ MUST include x5c or x5u here or in recipient header???
 
     The string value of encrypted_key is defined in section 7.2.1 of [JWE].
 
+### Header Object
+
+* alg: "String"
+
+    The string value of alg SHOULD be "RSA1_5".
 
 # IANA Considerations
 
@@ -702,10 +714,10 @@ IANA registration of new media subtype: vcon for media type application:
 
 # Example vCons
 
-## Simple vCon Inline Recording
+## Two Party Call vCon Inline Recording
 
 ~~~
-{::include examples/simple-vcon.pp}
+{::include examples/ab_call_int_rec.pp}
 ~~~
 
 ## Text Chat vCon
