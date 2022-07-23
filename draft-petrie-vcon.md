@@ -736,6 +736,9 @@ IANA registration of new media subtype: vcon for media type application:
 ~~~
 
 ## Encrypted  vCon
+~~~
+{::include examples/ab_call_ext_rec_encrypted.pp}
+~~~
 
 ## Redacted Signed vCon
 
