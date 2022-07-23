@@ -1,6 +1,6 @@
 
 VCON_PATH=../../../
-EXAMPLES=simple-vcon.vcon ab_call_ext_rec.vcon ab_call_int_rec.vcon ab_call_ext_rec_signed.vcon
+EXAMPLES=simple-vcon.vcon ab_call_ext_rec.vcon ab_call_int_rec.vcon ab_call_ext_rec_signed.vcon ab_call_ext_rec_encrypted.vcon
 INCLUDES=$(EXAMPLES:.vcon=.pp)
 #VCON_PYPATH="${VCON_PATH}vcon/vcon:${VCON_PATH}vcon/vcon/bin"
 VCON_PYPATH="${VCON_PATH}vcon"
@@ -25,6 +25,9 @@ ab_call_ext_rec.vcon: ${VCON_PATH}vcon ${VCON} ab.vcon ab_call.wav
 
 ab_call_ext_rec_signed.vcon: ${VCON_PATH}vcon ${VCON} ab_call_ext_rec.vcon
 	(export PYTHONPATH=${VCON_PYPATH}:${PATHONPATH} ; ${VCON} -i ab_call_ext_rec.vcon sign ${CERTPATH}fake_grp.key ${CERTPATH}fake_grp.crt ${CERTPATH}fake_div.crt ${CERTPATH}fake_ca_root.crt | jq '.' > ab_call_ext_rec_signed.vcon)
+
+ab_call_ext_rec_encrypted.vcon: ${VCON_PATH}vcon ${VCON} ab_call_ext_rec_signed.vcon
+	(export PYTHONPATH=${VCON_PYPATH}:${PATHONPATH} ; ${VCON} -i ab_call_ext_rec_signed.vcon encrypt ${CERTPATH}fake_grp.crt | jq '.' > ab_call_ext_rec_encrypted.vcon)
 
 ab_call_int_rec.vcon: ${VCON_PATH}vcon ${VCON} ab.vcon ab_call.wav 
 	(export PYTHONPATH=${VCON_PYPATH}:${PATHONPATH} ; ${VCON} -i ab.vcon add in-recording ab_call.wav 2022-06-21T13:53:26-04:00 "[0,1]" | jq '.' > ab_call_int_rec.vcon)
