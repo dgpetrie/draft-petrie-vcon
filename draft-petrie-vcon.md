@@ -58,7 +58,7 @@ informative:
   vCard: RFC7095
 
   vCon-white-paper:
-    target: https://example.com
+    target: https://github.com/vcon-dev/vcon/blob/main/docs/vCons_%20an%20Open%20Standard%20for%20Conversation%20Data.pdf
     title: "vCon: an Open Standard for Conversation Data"
     author:
       -
