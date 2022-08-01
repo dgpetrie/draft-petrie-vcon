@@ -31,6 +31,8 @@ author:
 
 normative:
 
+  GEOPRIV: RFC4119
+
   HTTPS: RFC2818
 
   JSON: RFC8259
@@ -46,6 +48,8 @@ normative:
   MIME: RFC2045
 
   PASSporT: RFC8225
+
+  PIDF-LO: RFC5491
 
   TEL: RFC3966
 
@@ -456,7 +460,25 @@ However it MAY name the data used to validate the name (e.g. ssn, user ID and pa
 
 ### jCard???
 
-### location???
+### gmlpos
+
+The gmlpos attribute contains the latitude and longitude of the location of the party at the time of the conversation start.
+This attribute contains a value of the same format as the gml:pos element defined in section 3.2 of the [PIDF-LO] PIDF.
+
+* gmlpos: "String" (optional)
+
+### civicaddress Object
+
+The civicaddress object is optional and contains civic address information about the location for the party.
+It MAY contain any or all of the following attributes: country, a1, a2, a3, a4, a5, a6, prd, pod, sts, hno, hns, lmk, loc, flr, nam, pc as defined in section 2.2.1 of [GEOPRIV].
+The values of all of these attributes are of type String.
+Note that the attribute names MUST be in lower case when contained in the civicaddress object even though they are in upper case in [GEOPRIV].
+
+Do we need RFC6848 civic address extensions?
+
+Is there a need for any temporal location?
+
+Do we just specify fo rht e start of the conversation?
 
 ### timezone???
 
