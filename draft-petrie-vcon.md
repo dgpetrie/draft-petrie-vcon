@@ -127,7 +127,62 @@ Analysis and transformations of the conversation (e.g.  transcriptions, text to 
 
 Documment discussed or exchanged during the conversation
 
+## Use Cases and Requirements
 
+Standardize container for conversational data exchange.
+It is not intended for real-time streaming of conversational data.
+It is for used of exchange of conversational data at either snapshots during or completed conversations and analysis after the completion.
+
+Define a standard for exchange of conversational data in a sea of modes, platforms and service offerings for conversations.
+
+Example conversational modes:
+
+* SMS
+
+* MMS
+
+* JABBER
+
+* SIMPLE
+
+* Proprietary web chat
+
+* SMTP
+
+* PSTN
+
+* SIP
+
+* WEBRTC
+
+* Priopietary video conferencing
+
+Do we need to list platforms and service offering?
+
+Ease integration of services and analysis of conversational data.  Lots off examples:
+
+* Export of conversation data from hosted service
+
+* Transcription
+
+* Translation
+
+* Sentiment Analysis
+
+* Product Evaluation Analysis
+
+* Import into ML and AI Analysis
+
+* Call Center Agent Evaluation and Coaching
+
+* Call Center DEVOPS (e.g. headset problems)
+
+* Call Center Service Level Agreement Evaluation
+
+Create standard format for conversations that can be used as a legal instrument such as verbal contract.
+This use case requires that a conversation be immutable.
+
+Better organize conversational data so that it can be handled in a consistant, safer means.
 
 # Conventions and Definitions
 
