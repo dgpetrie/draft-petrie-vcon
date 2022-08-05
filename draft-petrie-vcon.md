@@ -179,10 +179,20 @@ Ease integration of services and analysis of conversational data.  Lots off exam
 
 * Call Center Service Level Agreement Evaluation
 
-Create standard format for conversations that can be used as a legal instrument such as verbal contract.
+Create standard format for conversations that can be used as a legal instrument such as verbal contract or for compliance records.
 This use case requires that a conversation be immutable.
 
 Better organize conversational data so that it can be handled in a consistant, safer means.
+
+Not in scope:
+
+* Streaming
+
+* Transport Mechanisms
+
+* Storage or Databases
+
+* Methods of Redaction of Text, Audio or Video Media
 
 # Conventions and Definitions
 
@@ -383,7 +393,9 @@ The redacted object SHOULD contain the uuid parameter or alteratively MAY includ
 If the unredacted vCon is included in the body, the unredacted vCon MUST be in the encrypted form.
 If a reference to the unredacted vCon is provided in the url, the access to that URL MUST be restricted to only those who should be allowed to see the PII for the redacted vCon.
 
-TODO: Need to define method(s) for redaction??
+TODO: Need to define method(s) for redaction?? No, redaction of text, audio and video can be done with existing post processing of media.  Method of redaction is out of scope of this document.  In scope: how to reference or handle redactions.
+
+Do we need different levels of redaction?  If so, we need lables for the levels of redaction.
 
 * uuid: "String" (optional if inline or external reference provided)
 
@@ -671,9 +683,53 @@ or
 
 # Security Considerations
 
+The security concerts for vCons can put into two catigories: making the conversation immutable and protecting the privacy of the parties to the conversation and their PII.
+These requirements along with need to evolve a vCon (e.g. adding analysis, translations and transcriptions) conflict in some ways.
+To enable this, multiple verisons of a vCon may be created.
+Versions of a vCon may add information (e.g. analysis added to a prior vCon referenced by the appended Object) and versions that remove information (e.g. redactions of privacy information removed from the vCon referenced in the redacted Object).
+Different parts and versions of a vCon may be created in different security domains over a period of time.
+Typically a conversation of one mode, will be hosted or observed in a single domain.
+This will likely fall into one of the following hosting situations:
+
+* Enterprise Hosted Communications
+
+* Software as a Service (SaaS) Hosted Communications
+
+* Service Provider Hosted Communications
+
+The distinction among these has gotten clouded over recent years.
+The import consideration is that each is a different security domain.
+Informaiton about a conversation captured in an enterprise communications system (e.g. meta data and Dialog Object(s) recorded in an IP PBX) is a differenct security domain from a SaaS transcription service (i.e. an Analysis Object).
+When a vCon leaves a security domain, it SHOULD be signed to prevent it from being altered.
+If the new security domain needs to alter it, a new vCon is created with the removed or added data and the prior version is referenced (i.e. via the redacted or appended Object).
+If informaiton is redacted for privacy reasons, the vCon referenced in the redacted Object, SHOULD be encrypted to protect the privacy information in the unredacted version of the vCon.
+
+Using this approach, we can reduce the security operations on a vCon to signing and encryption.
+Two apporached to signing are needed as we have data that is contained withing the vCon and may have data not contained that is externally referenced.
+Externally referenced data MUST be signed using [LM-OTS] with the signature and URL of the externally referenced data included in the vCon.
+The vCon and its contents MUST use [JWS] for signing.
+When a vCon requires encryption, it MUST use [JWE].
+
+
+
+Immutable or proof that conversation has been modified.
+
+Protection of Privacy
+
+* Portions redacted
+* De-????
+* Entire conversation data set encrypted
+
+
 PII can be redacted.
 If PII in vCon data, it SHOULD be signed?? AND encrypted
 To be a conversation of record, vCon MUST be signed.
+
+Methods of redaction exist for text, audio and video using post processing of the media.
+The method of redaction used is out of the scope of this document.
+A redacted vCon MAY reference it's non-redacted version.
+The non-redacted version of the vCon referenced from the redacted vCon MUST be encrypted such that only those with permision to view the non-redacted content can decrypt it.
+
 Any time a vCon is shared outside its original security domain, it SHOULD be signed and optionally encrypted.
 Files externally referenced by a vCon SHOULD always be signed with the verification information included in the vCon that references the external file as defined in [#externally-referenced-files] and [#signing-exteranlly-referenced-files].
 Externally referenced files SHOULD only be transported over [HTTPS] and SHOULD be access controlled to those who are permitted to read the contents of that entire vCon.
