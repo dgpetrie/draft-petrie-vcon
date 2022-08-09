@@ -194,6 +194,8 @@ Not in scope:
 
 * Methods of Redaction of Text, Audio or Video Media
 
+* Standardization of Anaysis Data Formats
+
 # Conventions and Definitions
 
 {::boilerplate bcp14-tagged}
@@ -203,6 +205,8 @@ Not in scope:
 * analysis - analysis, transformations, summary, sentiment, or translation tyically of the dialog data
 
 * conversation - an exchange of communication using text, audio or video medium between at least one human and one or more bots or humans
+
+* de-identification - removal of all information that could identify a party in a conversation.  This includes PII as well as audio and video recordings.  Voice recordings might be re-vocalized with a different speaker.
 
 * dialog - the captured conversation in its original form (e.g. text, audio or video)
 
@@ -219,6 +223,8 @@ Not in scope:
 * payload - the contents or bytes that make up a file
 
 * PII - Personal Identifiable Information
+
+* PII masked - may include voice recordings, but PII is removed from transcripts and recordings (audio and video).
 
 * vCon - container for conversational information
 
@@ -683,11 +689,18 @@ or
 
 # Security Considerations
 
-The security concerts for vCons can put into two catigories: making the conversation immutable and protecting the privacy of the parties to the conversation and their PII.
+The security concerts for vCons can put into two categories: making the conversation immutable through integrity verification and protecting the confidentiality of privacy of the parties to the conversation and their PII.
 These requirements along with need to evolve a vCon (e.g. adding analysis, translations and transcriptions) conflict in some ways.
 To enable this, multiple verisons of a vCon may be created.
 Versions of a vCon may add information (e.g. analysis added to a prior vCon referenced by the appended Object) and versions that remove information (e.g. redactions of privacy information removed from the vCon referenced in the redacted Object).
+Redactions may be a different levels for example:
+
+* PII masked to remove PII data in the text, audio, video or transcripts
+
+* De-identified to remove segments or whole recordings that might be used for voice printing or facial recognition
+
 Different parts and versions of a vCon may be created in different security domains over a period of time.
+In addition, some conversation data may be referenced externally through an HTTPS URL as opposed to conpletely contained within the vCon.
 Typically a conversation of one mode, will be hosted or observed in a single domain.
 This will likely fall into one of the following hosting situations:
 
@@ -699,16 +712,26 @@ This will likely fall into one of the following hosting situations:
 
 The distinction among these has gotten clouded over recent years.
 The import consideration is that each is a different security domain.
-Informaiton about a conversation captured in an enterprise communications system (e.g. meta data and Dialog Object(s) recorded in an IP PBX) is a differenct security domain from a SaaS transcription service (i.e. an Analysis Object).
+Information about a conversation captured in an enterprise communications system (e.g. meta data and Dialog Object(s) recorded in an IP PBX) is a differenct security domain from a SaaS transcription service (i.e. an Analysis Object).
 When a vCon leaves a security domain, it SHOULD be signed to prevent it from being altered.
 If the new security domain needs to alter it, a new vCon is created with the removed or added data and the prior version is referenced (i.e. via the redacted or appended Object).
 If informaiton is redacted for privacy reasons, the vCon referenced in the redacted Object, SHOULD be encrypted to protect the privacy information in the unredacted version of the vCon.
 
-Using this approach, we can reduce the security operations on a vCon to signing and encryption.
-Two apporached to signing are needed as we have data that is contained withing the vCon and may have data not contained that is externally referenced.
-Externally referenced data MUST be signed using [LM-OTS] with the signature and URL of the externally referenced data included in the vCon.
-The vCon and its contents MUST use [JWS] for signing.
-When a vCon requires encryption, it MUST use [JWE].
+The secure storage and access of externally referenced conversation data is considered out of scope from this document.
+Secure mechanizms for HTTPS access and storage of files are well defined.
+Identity and cridentials for accessing externally stored data will be exchanged out of band from the vCon.
+The one requirement for externally referenced data from the perspective of this document, is proof of integrety of that data.
+
+Using the above described approach for redaction and appending of data, we can reduce the security operations on a vCon to signing and encryption.
+Two approached to signing are needed as we have data, in JSON format, that is contained within the vCon and may have data (typically media and file formats, often binary) not contained that is externally referenced.
+
+Externally referenced data will be signed using [LM-OTS] with the signature and URL of the externally referenced data included in the vCon with the URL refererence, the signature and public key included in the vCon.
+[LM-OTS] was chosen due to the relatively low cost to generate and verify the signature for what could be very large externally referenced media files and for the convenience of having a fairly small public key.
+As the signature can be on the order of 1KB, the total data size required for the reference (i.e. URL, public key and signature) is still small in comparison to containing the entire externally referenced data.
+As the public key and signature are contained in the vCon which will also be signed, the chain of authentication is provided via the signature on the vCon itself.
+This make the One Time Signature approach attractive as a solution as well.
+
+This document specifies the JSON format for vCons.  So it seemed the logical solution for signing vCons, is JOSE [JWS] JSON Serialization and likewise for encrypting vCons is JOSE [JWE] JSON Serialization.  The solutions are well documents, implementations are readily available and tested.
 
 
 
