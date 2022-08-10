@@ -348,7 +348,7 @@ When a vCon is to be exported from one security domain to another, it SHOULD be 
 The subsequent domain may have need to redact or append data to the vCon.
 Alternatively the originating domain may want to redact the vCon before providing it to an other domain.
 The second or subsequent domain, MAY modify the prior vCon instance version and when complete or exporting to another security domain, it SHOULD sign or encrypt the new vCon instance version.
-The new vCon instance version SHOULD refer to the prior vCon instance version via the redacted or appended parameters.
+The new vCon instance version SHOULD refer to the prior vCon instance version via the [Redacted Object](#redacted-object) or [Appended Object](#appended-object).
 
 ## vCon JSON Object Keys and Values
 
@@ -390,12 +390,12 @@ Email threads and prescheduled calls and video conversences typically have a sub
 
     The string value of the subject is a free formed JSON string with no constrained syntax.
 
-### redacted Object
+### Redacted Object
 
 A redacted vCon SHOULD provide a reference to the unredacted vCon instance version of itself.
 For privacy reasons, it may be necessary to redact a vCon to construct another vCon without the PII.
 This allows the non-PII portion of the vCon to still be analysed or used in a broader scope.
-The redacted object SHOULD contain the uuid parameter or alteratively MAY include the body and encoding parameters or alteratively the url, alg key, and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
+The Redacted Object SHOULD contain the uuid parameter or alteratively MAY include the body and encoding parameters or alteratively the url, alg key, and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
 If the unredacted vCon is included in the body, the unredacted vCon MUST be in the encrypted form.
 If a reference to the unredacted vCon is provided in the url, the access to that URL MUST be restricted to only those who should be allowed to see the PII for the redacted vCon.
 
@@ -419,11 +419,11 @@ or as defined in [Externally Referenced Files](#externally-referenced-files) url
 * key: "String"
 * signature: "String"
 
-### appended Object
+### Appended Object
 
 A signed or encrypted vCon cannot be modified without invalidating it.
 In these cases, to allow for adding of additional information a new vCon instance version MUST be created.
-The prior vCon instance version is referenced by the appended object.
+The prior vCon instance version is referenced by the Appended Object.
 Then the appended information is added to the new vCon instance version (i.e. top level vCon object).
 
 The prior vCon instance version SHOULD be referenced via the uuid of the prior vCon instance version, or alteratively MAY include the body and encoding parameters or alteratively the url, alg, key and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
@@ -535,17 +535,17 @@ However it MAY name the data used to validate the name (e.g. ssn, user ID and pa
 
 ### gmlpos
 
-The gmlpos attribute contains the latitude and longitude of the location of the party at the time of the conversation start.
-This attribute contains a value of the same format as the gml:pos element defined in section 3.2 of the [PIDF-LO] PIDF.
+The gmlpos parameter contains the latitude and longitude of the location of the party at the time of the conversation start.
+This parameter contains a value of the same format as the gml:pos element defined in section 3.2 of the [PIDF-LO] PIDF.
 
 * gmlpos: "String" (optional)
 
 ### civicaddress Object
 
 The civicaddress object is optional and contains civic address information about the location for the party.
-It MAY contain any or all of the following attributes: country, a1, a2, a3, a4, a5, a6, prd, pod, sts, hno, hns, lmk, loc, flr, nam, pc as defined in section 2.2.1 of [GEOPRIV].
-The values of all of these attributes are of type String.
-Note that the attribute names MUST be in lower case when contained in the civicaddress object even though they are in upper case in [GEOPRIV].
+It MAY contain any or all of the following parameters: country, a1, a2, a3, a4, a5, a6, prd, pod, sts, hno, hns, lmk, loc, flr, nam, pc as defined in section 2.2.1 of [GEOPRIV].
+The values of all of these parameters are of type String.
+Note that the parameter names MUST be in lower case when contained in the civicaddress object even though they are in upper case in [GEOPRIV].
 
 Do we need RFC6848 civic address extensions?
 
@@ -692,8 +692,8 @@ or
 The security concerts for vCons can put into two categories: making the conversation immutable through integrity verification and protecting the confidentiality of privacy of the parties to the conversation and their PII.
 These requirements along with need to evolve a vCon (e.g. adding analysis, translations and transcriptions) conflict in some ways.
 To enable this, multiple verisons of a vCon may be created.
-Versions of a vCon may add information (e.g. analysis added to a prior vCon referenced by the appended Object) and versions that remove information (e.g. redactions of privacy information removed from the vCon referenced in the redacted Object).
-Redactions may be a different levels for example:
+Versions of a vCon may add information (e.g. analysis added to a prior vCon referenced by the [Appended Object](#appended-object)) and versions that remove information (e.g. redactions of privacy information removed from the vCon referenced in the [Redacted Object](#redacted-object)).
+Redactions may be at different levels for example:
 
 * PII masked to remove PII data in the text, audio, video or transcripts
 
@@ -714,8 +714,8 @@ The distinction among these has gotten clouded over recent years.
 The import consideration is that each is a different security domain.
 Information about a conversation captured in an enterprise communications system (e.g. meta data and Dialog Object(s) recorded in an IP PBX) is a differenct security domain from a SaaS transcription service (i.e. an Analysis Object).
 When a vCon leaves a security domain, it SHOULD be signed to prevent it from being altered.
-If the new security domain needs to alter it, a new vCon is created with the removed or added data and the prior version is referenced (i.e. via the redacted or appended Object).
-If informaiton is redacted for privacy reasons, the vCon referenced in the redacted Object, SHOULD be encrypted to protect the privacy information in the unredacted version of the vCon.
+If the new security domain needs to alter it, a new vCon is created with the removed or added data and the prior version is referenced (i.e. via the [Redacted Object](#redacted-object) or [Appended Object](#appended-object)).
+If informaiton is redacted for privacy reasons, the vCon referenced in the [Redacted Object](#redacted-object), if inline, SHOULD be encrypted to protect the privacy information in the unredacted version of the vCon.
 
 The secure storage and access of externally referenced conversation data is considered out of scope from this document.
 Secure mechanizms for HTTPS access and storage of files are well defined.
@@ -733,19 +733,8 @@ This make the One Time Signature approach attractive as a solution as well.
 
 This document specifies the JSON format for vCons.  So it seemed the logical solution for signing vCons, is JOSE [JWS] JSON Serialization and likewise for encrypting vCons is JOSE [JWE] JSON Serialization.  The solutions are well documents, implementations are readily available and tested.
 
+* Rest of this section need to be merged or re-written to go with the above
 
-
-Immutable or proof that conversation has been modified.
-
-Protection of Privacy
-
-* Portions redacted
-* De-????
-* Entire conversation data set encrypted
-
-
-PII can be redacted.
-If PII in vCon data, it SHOULD be signed?? AND encrypted
 To be a conversation of record, vCon MUST be signed.
 
 Methods of redaction exist for text, audio and video using post processing of the media.
@@ -765,21 +754,21 @@ Need to explain typical storage contexts which may be more secure and storage co
 In some deployments, it is not practical to include all of the file contents of a vCon inline.
 In support of that, file may be externally referenced.
 When external files are referenced, the signature on the vCon does not secure the file contents from modification.
-For this reason any externally referenced files MUST also have a signature.
+For this reason any externally referenced files SHOULD also have a signature.
 vCons use the [LM-OTS] method for signing the externally referenced file content and include its url, alg, key and signature in the vCon which are included in the integrety signature for the whole vCon.
-
 
 After retriving externally referenced files, before using its content, the payload of the HTTPS request should be verified using the key and signature for the url using the procedure defined in section 4.6 of [LM-OTS].
 
 ## Signed Form of vCon Object
 
-A signed vCon uses [JWS] and takes the form General JWS JSON Serialization Syntax form as defined in section 7.2.1 of [JWS].
+A signed vCon uses [JWS] and takes the General JWS JSON Serialization Syntax form as defined in section 7.2.1 of [JWS].
 
 MUST include x5c or x5u in unprotected header.
 
 * payload: "String"
 
-    The value of the payload is the Base64Url Encoded string containing the unsigned vCon.  The general construction of the payload string value is described in section 7.2.1 of [JWK]
+    The value of the payload is the Base64Url Encoded string containing the unsigned JSON vCon.
+    The general construction of the payload string value is described in section 7.2.1 of [JWK]
 
 * signatures "Signature[]"
 
@@ -813,9 +802,15 @@ The Header Object and its contents are defined in section 4 of [JWS].  The Heade
 
     The string value of x5u MUST contain an [HTTPS] URL as defined in section 4.1.5 of [JWS].
 
-How to deal with expired signatures.
+TODO: How to deal with expired signatures.
 
 ## Encrypted Form of vCon Object
+
+TODO: Check this terminology:
+
+A vCon MUST be signed first using JWS, then encrypted using JWE as opposed to just encrypted with integrety protection.
+The rationalle is that meta data and dialog will typically be collected in one security domain, then may be stored or exported to another.
+The signing is likely for the lifetime of the vCon, where the encryption may be shorter term or domain specific.vCons may be stored in unencrypted form, but the signed form MUST be maintained to ensure its integrity.
 
 A encrypted vCon uses [JWE] and takes the form General JWE JSON Serialization Syntax form as defined in section 7.2.1 of [JWE].
 
