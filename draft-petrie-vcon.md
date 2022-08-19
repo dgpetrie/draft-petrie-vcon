@@ -29,6 +29,11 @@ author:
     organization: SIPez LLC
     email: dan.ietf@sipez.com
 
+ -
+    fullname: Thomas McCarthy-Howe
+    organization: Strolid
+    email: thomas.howe@strolid.com
+
 normative:
 
   GEOPRIV: RFC4119
@@ -91,25 +96,25 @@ informative:
 
 --- abstract
 
-A vCon is the container for data and information relating to a conversation.  It is analogous to a {{vCard}} which contains address information for an individual.  A conversation may take the form of a traditional phone call, video conference, SMS or MMS message exchange, webchat or email thread.  The data in the container relating to the conversation may include Call Detail Records ({{CDR}}), call meta data, participant identity information (e.g. {{PASSporT}}), the actual conversational data exchanged (e.g. audio, video, text), realtime or post conversational analysis and attachements of files exchanged during the conversation.  Having a standardize container for all of the data related to a conversation is useful for many applications (see {{vCon-white-paper}}).  This document specifies the {{JSON}} format for a vCon and a method for signing vCons.
+A vCon is the container for data and information relating to a real-tim, human conversation.  It is analogous to a {{vCard}} which enables the definition, interchange and storage of an individual's various points of contact.  The data contained in a vCon may be derived from any multimedia session, traditional phone call, video conference, SMS or MMS message exchange, webchat or email thread.  The data in the container relating to the conversation may include Call Detail Records ({{CDR}}), call meta data, participant identity information (e.g. {{PASSporT}}), the actual conversational data exchanged (e.g. audio, video, text), realtime or post conversational analysis and attachements of files exchanged during the conversation.  A standardized conversation container enables many applications, estabilishes a common method of storage and interchange, and supports identity, privacy and security efforts (see {{vCon-white-paper}})  
 
 
 --- middle
 
 # Introduction
 
-Standardizing a container for conversation data (vCon) has numerous advantages.  The use of vCons can ease service integration by using a common container and format for enterprize communications.  A vCon becomes the standardized input to communication analysis tools and machine learning and categorization.  vCons can help normalize data lakes.  For a sales lead organization, a vCon can be the container of assets sold to sales teams.  For conversations of record, the vCon can be a legal instrument.
+The generation of conversational data, contained in transcripts and multi-media files, is common in business, especially in customer facing organizations. However, the storage, analysis and sharing of the data they contain is not currently a standard.  Standardizing a container for conversation data (vCon) has numerous advantages, and enables the management of the conversation's content.  For instance, a standard allows for tools to determine the contents of the conversation, such that privacy guarantees and duties can be accurately performed. As a storage mechanism, vCons can help normalize data lakes and allow for interchange between organizations and networks. The use of vCons can ease service integration by using a common container and format for enterprize communications.  A vCon becomes the standardized input to communication analysis tools and machine learning and categorization.  For a sales lead organization, a vCon can be the container of assets sold to sales teams.  For conversations of record, the vCon can be a legal instrument.
 
 
 ## What's in a vCon?
 
-Meta data , Dialog , Analysis and Conversation Documents
+A vCon contains four major categories of data: metadata , dialog , analysis and attachments.  The metadata portion contains an updated call detail record, with identifications of the participants, the issuer of the vCon and tamerproof features such as signatures.  The dialog portion contains a set of multimedia and mime elements, each representing the actual, physical conversation.  The analysis portion contains data derived from the metadata and dialog portions, intended to carry items like transcripts, sentiement analysis and other semantic tagging. Finally, the attachment portion contains any other documents, such as Powerpoint or sales lead information, which provides context and support for the conversation itself.
 
-What is the scope of a conversation?
+A vCon acts as the definition of the conversation, and are created by systems during and after the conversation itself.  Some communication modes, like SMS texting, lack natural session boundaries and require explicit definition.  vCons may have two or more parties involved, but at least one should be a human.  For instance, an interaction between a bot and a human is an appropriate scope for vCons, but a converstion between two bots would not. 
 
-Documents and data inline vs externally referenced.
+Due to the size and complexity of the dialog portion of a vCon, both inline and externally referenced dialog assets are supported. For instance, vCons may reference a videoconference media as an external URL with an accompanying signature of the contents to detect tampering. Alteratively, vCons may contain the media of the entire dialog internally, keeping the conversation in one place, and optionally encrypted.  
 
-Different versions of vCon instance for redaction (e.g. for PII or other reasons), added analysis or other content
+vCons are desgined to be a digital asset, versioned and signed. For instance, different versions of vCon may arise from due to redaction (e.g. for PII or other reasons), added analysis or the addition of other content. In the metadata, vCons contain the unique ID of the parent vCon, such that they may be traveressed while maintaining their data integrity and provenance. 
 
 ### Meta Data
 
