@@ -393,15 +393,16 @@ Email threads and prescheduled calls and video conversences typically have a sub
 ### Redacted Object
 
 A redacted vCon SHOULD provide a reference to the unredacted vCon instance version of itself.
+The purpose of the Redacted Object is to provide the reference to the unredacted or less redacted version of the vCon from which this vCon was derived.
 For privacy reasons, it may be necessary to redact a vCon to construct another vCon without the PII.
 This allows the non-PII portion of the vCon to still be analysed or used in a broader scope.
-The Redacted Object SHOULD contain the uuid parameter or alteratively MAY include the body and encoding parameters or alteratively the url, alg key, and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
+The Redacted Object SHOULD contain the uuid parameter or alteratively MAY include the vCon inline via the body and encoding parameters or alteratively the url, alg key, and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
 If the unredacted vCon is included in the body, the unredacted vCon MUST be in the encrypted form.
-If a reference to the unredacted vCon is provided in the url, the access to that URL MUST be restricted to only those who should be allowed to see the PII for the redacted vCon.
+If a reference to the unredacted vCon is provided in the url parameter, the access to that URL MUST be restricted to only those who should be allowed to see the identity or PII for the redacted vCon.
 
 TODO: Need to define method(s) for redaction?? No, redaction of text, audio and video can be done with existing post processing of media.  Method of redaction is out of scope of this document.  In scope: how to reference or handle redactions.
 
-Do we need different levels of redaction?  If so, we need lables for the levels of redaction.
+TODO: Do we need different levels of redaction?  If so, we need lables for the levels of redaction.
 
 * uuid: "String" (optional if inline or external reference provided)
 
@@ -472,6 +473,8 @@ TODO: Alternatively, the Dialog Object could refer to a vCon??
 
 The name, identity or contact information of all of the parties involved with the conversation are included in the parties object array.
 Whether the parties were observers, passive or active participants in the conversation, they each are included as a Party Object in the parties array.
+
+TODO: Should this be a object not an array to make it easier to append parties (i.e. indices change when appended)?
 
 * parties: "Party[]"
 
@@ -718,12 +721,12 @@ If the new security domain needs to alter it, a new vCon is created with the rem
 If informaiton is redacted for privacy reasons, the vCon referenced in the [Redacted Object](#redacted-object), if inline, SHOULD be encrypted to protect the privacy information in the unredacted version of the vCon.
 
 The secure storage and access of externally referenced conversation data is considered out of scope from this document.
-Secure mechanizms for HTTPS access and storage of files are well defined.
+Secure mechanisms for HTTPS access and storage of files are well defined.
 Identity and cridentials for accessing externally stored data will be exchanged out of band from the vCon.
 The one requirement for externally referenced data from the perspective of this document, is proof of integrety of that data.
 
 Using the above described approach for redaction and appending of data, we can reduce the security operations on a vCon to signing and encryption.
-Two approached to signing are needed as we have data, in JSON format, that is contained within the vCon and may have data (typically media and file formats, often binary) not contained that is externally referenced.
+Two approached to signing are needed as we have data, in JSON format, that is contained within the vCon and may have data (typically media and file formats, often binary) not contained, inline in the vCon, that is externally referenced.
 
 Externally referenced data will be signed using [LM-OTS] with the signature and URL of the externally referenced data included in the vCon with the URL refererence, the signature and public key included in the vCon.
 [LM-OTS] was chosen due to the relatively low cost to generate and verify the signature for what could be very large externally referenced media files and for the convenience of having a fairly small public key.
@@ -733,7 +736,7 @@ This make the One Time Signature approach attractive as a solution as well.
 
 This document specifies the JSON format for vCons.  So it seemed the logical solution for signing vCons, is JOSE [JWS] JSON Serialization and likewise for encrypting vCons is JOSE [JWE] JSON Serialization.  The solutions are well documents, implementations are readily available and tested.
 
-* Rest of this section need to be merged or re-written to go with the above
+* TODO: Rest of this section needs to be merged or re-written to go with the above
 
 To be a conversation of record, vCon MUST be signed.
 
@@ -852,7 +855,7 @@ vCon SHOULD be signed first, then signed form of vCon is plaintext to encryption
 
 * alg: "String"
 
-    The string value of alg SHOULD be "RSA1_5".
+    The string value of alg SHOULD be "RSA-OAEP".
 
 # IANA Considerations
 
