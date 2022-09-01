@@ -46,8 +46,6 @@ normative:
 
   JWS: RFC7515
 
-  LM-OTS: RFC8554
-
   MAILTO: RFC2368
 
   MIME: RFC2045
@@ -56,6 +54,8 @@ normative:
 
   PIDF-LO: RFC5491
 
+  SHA512: RFC234
+
   TEL: RFC3966
 
   UUID: RFC4122
@@ -63,6 +63,8 @@ normative:
 informative:
 
   JMAP: RFC8620
+
+  LM-OTS: RFC8554
 
   vCard: RFC7095
 
@@ -96,7 +98,11 @@ informative:
 
 --- abstract
 
-A vCon is the container for data and information relating to a real-tim, human conversation.  It is analogous to a {{vCard}} which enables the definition, interchange and storage of an individual's various points of contact.  The data contained in a vCon may be derived from any multimedia session, traditional phone call, video conference, SMS or MMS message exchange, webchat or email thread.  The data in the container relating to the conversation may include Call Detail Records ({{CDR}}), call meta data, participant identity information (e.g. {{PASSporT}}), the actual conversational data exchanged (e.g. audio, video, text), realtime or post conversational analysis and attachements of files exchanged during the conversation.  A standardized conversation container enables many applications, estabilishes a common method of storage and interchange, and supports identity, privacy and security efforts (see {{vCon-white-paper}})
+A vCon is the container for data and information relating to a real-time, human conversation.
+It is analogous to a {{vCard}} which enables the definition, interchange and storage of an individual's various points of contact.
+The data contained in a vCon may be derived from any multimedia session, traditional phone call, video conference, SMS or MMS message exchange, webchat or email thread.
+The data in the container relating to the conversation may include Call Detail Records ({{CDR}}), call meta data, participant identity information (e.g. {{PASSporT}}), the actual conversational data exchanged (e.g. audio, video, text), realtime or post conversational analysis and attachements of files exchanged during the conversation.
+A standardized conversation container enables many applications, estabilishes a common method of storage and interchange, and supports identity, privacy and security efforts (see {{vCon-white-paper}})
 
 
 --- middle
@@ -108,34 +114,70 @@ The generation of conversational data, contained in transcripts and multi-media 
 
 ## What's in a vCon?
 
-A vCon contains four major categories of data: metadata , dialog , analysis and attachments.  The metadata portion contains an updated call detail record, with identifications of the participants, the issuer of the vCon and tamerproof features such as signatures.  The dialog portion contains a set of multimedia and mime elements, each representing the actual, physical conversation.  The analysis portion contains data derived from the metadata and dialog portions, intended to carry items like transcripts, sentiement analysis and other semantic tagging. Finally, the attachment portion contains any other documents, such as Powerpoint or sales lead information, which provides context and support for the conversation itself.
+A vCon contains four major categories of data: metadata , dialog , analysis and attachments.
+The metadata portion allows for an expanded set of data from a typical call detail record ([CDR]), with identifications of the participants or parties to the conversation, the issuer of the vCon and tamerproof features such as signatures.
+The dialog portion contains a set of multimedia and mime elements, each representing the actual, physical conversation in it's original media form: text, audio or video.
+The analysis portion contains data derived from the metadata and dialog portions, intended to carry items like transcripts, translations, summaries, text to speech, sentiment analysis and other semantic tagging.
+Finally, the attachment portion contains any other documents, such as slide deck or sales lead information, which provides context and support for the conversation itself.
 
 A vCon acts as the definition of the conversation, and are created by systems during and after the conversation itself.  Some communication modes, like SMS texting, lack natural session boundaries and require explicit definition.  vCons may have two or more parties involved, but at least one should be a human.  For instance, an interaction between a bot and a human is an appropriate scope for vCons, but a converstion between two bots would not.
 
-Due to the size and complexity of the dialog portion of a vCon, both inline and externally referenced dialog assets are supported. For instance, vCons may reference a videoconference media as an external URL with an accompanying signature of the contents to detect tampering. Alteratively, vCons may contain the media of the entire dialog internally, keeping the conversation in one place, and optionally encrypted.
+Due to the size and complexity of the dialog portion of a vCon, both inline and externally referenced dialog, analysis, attachments and other vCon reference assets are supported.
+For instance, vCons may reference a videoconference media as an external URL with an accompanying signature of the contents to detect tampering.
+Alteratively, vCons may contain the media of the entire dialog internally, keeping the conversation in one place, and optionally encrypted.
 
-vCons are desgined to be a digital asset, versioned and signed. For instance, different versions of vCon may arise from due to redaction (e.g. for PII or other reasons), added analysis or the addition of other content. In the metadata, vCons contain the unique ID of the parent vCon, such that they may be traveressed while maintaining their data integrity and provenance.
-
-### Meta Data
-
-Including the parties involved and their identities
-
-### Conversation Dialog
-
-Conversation in it's original media form: text, audio or video.
-
-### Conversation Analysis
-
-Analysis and transformations of the conversation (e.g.  transcriptions, text to speech, summaries, sentiment, translations)
-
-### Conversation Documents
-
-Documment discussed or exchanged during the conversation
+vCons are designed to be a digital asset, versioned and signed.
+For instance, different versions of vCon may arise from due to redaction (e.g. for PII or other reasons), added analysis or the addition of other content.
+In the metadata, vCons contain the unique ID of the parent vCon, such that they may be traveressed while maintaining their data integrity and provenance.
 
 ## Use Cases and Requirements
 
+Use cases:
+
+In large enterprises, different products may be served by different call centers (inhouse or out sourced).
+The call centers may have different communications infrastructure and even different platform vendors (e.g. IP PBX, email servers).
+Consequently, the CDR and meta data as well as the conversation recordings may be stored in different formats and locations.
+This creates artifical silos of storage and analysis.
+Using vCon as a stardard exchange, storage, analysis input and output format, would ease integration efforts and cross enterprise analysis of products and call center metrics.
+This would also ease customer analysis across product lines which may currently be difficutly due to interoperable silos.
+Having conversation data in the vCon format would lower the cost and speed deployment of both inhouse and outsourced analysis tools for import into ML and AI based tools, transcription, translation and sentiment analysis.
+Having conversation data in a standard vCon container would ease the export of conversation data from hosted services.
+This would enable more analysis capabilities.
+
+In some locations, regulations make it manditory for enterprises to delete private information upon request of the individual.
+Large enterprises with siloed communications systems have difficulty locating or identifying all of the private data for an individual due to the disparate communications systems.
+Using the vCon as the standard container for all communications system, storing the conversation data centrally and removing it from the siloed communcations systems, allows for easier management, correlation, tracking and deletion of individual's private data.
+Without centralizing the storage of the conversations in a standardized container, deleting an individuals private data is untenable and the enterprise cannot assert that they have fulfilled their requirment to locate and delete all of the private data.
+
+Large call centers may have tens of thousands of call agents making hundreds of thousands of calls a day.
+Supervising the agents and calls in a large call center is a huge efort.
+Using vCons to capture all of the conversations for all of the agents, enables more automation of evaluation, training and coaching of call center agents.
+DEVOPS tools such as check for conversation with too low a volume or agents with faulty headsets becomes easier an less costly using vCons.
+Call centers often have to provide service level proof and reports to their customers.
+These service level evaluations, monitoring and reporting can be more easily provided and at a lower cost via third party solutions with vCons as a standard conversation container.
+
+Conversations can have legal and regulatory significance.
+Regulations may require conversation of record to be stored for compliance.
+A conversation can become a verbal contract, making the conversation data a legal instrument.
+Having a standard container for the conversation data and asserting the integrity of the data make it easier to distribute the conversation data to the parties involved.
+
+Requirements:
+
+* Consolidation of information for a conversation
+
+* Ease of integration of services and analysis
+
+* Immutable
+
+* Hiding of PII
+
+* Amendable with additional information and data elements
+
+* Multiple modes of communication, changing over time
+
+* Better organize conversational data so that it can be handled in a consistant, safer means
+
 Standardize container for conversational data exchange.
-It is not intended for real-time streaming of conversational data.
 It is for used of exchange of conversational data at either snapshots during or completed conversations and analysis after the completion.
 
 Define a standard for exchange of conversational data in a sea of modes, platforms and service offerings for conversations.
@@ -164,40 +206,19 @@ Example conversational modes:
 
 Do we need to list platforms and service offering?
 
-Ease integration of services and analysis of conversational data.  Lots off examples:
 
-* Export of conversation data from hosted service
-
-* Transcription
-
-* Translation
-
-* Sentiment Analysis
-
-* Product Evaluation Analysis
-
-* Import into ML and AI Analysis
-
-* Call Center Agent Evaluation and Coaching
-
-* Call Center DEVOPS (e.g. headset problems)
-
-* Call Center Service Level Agreement Evaluation
-
-Create standard format for conversations that can be used as a legal instrument such as verbal contract or for compliance records.
-This use case requires that a conversation be immutable.
-
-Better organize conversational data so that it can be handled in a consistant, safer means.
 
 Not in scope:
 
-* Streaming
+* real-time streaming of conversational data
 
 * Transport Mechanisms
 
 * Storage or Databases
 
 * Methods of Redaction of Text, Audio or Video Media
+
+* Validation of redactions or appended data beyond the signature of the domain making the edits
 
 * Standardization of Anaysis Data Formats
 
@@ -531,11 +552,14 @@ TODO: Should this be a object not an array to make it easier to append parties (
 
 ### validation
 
-Validation methodologies are enterprise and domain specific.  The validation parameter captures the method used to validate the name parameter.
+Proof of authorization of the communation channel through STIR, login or possesion of a device, is often not sufficient proof of the identity of the persion at the other end of the communications channel.
+It is common in call centers to validate the identity of the person on the communication channel through verification fo some sort of personal identication information.
+The methods used, often varies with the situation and is business practices specific.
+The purpose of the validation parameter, is to allow the validator to save a label or token which identifies the method of identity validation used to identify the person at the other end of the communication channel.
 For security reasons, it SHOULD NOT contain the data used to validate the name.
-However it MAY name the data used to validate the name (e.g. ssn, user ID and password).
+However it MAY name the data used to validate the name (e.g. "SSN", "DOB", "user ID and password").
 
-* validation: "String" (MUST be provided if name is provided)
+* validation: "String" (SHOULD be provided if name parameter is provided)
 
     The value of the validation string MAY be "none" or enterprise or domain defined token or string.
 
