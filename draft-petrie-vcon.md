@@ -54,7 +54,7 @@ normative:
 
   PIDF-LO: RFC5491
 
-  SHA512: RFC234
+  SHA-512: RFC234
 
   TEL: RFC3966
 
@@ -63,8 +63,6 @@ normative:
 informative:
 
   JMAP: RFC8620
-
-  LM-OTS: RFC8554
 
   vCard: RFC7095
 
@@ -95,6 +93,8 @@ informative:
     author:
       org: ITU
       date: 1998
+
+  LM-OTS: RFC8554
 
 --- abstract
 
@@ -132,8 +132,6 @@ In the metadata, vCons contain the unique ID of the parent vCon, such that they 
 
 ## Use Cases and Requirements
 
-Use cases:
-
 In large enterprises, different products may be served by different call centers (inhouse or out sourced).
 The call centers may have different communications infrastructure and even different platform vendors (e.g. IP PBX, email servers).
 Consequently, the CDR and meta data as well as the conversation recordings may be stored in different formats and locations.
@@ -163,26 +161,27 @@ Having a standard container for the conversation data and asserting the integrit
 
 Requirements:
 
-* Consolidation of information for a conversation
+* Standardize container for conversational data exchange
 
-* Ease of integration of services and analysis
-
-* Immutable
-
-* Hiding of PII
-
-* Amendable with additional information and data elements
+* Consolidation of data and information for a conversation
 
 * Multiple modes of communication, changing over time
 
-* Better organize conversational data so that it can be handled in a consistant, safer means
+* Snapshots of conversation during or once completed along with analysis
 
-Standardize container for conversational data exchange.
-It is for used of exchange of conversational data at either snapshots during or completed conversations and analysis after the completion.
+* Ease of integration of services and analysis
+
+* Better organize conversational data so that it can be handled in a consistant, privacy safer means
+
+* Immutable
+
+* Hiding of PII or entire conversation
+
+* Amendable with additional information and data elements
 
 Define a standard for exchange of conversational data in a sea of modes, platforms and service offerings for conversations.
 
-Example conversational modes:
+Example conversational modes and protocols:
 
 * SMS
 
@@ -202,25 +201,21 @@ Example conversational modes:
 
 * WEBRTC
 
-* Priopietary video conferencing
+* Proprietary video conferencing
 
-Do we need to list platforms and service offering?
+The following  are considered not in scope or non-requirements:
 
+* Real-time streaming or updating of conversational data
 
+* Transport mechanisms
 
-Not in scope:
+* Storage or databases specifications
 
-* real-time streaming of conversational data
+* Methods of redaction of text, audio or video media
 
-* Transport Mechanisms
+* Validation of redactions or appended data beyond the signature of the domain making the changes to the conversational data (e.g. Merkle tree like redactions)
 
-* Storage or Databases
-
-* Methods of Redaction of Text, Audio or Video Media
-
-* Validation of redactions or appended data beyond the signature of the domain making the edits
-
-* Standardization of Anaysis Data Formats
+* Standardization of anaysis data formats or file media types
 
 # Conventions and Definitions
 
@@ -311,11 +306,11 @@ The encoding parameter describes the type of encoding that was performed on the 
 
 ## Externally Referenced Files
 
-Files and data stored externally from the vCon MUST be signed to ensure that they have not been modified.
-Objects that refer to a file which is externally stored from the vCon MUST have the parameters: url, alg key, and signature.  These parameters are defined in the following subsections.
-Section 4 of [LM-OTS] defines the general procedure to sign the bytes which compose the content or payload of the externally referenced file.
-Handling of externally referenced files is described in general in [#signing-externally-referenced-files].
-The following subsections define the specific algoritym used and how that signature information is included in a vCon so that the content can be verified.
+Files and data stored externally from the vCon MUST be "signed" to ensure that they have not been modified.
+Objects that refer to a file which is externally stored from the vCon MUST have the parameters: url, alg and signature.  These parameters are defined in the following subsections.
+The use of [SHA-512] hash for ensuring that the externnaly referenced data or file has not been modified, is defined in this document.
+Other methods of ensuring integrity may be added in the future.
+The following subsections define how the specific algoritym used and how that signature information is included in a vCon so that the content can be verified.
 
 ### url
 
@@ -335,21 +330,15 @@ So only one value is defined for the alg parameter.
 
     This SHOULD be the following string:
 
-    + "LMOTS_SHA256_N32_W8":  The algorithm used for signing the externally referenced file is defined in section 4.1 of [LM-OTS].
-
-### key
-
-* key: "String"
-
-    The string value of the key parameter is the Base64Ulr Encoded value of the Public Key as defined in section 4.3 [LM-OTS]
+    + "SHA-512":  The algorithm used for signing the externally referenced file is defined in section 6.3 and 6.4 of [SHA-512].
 
 ### signature
 
-The [LM-OTS] signature on the externally referenced file is included in the signature string value.
+The [SHA-512] hash on the externally referenced file is included in the signature string value.
 
 * signature: "String"
 
-    The string value of signature is the Base64Url Encoded value of the Signature as defined in section 4.5 of [LM-OTS].
+    The string value of the signature parameter is the Base64Ulr Encoded value of the SHA-512 hash (as defined in section 6.3 and 6.4 [SHA-512]) of the body of the content at the given url.
 
 # vCon JSON Object
 
@@ -416,59 +405,67 @@ Email threads and prescheduled calls and video conversences typically have a sub
 
     The string value of the subject is a free formed JSON string with no constrained syntax.
 
-### Redacted Object
+### redacted
 
-A redacted vCon SHOULD provide a reference to the unredacted vCon instance version of itself.
+A redacted vCon SHOULD provide a reference to the unredacted or prior, less redacted, vCon instance version of itself.
 The purpose of the Redacted Object is to provide the reference to the unredacted or less redacted version of the vCon from which this vCon was derived.
 For privacy reasons, it may be necessary to redact a vCon to construct another vCon without the PII.
 This allows the non-PII portion of the vCon to still be analysed or used in a broader scope.
-The Redacted Object SHOULD contain the uuid parameter or alteratively MAY include the vCon inline via the body and encoding parameters or alteratively the url, alg key, and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
+The Redacted Object SHOULD contain the uuid parameter or alteratively MAY include the vCon inline via the body and encoding parameters or alteratively the url, alg and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
 If the unredacted vCon is included in the body, the unredacted vCon MUST be in the encrypted form.
 If a reference to the unredacted vCon is provided in the url parameter, the access to that URL MUST be restricted to only those who should be allowed to see the identity or PII for the redacted vCon.
 
-TODO: Need to define method(s) for redaction?? No, redaction of text, audio and video can be done with existing post processing of media.  Method of redaction is out of scope of this document.  In scope: how to reference or handle redactions.
+The method(s) for redaction of text, audio and video can be done with existing post processing of media.
+The method of redaction is out of scope of this document.
+The assurance of the accurace of the redaction is made by the entity that creates the redaction which SHOULD signe the redacted version of the vCon.
 
 TODO: Do we need different levels of redaction?  If so, we need lables for the levels of redaction.
+
+* redacted: "Redacted Object" (optional, mutually excliusive with appended and group parameters)
+
+A Redacted Object contains the following parameters:
 
 * uuid: "String" (optional if inline or external reference provided)
 
     The value contains the [uuid string value](#uuid) of the unredacted/original vCon instance version.
 
-or as defined in [Inline Files](#inline-files) body and encoding MAY be included:
+Alternatively, as defined in [Inline Files](#inline-files) body and encoding MAY be included:
 
 * body: "String"
 * encoding: "String"
 
-or as defined in [Externally Referenced Files](#externally-referenced-files) url, alg, key and signature MAY be included:
+Alterativelly, as defined in [Externally Referenced Files](#externally-referenced-files) url, alg and signature MAY be included:
 
 * url: "String"
 * alg: "String"
-* key: "String"
 * signature: "String"
 
-### Appended Object
+### appended
 
 A signed or encrypted vCon cannot be modified without invalidating it.
 In these cases, to allow for adding of additional information a new vCon instance version MUST be created.
 The prior vCon instance version is referenced by the Appended Object.
 Then the appended information is added to the new vCon instance version (i.e. top level vCon object).
 
-The prior vCon instance version SHOULD be referenced via the uuid of the prior vCon instance version, or alteratively MAY include the body and encoding parameters or alteratively the url, alg, key and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
+The prior vCon instance version SHOULD be referenced via the uuid of the prior vCon instance version, or alteratively MAY include the body and encoding parameters or alteratively the url, alg and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
+
+* appended: "Appended Object" (optional, mutually exclusive with redacted and group parameters)
+
+The Appended Object contains the following parameters:
 
 * uuid: "String" (optional if inline or external reference provided)
 
     The value contains the [uuid string value](#uuid) of the unredacted/original vCon instance version.
 
-or as defined in [Inline Files](#inline-files) body and encoding MAY be included:
+Alteratively, as defined in [Inline Files](#inline-files) body and encoding MAY be included:
 
 * body: "String"
 * encoding: "String"
 
-or as defined in [Externally Referenced Files](#externally-referenced-files) url, alg, key and signature MAY be included:
+Alteratively, as defined in [Externally Referenced Files](#externally-referenced-files) url, alg and signature MAY be included:
 
 * url: "String"
 * alg: "String"
-* key: "String"
 * signature: "String"
 
 ### group Objects Array
@@ -487,20 +484,20 @@ The scope of a conversation is defined by the observer.  It may be any of the fo
 
 * a series of weekly status calls
 
-In support of these constructs, it may be desirable to aggregate a group of vCons.  The conversations may be over heterogenius or homogenius medium.  A vCon MAY aggregated a group of vCon instances in the group array, using a Group Object for each vCon instance.
+In support of these constructs, it may be desirable to aggregate a group of vCons as opposed to including all of the dialog in a single vCon.
+The conversations may be over heterogenius or homogenius medium.
+A vCon MAY aggregated a group of vCon instances in the group array, using a Group Object for each vCon instance.
 
-* group: Group[] (optional)
+* group: Group[] (optional, mutially exclusive with redacted and appended parameters)
 
     The group array contains a [Group Object](#group-object) for each vCon.
-
-TODO: Alternatively, the Dialog Object could refer to a vCon??
 
 ### parties Objects Array
 
 The name, identity or contact information of all of the parties involved with the conversation are included in the parties object array.
 Whether the parties were observers, passive or active participants in the conversation, they each are included as a Party Object in the parties array.
 
-TODO: Should this be a object not an array to make it easier to append parties (i.e. indices change when appended)?
+TODO: Should this be a object not an array to make it easier to append parties (i.e. indices of append vCons change when appended)?
 
 * parties: "Party[]"
 
@@ -630,7 +627,7 @@ What about multi-part MIME for email?
 
 ### Dialog Content
 
-The Dialog Object SHOULD contain the body and encoding parameters or the url, alg, key and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
+The Dialog Object SHOULD contain the body and encoding parameters or the url, alg and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
 
 ## Analysis Object
 
@@ -676,7 +673,7 @@ Analysis is a broad and in some cases developing field.  This document does not 
 
 ### Analysis Content
 
-The Analysis Object SHOULD contain the body and encoding parameters or the url, alg, key and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
+The Analysis Object SHOULD contain the body and encoding parameters or the url, alg and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
 
 ## Attachment Object
 
@@ -702,22 +699,31 @@ Or a subject or title.
 
 ### Attachment Content
 
-The Attachment Object SHOULD contain the body and encoding parameters or the url, alg, key and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
+The Attachment Object SHOULD contain the body and encoding parameters or the url, alg and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
 
 ## Group Object
 
-The Group Object SHOULD contain the uuid or body and encoding parameters or the url, alg, key and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
+The Group Object SHOULD contain the uuid or body and encoding parameters or the url, alg and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
+The vCon MAY be referenced via UUID:
 
 * uuid: uuid (optional)
 
-or
+Alternatively the vCon MAY be included in line as the value of the body parameter.
+The encoding parameter MUST be included with the body parameter, if provided, to decribe the encoding of the vCon body.
 
 * body: vcon (optional)
+
 * encoding: "String"
-    The encoding string MUST have the value: "json"
+    The encoding string MUST have the value: "json".
 
-or
+Alteratively, the vCon can be externally refernced.
+The url, alg and signature parameters and values are defined in [Externally Referenced Files](#externally-referenced-files).
 
+* url: "String"
+
+* alg: "String"
+
+* signature: "String"
 
 # Security Considerations
 
@@ -757,11 +763,9 @@ The one requirement for externally referenced data from the perspective of this 
 Using the above described approach for redaction and appending of data, we can reduce the security operations on a vCon to signing and encryption.
 Two approached to signing are needed as we have data, in JSON format, that is contained within the vCon and may have data (typically media and file formats, often binary) not contained, inline in the vCon, that is externally referenced.
 
-Externally referenced data will be signed using [LM-OTS] with the signature and URL of the externally referenced data included in the vCon with the URL refererence, the signature and public key included in the vCon.
-[LM-OTS] was chosen due to the relatively low cost to generate and verify the signature for what could be very large externally referenced media files and for the convenience of having a fairly small public key.
-As the signature can be on the order of 1KB, the total data size required for the reference (i.e. URL, public key and signature) is still small in comparison to containing the entire externally referenced data.
-As the public key and signature are contained in the vCon which will also be signed, the chain of authentication is provided via the signature on the vCon itself.
-This make the One Time Signature approach attractive as a solution as well.
+Externally referenced data will be "signed" using [SHA-512] hash which along with the URL of the externally referenced data is included in the vCon.
+[SHA-512] was chosen due to the relatively low cost to generate and verify the signature for what could be very large externally referenced media files.
+As the hash for each externally referenced file is contained in the vCon which will also be signed, the chain of authentication is provided via the signature on the vCon itself.
 
 This document specifies the JSON format for vCons.  So it seemed the logical solution for signing vCons, is JOSE [JWS] JSON Serialization and likewise for encrypting vCons is JOSE [JWE] JSON Serialization.  The solutions are well documents, implementations are readily available and tested.
 
@@ -787,9 +791,9 @@ In some deployments, it is not practical to include all of the file contents of 
 In support of that, file may be externally referenced.
 When external files are referenced, the signature on the vCon does not secure the file contents from modification.
 For this reason any externally referenced files SHOULD also have a signature.
-vCons use the [LM-OTS] method for signing the externally referenced file content and include its url, alg, key and signature in the vCon which are included in the integrety signature for the whole vCon.
+vCons use the [SHA-512] hash method for integrety checking of externally referenced file content and include its url, alg and signature in the vCon which are included in the integrety signature for the whole vCon.
 
-After retriving externally referenced files, before using its content, the payload of the HTTPS request should be verified using the key and signature for the url using the procedure defined in section 4.6 of [LM-OTS].
+After retriving externally referenced files, before using its content, the payload of the HTTPS request should be verified using the signature parameter value for the hash for the url body using the procedure defined in section 6.3 and 6.4 of [SHA-512].
 
 ## Signed Form of vCon Object
 
