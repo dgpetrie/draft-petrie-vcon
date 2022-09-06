@@ -363,7 +363,7 @@ When a vCon is to be exported from one security domain to another, it SHOULD be 
 The subsequent domain may have need to redact or append data to the vCon.
 Alternatively the originating domain may want to redact the vCon before providing it to an other domain.
 The second or subsequent domain, MAY modify the prior vCon instance version and when complete or exporting to another security domain, it SHOULD sign or encrypt the new vCon instance version.
-The new vCon instance version SHOULD refer to the prior vCon instance version via the [Redacted Object](#redacted-object) or [Appended Object](#appended-object).
+The new vCon instance version SHOULD refer to the prior vCon instance version via the [redacted](#redacted) or [appended](#appended).
 
 ## vCon JSON Object Keys and Values
 
@@ -730,7 +730,7 @@ The url, alg and signature parameters and values are defined in [Externally Refe
 The security concerts for vCons can put into two categories: making the conversation immutable through integrity verification and protecting the confidentiality of privacy of the parties to the conversation and their PII.
 These requirements along with need to evolve a vCon (e.g. adding analysis, translations and transcriptions) conflict in some ways.
 To enable this, multiple verisons of a vCon may be created.
-Versions of a vCon may add information (e.g. analysis added to a prior vCon referenced by the [Appended Object](#appended-object)) and versions that remove information (e.g. redactions of privacy information removed from the vCon referenced in the [Redacted Object](#redacted-object)).
+Versions of a vCon may add information (e.g. analysis added to a prior vCon referenced by the [appended](#appended)) and versions that remove information (e.g. redactions of privacy information removed from the vCon referenced in the [redacted](#redacted)).
 Redactions may be at different levels for example:
 
 * PII masked to remove PII data in the text, audio, video or transcripts
@@ -752,8 +752,8 @@ The distinction among these has gotten clouded over recent years.
 The import consideration is that each is a different security domain.
 Information about a conversation captured in an enterprise communications system (e.g. meta data and Dialog Object(s) recorded in an IP PBX) is a differenct security domain from a SaaS transcription service (i.e. an Analysis Object).
 When a vCon leaves a security domain, it SHOULD be signed to prevent it from being altered.
-If the new security domain needs to alter it, a new vCon is created with the removed or added data and the prior version is referenced (i.e. via the [Redacted Object](#redacted-object) or [Appended Object](#appended-object)).
-If informaiton is redacted for privacy reasons, the vCon referenced in the [Redacted Object](#redacted-object), if inline, SHOULD be encrypted to protect the privacy information in the unredacted version of the vCon.
+If the new security domain needs to alter it, a new vCon is created with the removed or added data and the prior version is referenced (i.e. via the [redacted](#redacted) or [appended](#appended)).
+If informaiton is redacted for privacy reasons, the vCon referenced in the [redacted](#redacted), if inline, SHOULD be encrypted to protect the privacy information in the unredacted version of the vCon.
 
 The secure storage and access of externally referenced conversation data is considered out of scope from this document.
 Secure mechanisms for HTTPS access and storage of files are well defined.
