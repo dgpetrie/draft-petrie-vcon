@@ -440,7 +440,7 @@ Alterativelly, as defined in [Externally Referenced Files](#externally-reference
 * alg: "String"
 * signature: "String"
 
-The following diagram illustrates a example JSON object tree for a redacted vCon.
+The following diagram illustrates an example JSON object tree for a redacted vCon.
 The top level object is a JWS signed vCon which contains a vCon in the unsigned form in the payload parameter.
 The second level object is the redacted vcon which refers to the encrypted unredacted vCon in it's redacted parameter.
 Note that the redacted vCon may reference the JWE encrypted vCon either by UUID, URL or direct inclusion.
@@ -479,6 +479,18 @@ Alteratively, as defined in [Externally Referenced Files](#externally-referenced
 * url: "String"
 * alg: "String"
 * signature: "String"
+
+The following figure illustrates an example appended vCon object tree.
+The top level object is the JWS signed appended vCon which contains the unsigned form of the vCon in it's payload parameter.
+The second level object it the appended vCon with additional conversational data (e.g. analysis data).
+It refers to its original parent (or prior version) of the vCon in its appended parameter.
+Note: the appended parameter may include the orginal in the body parameter or refer to it via UUID or URL.
+The appended vCon in this figure referes to the JWS signed version of the vCon, which in turn contains the original vCon in unsigned form in its payload parameter.
+
+~~~
+{::include appended-vcon-tree.ans}
+~~~
+{: #diagram3 title="appended vCon object tree"}
 
 ### group Objects Array
 
@@ -960,7 +972,7 @@ IANA registration of new media subtype: vcon for media type application:
 
 ## Redacted Signed vCon
 
-## Ammended Signed vCon
+## Appended Signed vCon
 
 ## vCon Group
 
