@@ -1,13 +1,13 @@
                 --------------
- Signed         | JWS        |
- redacted vCon: |            | payload parameter
+Signed          | JWS        |
+redacted vCon:  |            | payload parameter
                 |    payload-|-- contains unsigned
                 -------------- / redacted vCon
                               /
             -------------    /
- vCon which |vCon       |<---
- has been   |           | redacted parameter contains
- redacted:  |  redacted-|-- or refers to JWE
+vCon which  |vCon       |<---
+has been    |           | redacted parameter contains
+redacted:   |  redacted-|-- or refers to JWE
             ------------- / encrypted unredacted vCon
                          /
                         /
