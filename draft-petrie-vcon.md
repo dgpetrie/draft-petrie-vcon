@@ -440,6 +440,18 @@ Alterativelly, as defined in [Externally Referenced Files](#externally-reference
 * alg: "String"
 * signature: "String"
 
+The following diagram illustrates a example JSON object tree for a redacted vCon.
+The top level object is a JWS signed vCon which contains a vCon in the unsigned form in the payload parameter.
+The second level object is the redacted vcon which refers to the encrypted unredacted vCon in it's redacted parameter.
+Note that the redacted vCon may reference the JWE encrypted vCon either by UUID, URL or direct inclusion.
+The JWE encrypted unredacted vCon contains the signed version of the unredacted vCon in the cyphertext parameter.
+The signed unredacted vCon contains the unredacted vCon in the unsigned form in it's payload parameter.
+
+~~~
+{::include redacted-vcon-tree.ans}
+~~~
+{: #diagram1 title="redacted vCon object tree"}
+
 ### appended
 
 A signed or encrypted vCon cannot be modified without invalidating it.
@@ -631,9 +643,17 @@ The Dialog Object SHOULD contain the body and encoding parameters or the url, al
 
 ## Analysis Object
 
-Analysis is a broad and in some cases developing field.  This document does not attempt to suggest a SHOULD support list of types.  That is for research and specification in a follow on document.
+Analysis is a broad and in some cases developing field.
+This document does not attempt to suggest a SHOULD support list of types.
+Nor are formats for analysis data defined in this document.
+That is for research and specification in a follow on document.
+For this reason the Analysis Object provide multiple ways to define the media type of the analysis file.
+If a well known media or mime type is defined, it SHOULD be used.
+For analysis data or files types for which a media type is not defined, the vendor and schema parameters SHOULD be used.
 
 ### type
+
+The type parameter is used to label the symatic type of analysis data.
 
 * type: "String"
 
@@ -657,19 +677,28 @@ Analysis is a broad and in some cases developing field.  This document does not 
 
 ### mimetype
 
-* mimetype: "Mime" (optional for externally referenced files)
+* mimetype: "Mime" (optional for externally referenced files in which case, this is provided in the HTTPS Content-Type header)
+
+    The mimetype string contains the media type or MIME type of the analysis file.
 
 ### filename
 
 * filename: "String" (optional)
 
+    The file name string contains an optional name for the analysis data file referenced in this Analysis Object.
+
 ### vendor
 
 * vendor: "String"
 
+    The vendor string value contains the vendor or product name of the software which generated this analysis.
+
 ### schema
 
 * schema: "String" (optional)
+
+    The schema string contains a token or label for the data format or schema for the analysis data.
+    As the vendor name may not be specific enough to identify the format of the analysis, the schema value is provide to differentiate from potentially multiple data formats for analysis provided by the same vendor or software.
 
 ### Analysis Content
 
@@ -692,6 +721,8 @@ Or a subject or title.
 ### mimetype
 
 * mimetype: "Mime" (optional for externally referenced files)
+
+    The mimetype string contains the media type or MIME type of the attached file.
 
 ### filename
 
@@ -844,7 +875,7 @@ TODO: How to deal with expired signatures.
 
 TODO: Check this terminology:
 
-A vCon MUST be signed first using JWS, then encrypted using JWE as opposed to just encrypted with integrety protection.
+A vCon MUST be signed first using JWS as defined in [Signed Form of vCon Object](#signed-form-of-vcon-object), then encrypted using JWE as opposed to just encrypted with integrety protection.
 The rationalle is that meta data and dialog will typically be collected in one security domain, then may be stored or exported to another.
 The signing is likely for the lifetime of the vCon, where the encryption may be shorter term or domain specific.vCons may be stored in unencrypted form, but the signed form MUST be maintained to ensure its integrity.
 
