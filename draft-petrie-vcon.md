@@ -48,7 +48,7 @@ normative:
 
   JWS: RFC7515
 
-  JWS: RFC7516
+  JWE: RFC7516
 
   MAILTO: RFC6068
 
@@ -103,7 +103,7 @@ informative:
 A vCon is the container for data and information relating to a real-time, human conversation.
 It is analogous to a {{vCard}} which enables the definition, interchange and storage of an individual's various points of contact.
 The data contained in a vCon may be derived from any multimedia session, traditional phone call, video conference, SMS or MMS message exchange, webchat or email thread.
-The data in the container relating to the conversation may include Call Detail Records ({{CDR}}), call meta data, participant identity information (e.g. {{PASSporT}}), the actual conversational data exchanged (e.g. audio, video, text), realtime or post conversational analysis and attachements of files exchanged during the conversation.
+The data in the container relating to the conversation may include Call Detail Records (CDR), call meta data, participant identity information (e.g. STIR PASSporT), the actual conversational data exchanged (e.g. audio, video, text), realtime or post conversational analysis and attachements of files exchanged during the conversation.
 A standardized conversation container enables many applications, estabilishes a common method of storage and interchange, and supports identity, privacy and security efforts (see {{vCon-white-paper}})
 
 
@@ -798,7 +798,7 @@ The import consideration is that each is a different security domain.
 Information about a conversation captured in an enterprise communications system (e.g. meta data and Dialog Object(s) recorded in an IP PBX) is a differenct security domain from a SaaS transcription service (i.e. an Analysis Object).
 Before a vCon leaves a security domain, it SHOULD be signed to prevent it from being altered.
 If the new security domain needs to alter it, a new vCon is created with the removed or added data and the prior version is referenced (i.e. via the [redacted](#redacted) or [appended](#appended)).
-See the [redacted vCon object tree figure](#redacted-vcon-object-tree) and [appended vCon object tree figure](#appended-vcon-object-tree).
+See the [redacted vCon object tree figure](#name-redacted-vcon-object-tree) and [appended vCon object tree figure](#name-appended-vcon-object-tree).
 If informaiton is redacted for privacy reasons, the vCon referenced in the [redacted](#redacted), if inline, SHOULD be encrypted to protect the privacy information in the unredacted version of the vCon.
 
 The secure storage and access of externally referenced conversation data is considered out of scope from this document.
@@ -821,7 +821,7 @@ A redacted vCon SHOULD reference it's non-redacted version.
 The non-redacted version of the vCon referenced from the redacted vCon MUST be encrypted such that only those with permision to view the non-redacted content can decrypt it.
 
 Any time a vCon is shared outside its original security domain, it SHOULD be signed and optionally encrypted.
-Files externally referenced by a vCon SHOULD always be signed with the verification information included in the vCon that references the external file as defined in [#externally-referenced-files] and [#signing-exteranlly-referenced-files].
+Files externally referenced by a vCon SHOULD always be signed with the verification information included in the vCon that references the external file as defined in [#externally-referenced-files] and [#signing-externally-referenced-files].
 Externally referenced files SHOULD only be transported over [HTTPS] and SHOULD be access controlled to those who are permitted to read the contents of that non-redacted vCon.
 vCons transported over non-secure channels such as email MUST be in the encrypted form.
 
