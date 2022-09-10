@@ -44,11 +44,11 @@ normative:
 
   JSON: RFC8259
 
-  JWK: RFC7516
-
   JWS: RFC7515
 
   JWE: RFC7516
+
+  JWK: RFC7517
 
   MAILTO: RFC6068
 
@@ -58,13 +58,13 @@ normative:
 
   PIDF-LO: RFC5491
 
-  SHA-512: RFC6234
-
   TEL: RFC3966
 
   UUID: RFC4122
 
 informative:
+
+  SHA-512: RFC6234
 
   JMAP: RFC8620
 
