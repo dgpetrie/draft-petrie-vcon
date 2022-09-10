@@ -9,7 +9,7 @@ number:
 date:
 consensus: true
 v: 3
-# area: ART
+area: ART
 # workgroup: Dispatch Working Group
 keyword:
  - next generation
@@ -36,9 +36,11 @@ author:
 
 normative:
 
+  RFC3339:
+
   GEOPRIV: RFC4119
 
-  HTTPS: RFC2818
+  HTTPS: RFC9110
 
   JSON: RFC8259
 
@@ -46,7 +48,9 @@ normative:
 
   JWS: RFC7515
 
-  MAILTO: RFC2368
+  JWS: RFC7516
+
+  MAILTO: RFC6068
 
   MIME: RFC2045
 
@@ -54,7 +58,7 @@ normative:
 
   PIDF-LO: RFC5491
 
-  SHA-512: RFC234
+  SHA-512: RFC6234
 
   TEL: RFC3966
 
@@ -93,8 +97,6 @@ informative:
     author:
       org: ITU
       date: 1998
-
-  LM-OTS: RFC8554
 
 --- abstract
 
@@ -259,7 +261,7 @@ The following  are considered not in scope or non-requirements:
 
 ## JSON Notation
 
-The convention for JSON notation used in this document is copied from sections 1.1-1.5 of [JMAP].
+The convention for [JSON] notation used in this document is copied from sections 1.1-1.5 of [JMAP].
 
 Date - A string that MUST have the form of an [RFC3339] date string as defined for the Date type in section 1.4 of [JMAP].
 
@@ -417,11 +419,11 @@ If a reference to the unredacted vCon is provided in the url parameter, the acce
 
 The method(s) for redaction of text, audio and video can be done with existing post processing of media.
 The method of redaction is out of scope of this document.
-The assurance of the accurace of the redaction is made by the entity that creates the redaction which SHOULD signe the redacted version of the vCon.
+The assurance of the accuracy of the redaction is made by the entity that creates the redaction which SHOULD signe the redacted version of the vCon.
 
-TODO: Do we need different levels of redaction?  If so, we need lables for the levels of redaction.
+TODO: Do we need different levels or rational for redaction?  If so, we need a parameter for the levels or reason of redaction.
 
-* redacted: "Redacted Object" (optional, mutually excliusive with appended and group parameters)
+* redacted: "Redacted" (optional, mutually excliusive with appended and group parameters)
 
 A Redacted Object contains the following parameters:
 
@@ -440,7 +442,7 @@ Alterativelly, as defined in [Externally Referenced Files](#externally-reference
 * alg: "String"
 * signature: "String"
 
-The following diagram illustrates an example JSON object tree for a redacted vCon.
+The following diagram illustrates an example partial JSON object tree for a redacted vCon.
 The top level object is a JWS signed vCon which contains a vCon in the unsigned form in the payload parameter.
 The second level object is the redacted vcon which refers to the encrypted unredacted vCon in it's redacted parameter.
 Note that the redacted vCon may reference the JWE encrypted vCon either by UUID, URL or direct inclusion.
@@ -461,7 +463,7 @@ Then the appended information is added to the new vCon instance version (i.e. to
 
 The prior vCon instance version SHOULD be referenced via the uuid of the prior vCon instance version, or alteratively MAY include the body and encoding parameters or alteratively the url, alg and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
 
-* appended: "Appended Object" (optional, mutually exclusive with redacted and group parameters)
+* appended: "Appended" (optional, mutually exclusive with redacted and group parameters)
 
 The Appended Object contains the following parameters:
 
@@ -480,7 +482,7 @@ Alteratively, as defined in [Externally Referenced Files](#externally-referenced
 * alg: "String"
 * signature: "String"
 
-The following figure illustrates an example appended vCon object tree.
+The following figure illustrates an example partial JSON object tree for an appended vCon.
 The top level object is the JWS signed appended vCon which contains the unsigned form of the vCon in it's payload parameter.
 The second level object it the appended vCon with additional conversational data (e.g. analysis data).
 It refers to its original parent (or prior version) of the vCon in its appended parameter.
@@ -490,7 +492,7 @@ The appended vCon in this figure referes to the JWS signed version of the vCon, 
 ~~~
 {::include appended-vcon-tree.ans}
 ~~~
-{: #diagram3 title="appended vCon object tree"}
+{: #diagram2 title="appended vCon object tree"}
 
 ### group Objects Array
 
@@ -512,7 +514,7 @@ In support of these constructs, it may be desirable to aggregate a group of vCon
 The conversations may be over heterogenius or homogenius medium.
 A vCon MAY aggregated a group of vCon instances in the group array, using a Group Object for each vCon instance.
 
-* group: Group[] (optional, mutially exclusive with redacted and appended parameters)
+* group: "Group[]" (optional, mutially exclusive with redacted and appended parameters)
 
     The group array contains a [Group Object](#group-object) for each vCon.
 
@@ -770,7 +772,7 @@ The url, alg and signature parameters and values are defined in [Externally Refe
 
 # Security Considerations
 
-The security concerts for vCons can put into two categories: making the conversation immutable through integrity verification and protecting the confidentiality of privacy of the parties to the conversation and their PII.
+The security concerts for vCons can put into two categories: making the conversation immutable through integrity verification and protecting the confidentiality of privacy of the parties to the conversation and/or their PII.
 These requirements along with need to evolve a vCon (e.g. adding analysis, translations and transcriptions) conflict in some ways.
 To enable this, multiple verisons of a vCon may be created.
 Versions of a vCon may add information (e.g. analysis added to a prior vCon referenced by the [appended](#appended)) and versions that remove information (e.g. redactions of privacy information removed from the vCon referenced in the [redacted](#redacted)).
@@ -794,8 +796,9 @@ This will likely fall into one of the following hosting situations:
 The distinction among these has gotten clouded over recent years.
 The import consideration is that each is a different security domain.
 Information about a conversation captured in an enterprise communications system (e.g. meta data and Dialog Object(s) recorded in an IP PBX) is a differenct security domain from a SaaS transcription service (i.e. an Analysis Object).
-When a vCon leaves a security domain, it SHOULD be signed to prevent it from being altered.
+Before a vCon leaves a security domain, it SHOULD be signed to prevent it from being altered.
 If the new security domain needs to alter it, a new vCon is created with the removed or added data and the prior version is referenced (i.e. via the [redacted](#redacted) or [appended](#appended)).
+See the [redacted vCon object tree figure](#redacted-vcon-object-tree) and [appended vCon object tree figure](#appended-vcon-object-tree).
 If informaiton is redacted for privacy reasons, the vCon referenced in the [redacted](#redacted), if inline, SHOULD be encrypted to protect the privacy information in the unredacted version of the vCon.
 
 The secure storage and access of externally referenced conversation data is considered out of scope from this document.
@@ -808,30 +811,24 @@ Two approached to signing are needed as we have data, in JSON format, that is co
 
 Externally referenced data will be "signed" using [SHA-512] hash which along with the URL of the externally referenced data is included in the vCon.
 [SHA-512] was chosen due to the relatively low cost to generate and verify the signature for what could be very large externally referenced media files.
-As the hash for each externally referenced file is contained in the vCon which will also be signed, the chain of authentication is provided via the signature on the vCon itself.
+As the hash for each externally referenced file is contained in the vCon which will be signed, the chain of authentication is provided via the signature on the vCon itself.
 
 This document specifies the JSON format for vCons.  So it seemed the logical solution for signing vCons, is JOSE [JWS] JSON Serialization and likewise for encrypting vCons is JOSE [JWE] JSON Serialization.  The solutions are well documents, implementations are readily available and tested.
 
-* TODO: Rest of this section needs to be merged or re-written to go with the above
-
-To be a conversation of record, vCon MUST be signed.
-
 Methods of redaction exist for text, audio and video using post processing of the media.
 The method of redaction used is out of the scope of this document.
-A redacted vCon MAY reference it's non-redacted version.
+A redacted vCon SHOULD reference it's non-redacted version.
 The non-redacted version of the vCon referenced from the redacted vCon MUST be encrypted such that only those with permision to view the non-redacted content can decrypt it.
 
 Any time a vCon is shared outside its original security domain, it SHOULD be signed and optionally encrypted.
 Files externally referenced by a vCon SHOULD always be signed with the verification information included in the vCon that references the external file as defined in [#externally-referenced-files] and [#signing-exteranlly-referenced-files].
-Externally referenced files SHOULD only be transported over [HTTPS] and SHOULD be access controlled to those who are permitted to read the contents of that entire vCon.
+Externally referenced files SHOULD only be transported over [HTTPS] and SHOULD be access controlled to those who are permitted to read the contents of that non-redacted vCon.
 vCons transported over non-secure channels such as email MUST be in the encrypted form.
-
-Need to explain typical storage contexts which may be more secure and storage contexts which are less secure.
 
 ## Signing Externally Referenced Files
 
 In some deployments, it is not practical to include all of the file contents of a vCon inline.
-In support of that, file may be externally referenced.
+In support of that, a file may be externally referenced.
 When external files are referenced, the signature on the vCon does not secure the file contents from modification.
 For this reason any externally referenced files SHOULD also have a signature.
 vCons use the [SHA-512] hash method for integrety checking of externally referenced file content and include its url, alg and signature in the vCon which are included in the integrety signature for the whole vCon.
@@ -841,8 +838,7 @@ After retriving externally referenced files, before using its content, the paylo
 ## Signed Form of vCon Object
 
 A signed vCon uses [JWS] and takes the General JWS JSON Serialization Syntax form as defined in section 7.2.1 of [JWS].
-
-MUST include x5c or x5u in unprotected header.
+The vCon General JWS JSON Serialization MUST include x5c or x5u in the unprotected header.
 
 * payload: "String"
 
@@ -867,7 +863,9 @@ The Signature Object MUST contain a header, protected and signature parameter as
 
 ### Header Object
 
-The Header Object and its contents are defined in section 4 of [JWS].  The Header Object for a signed vCon MUST include the alg and either the x5c or x5u arrays.  The x5c or x5u requirement makes the management and use of vCons easier, allowing the certifcate chain to be found as the vCon is moved.
+The Header Object and its contents are defined in section 4 of [JWS].
+The Header Object for a signed vCon MUST include the alg and either the x5c or x5u arrays.
+The x5c or x5u requirement makes the management and use of vCons easier, allowing the certifcate chain to be found as the vCon is moved.
 
 * alg: "String"
 
