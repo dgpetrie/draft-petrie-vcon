@@ -117,19 +117,20 @@ The generation of conversational data, contained in transcripts and multi-media 
 ## What's in a vCon?
 
 A vCon contains four major categories of data: metadata , dialog , analysis and attachments.
-The metadata portion allows for an expanded set of data from a typical call detail record ([CDR]), with identifications of the participants or parties to the conversation, the issuer of the vCon and tamerproof features such as signatures.
+The metadata portion allows for an expanded set of data from a typical call detail record ([CDR]), with identifications of the participants or parties to the conversation, references to related or earlier versions of the vCon.
 The dialog portion contains a set of multimedia and mime elements, each representing the actual, physical conversation in it's original media form: text, audio or video.
 The analysis portion contains data derived from the metadata and dialog portions, intended to carry items like transcripts, translations, summaries, text to speech, sentiment analysis and other semantic tagging.
 Finally, the attachment portion contains any other documents, such as slide deck or sales lead information, which provides context and support for the conversation itself.
+The vCon may also container integrety checking infromation such as the issuer of the vCon and tamerproof features such as signatures.
 
 A vCon acts as the definition of the conversation, and are created by systems during and after the conversation itself.  Some communication modes, like SMS texting, lack natural session boundaries and require explicit definition.  vCons may have two or more parties involved, but at least one should be a human.  For instance, an interaction between a bot and a human is an appropriate scope for vCons, but a converstion between two bots would not.
 
-Due to the size and complexity of the dialog portion of a vCon, both inline and externally referenced dialog, analysis, attachments and other vCon reference assets are supported.
-For instance, vCons may reference a videoconference media as an external URL with an accompanying signature of the contents to detect tampering.
-Alteratively, vCons may contain the media of the entire dialog internally, keeping the conversation in one place, and optionally encrypted.
+Due to the size and complexity of some portions of a vCon, both inline and externally referenced dialog, analysis, attachments and other vCon reference assets are supported.
+For instance, vCons may reference a videoconference media recording as an external URL with an accompanying signature of the contents to detect tampering.
+Alteratively, vCons may directly contain the media of the entire dialog internally, keeping the conversation in one place, and optionally encrypted.
 
 vCons are designed to be a digital asset, versioned and signed.
-For instance, different versions of vCon may arise from due to redaction (e.g. for PII or other reasons), added analysis or the addition of other content.
+For instance, different versions of vCon may arise due to redaction (e.g. for PII or other reasons), added analysis or the addition of other content.
 In the metadata, vCons contain the unique ID of the parent vCon, such that they may be traveressed while maintaining their data integrity and provenance.
 
 ## Use Cases and Requirements
@@ -139,7 +140,7 @@ The call centers may have different communications infrastructure and even diffe
 Consequently, the CDR and meta data as well as the conversation recordings may be stored in different formats and locations.
 This creates artifical silos of storage and analysis.
 Using vCon as a stardard exchange, storage, analysis input and output format, would ease integration efforts and cross enterprise analysis of products and call center metrics.
-This would also ease customer analysis across product lines which may currently be difficutly due to interoperable silos.
+This would also ease customer analysis across product lines which may currently be difficutly due to separated, heterogenious communications silos.
 Having conversation data in the vCon format would lower the cost and speed deployment of both inhouse and outsourced analysis tools for import into ML and AI based tools, transcription, translation and sentiment analysis.
 Having conversation data in a standard vCon container would ease the export of conversation data from hosted services.
 This would enable more analysis capabilities.
@@ -152,7 +153,7 @@ Without centralizing the storage of the conversations in a standardized containe
 Large call centers may have tens of thousands of call agents making hundreds of thousands of calls a day.
 Supervising the agents and calls in a large call center is a huge efort.
 Using vCons to capture all of the conversations for all of the agents, enables more automation of evaluation, training and coaching of call center agents.
-DEVOPS tools such as check for conversation with too low a volume or agents with faulty headsets becomes easier an less costly using vCons.
+DEVOPS tools such as checking for conversation with too low a volume or agents with faulty headsets becomes easier and less costly using vCons.
 Call centers often have to provide service level proof and reports to their customers.
 These service level evaluations, monitoring and reporting can be more easily provided and at a lower cost via third party solutions with vCons as a standard conversation container.
 
@@ -233,7 +234,7 @@ The following  are considered not in scope or non-requirements:
 
 * dialog - the captured conversation in its original form (e.g. text, audio or video)
 
-* encrypted form - vCon in the signed??? and encrypted form
+* encrypted form - encrypted JWE document with the JWS signed vCon form contained in the cyphertext
 
 * file - a data block either included or referenced in a vCon
 
@@ -257,7 +258,7 @@ The following  are considered not in scope or non-requirements:
 
 * vCon syntax version - the version for the data syntax used for form a vCon
 
-* signed form - vCon in the signed (JWS) form
+* signed form - JWS signed document with the unsigned vCon form contained in the payload
 
 ## JSON Notation
 
@@ -269,7 +270,7 @@ Date - A string that MUST have the form of an [RFC3339] date string as defined f
 
 "UnsignedInt" - a positive JSON integer as defined in section 1.3 of [JMAP].
 
-"UnsignedFloat"
+"UnsignedFloat" - a positive JSON floating point number containing a decimal point as defined in section 6 of [JSON].
 
 "Mime" - A "String" value that MUST be of the following form as defined in section 5.1 of [MIME]:
     type "/" subtype
@@ -284,7 +285,7 @@ Objects or arrays with no or null values MAY be excluded from the vCon.
 
 Objects that contain a file or data inline (i.e. within the vCon) MUST have the parameters: body and encoding.
 JSON does not support binary data values.
-For this reason inline files MUST be base64url (see Section 2 [JWS]) encoded to be included as a valid JSON string value if they are not already valud JSON strings.
+For this reason inline files MUST be base64url (see Section 2 [JWS]) encoded to be included as a valid JSON string value if they are not already valid JSON strings.
 
 ### body
 
@@ -365,7 +366,7 @@ When a vCon is to be exported from one security domain to another, it SHOULD be 
 The subsequent domain may have need to redact or append data to the vCon.
 Alternatively the originating domain may want to redact the vCon before providing it to an other domain.
 The second or subsequent domain, MAY modify the prior vCon instance version and when complete or exporting to another security domain, it SHOULD sign or encrypt the new vCon instance version.
-The new vCon instance version SHOULD refer to the prior vCon instance version via the [redacted](#redacted) or [appended](#appended).
+The new vCon instance version SHOULD refer to the prior vCon instance version via the redacted ([#redacted]) or [appended](#appended).
 
 ## vCon JSON Object Keys and Values
 
