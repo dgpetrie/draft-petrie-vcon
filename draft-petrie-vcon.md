@@ -366,7 +366,7 @@ When a vCon is to be exported from one security domain to another, it SHOULD be 
 The subsequent domain may have need to redact or append data to the vCon.
 Alternatively the originating domain may want to redact the vCon before providing it to an other domain.
 The second or subsequent domain, MAY modify the prior vCon instance version and when complete or exporting to another security domain, it SHOULD sign or encrypt the new vCon instance version.
-The new vCon instance version SHOULD refer to the prior vCon instance version via the redacted ([#redacted]) or [appended](#appended).
+The new vCon instance version SHOULD refer to the prior vCon instance version via the redacted ([redacted](#redacted)) or appended ([appended](#appended)).
 
 ## vCon JSON Object Keys and Values
 
