@@ -60,7 +60,7 @@ normative:
 
   TEL: RFC3966
 
-  UUID: RFC4122
+  UUID: I-D.draft-peabody-dispatch-new-uuid-format
 
 informative:
 
@@ -387,8 +387,8 @@ The UUID MUST be globaly unique.
 
 * uuid: "String"
 
-    The value of the string SHOULD be generated using the version 5 UUID defined in [UUID].
-    The name string used in generating the uuid SHOULD be the same FQHN as would used in the signing certificate as there are the same domains of uniqness.
+    The value of the string SHOULD be generated using the version 8 UUID defined in [UUID] which is identical to a version 7 UUID with the exception that rand_b is generated from the high 62 bits of the SHA-1 hash of the FQHN string and the version ID is 8.
+    The DNS name string used in generating the uuid value SHOULD be the same FQHN, or a subdomain to allow for more distributed generation of UUIDs, as would used in the signing certificate as they are the same domains of uniqness.
 
 ### subject
 
