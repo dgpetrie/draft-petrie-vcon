@@ -9,8 +9,8 @@ number:
 date:
 consensus: true
 v: 3
-# area: ART
-# workgroup: Dispatch Working Group
+area: ART
+workgroup: Dispatch Working Group
 keyword:
  - next generation
  - unicorn
@@ -387,7 +387,11 @@ The UUID MUST be globaly unique.
 
 * uuid: "String"
 
-    The value of the string SHOULD be generated using the version 8 UUID defined in [UUID] which is identical to a version 7 UUID with the exception that rand_b is generated from the high 62 bits of the SHA-1 hash of the FQHN string and the version ID is 8.
+    The value of the string SHOULD be generated using the version 8 UUID defined in [UUID] which is generated identically to a version 7 UUID with the exception that:
+
+        * rand_b/custom_c is generated from the high 62 bits of the SHA-1 hash of the FQHN string
+        * the variant and version fields are set as described for version 8 UUID
+
     The DNS name string used in generating the uuid value SHOULD be the same FQHN, or a subdomain to allow for more distributed generation of UUIDs, as would used in the signing certificate as they are the same domains of uniqness.
 
 ### subject
@@ -558,6 +562,8 @@ Alcillary documents, discussed, presented, referenced or related to the converst
 
 ### tel URL
 
+If the tel URL for the party is known, it can be included in the tel parameter.
+
 * tel: "String" (optional)
 
     The value of the tel parameter SHOULD be a valid [TEL] URL.  The URL scheme prefix (i.e. "tel:") is optional.
@@ -565,11 +571,15 @@ Alcillary documents, discussed, presented, referenced or related to the converst
 
 ### STIR
 
+If the STIR [PASSporT] was provided to identify the party, the PASSporTcan be included in the stir parameter for the party.
+
 * stir: "String" (optional)
 
-[PASSporT]
+    The string value of the stir parameter contains the [PASSporT] in the JWS Compact Serialization form.
 
 ### mailto
+
+If the mailto URL is known for the party, it can be included in the mailto parameter.
 
 * mailto: "String" (optional)
 
@@ -577,29 +587,38 @@ Alcillary documents, discussed, presented, referenced or related to the converst
 
 ### name
 
+If the party's name is known, it can be included in the name paramter.
+
 * name: "String" (optional)
+
+    The string value of the name parameter is a free form JSON string in which part or all of the parity's name can be included.
 
 ### validation
 
 Proof of authorization of the communation channel through STIR, login or possesion of a device, is often not sufficient proof of the identity of the persion at the other end of the communications channel.
-It is common in call centers to validate the identity of the person on the communication channel through verification fo some sort of personal identication information.
+It is common in call centers to validate the identity of the person on the communication channel through verification of some sort of personal identication information.
 The methods used, often varies with the situation and is business practices specific.
 The purpose of the validation parameter, is to allow the validator to save a label or token which identifies the method of identity validation used to identify the person at the other end of the communication channel.
 For security reasons, it SHOULD NOT contain the data used to validate the name.
 However it MAY name the data used to validate the name (e.g. "SSN", "DOB", "user ID and password").
+It is up to the domain creating the vCon to define the set of tokens or values to be used for the validation parameter.
 
 * validation: "String" (SHOULD be provided if name parameter is provided)
 
-    The value of the validation string MAY be "none" or enterprise or domain defined token or string.
+    The value of the validation string MAY be "none" or enterprise or domain defined token or string values.
 
 ### jCard???
 
+TODO: Do we want to support including a jCard for the party?
+
 ### gmlpos
 
+If the geolocation of the party is known, it can be added in the gmlpos parameter.
 The gmlpos parameter contains the latitude and longitude of the location of the party at the time of the conversation start.
-This parameter contains a value of the same format as the gml:pos element defined in section 3.2 of the [PIDF-LO] PIDF.
 
 * gmlpos: "String" (optional)
+
+    The geopos parameter value contains a string of the same format as the gml:pos element defined in section 3.2 of the [PIDF-LO] PIDF.
 
 ### civicaddress Object
 
@@ -608,17 +627,41 @@ It MAY contain any or all of the following parameters: country, a1, a2, a3, a4, 
 The values of all of these parameters are of type String.
 Note that the parameter names MUST be in lower case when contained in the civicaddress object even though they are in upper case in [GEOPRIV].
 
-Do we need RFC6848 civic address extensions?
+* country: "String" (optional)
+* a1: "String" (optional)
+* a2: "String" (optional)
+* a3: "String" (optional)
+* a4: "String" (optional)
+* a5: "String" (optional)
+* a6: "String" (optional)
+* prd: "String" (optional)
+* pod: "String" (optional)
+* sts: "String" (optional)
+* hno: "String" (optional)
+* hns: "String" (optional)
+* lmk: "String" (optional)
+* loc: "String" (optional)
+* flr: "String" (optional)
+* nam: "String" (optional)
+* pc: "String" (optional)
 
-Is there a need for any temporal location?
+TODO: Do we need RFC6848 civic address extensions?
 
-Do we just specify fo rht e start of the conversation?
+TODO: Is there a need for any temporal location?
+
+TODO: Do we just specify for the start of the conversation?
 
 ### timezone???
 
+TODO: timezone???
+
 ## Dialog Object
 
-Is there other signalling data that we want to capture other than start and duration and the media (e.g. from jabber, sms, mms, email, SIP, etc.)?
+The Dialog object references or contains text, audio or video captured from the conversation.
+Currently two types of dialog objects are defined in this document.
+One for text media and the other for audio or video recording files.
+
+TODO: Is there other signalling data that we want to capture other than start and duration and the media (e.g. from jabber, sms, mms, email, SIP, etc.)?
 
 ### type
 
@@ -629,37 +672,75 @@ Is there other signalling data that we want to capture other than start and dura
 
 ### start
 
-* start: "Date"
+The start parameter contains the date and time for the begining of the captured piece of dialog.
+For text it is the time that the party started typing or if not available, then it is the time the text was sent.
+For audio and video recordings, it is the time which corresponds to the beginning of the recording.
 
+* start: "Date"
 
 ### duration
 
-* duration: "UnsignedInt" \| "UnsignedFloat"
+The duration parameter contains the duration in seconds of the referenced or included piece of dialog.
+For text, if known, it is the time duration from when the party started typing to when they completed typing and the text was sent.
+For recordings, it is the duration of the recording.
 
-    The value MUST be the dialog (usually the recording) duration in seconds.
+* duration: "UnsignedInt" \| "UnsignedFloat" (optional)
+
+    The value MUST be the dialog duration in seconds.
 
 ### parties
 
+The party(s) which generated the text or recording for this piece of dialog are indicated in the parties parameter.
+
 * parties: "UnsignedInt" \| "UnsignedInt"[] \| ("UnsignedInt" \| "UnsignedInt"[])[]
 
-    Single channel recordings should have a parties value of the form: "UnisignedInt" or "UnsignedInt[]" where the integer value or array of integer values are the indices to the Party Object(s) in the parties array that contributed to the mix for the single channel recording.  The index for the Party Object SHOULD be included even if the indicated party was silent the entire conversation.
+    Single channel recordings should have a parties value of the form: "UnisignedInt" or "UnsignedInt[]" where the integer value or array of integer values are the indices to the Party Object(s) in the parties array that contributed to the mix for the single channel recording.
+    The index for the Party Object SHOULD be included even if the indicated party was silent the entire piece of dialog.
 
-    Multi-channel recordings MUST have a parties value that is an array of the same size as the number of channels in the recording.  The values in that array are either an integer or an array of integers which are the indicies to the parties that contributed to the mix for the associated channel of the recording.  The index for Party Objects SHOULD be included even if the party was silent the entire conversation.
+    Multi-channel recordings MUST have a parties value that is an array of the same size as the number of channels in the recording.
+    The values in that array are either an integer or an array of integers which are the indicies to the parties that contributed to the mix for the associated channel of the recording.
+    The index for Party Objects SHOULD be included even if the party was silent the entire conversation.
 
 ### mimetype
 
+The media type for the piece of dialog included or referenced is provided in the mimetype parameter.
+The mimetype parmeter MUST be provided for inline dialog files and MUST be provided if the Content-Type header in the [HTTPS] response for the externally referenced URL is not provided.
+
 * mimetype: "Mime" (optional for externally referenced files)
 
-SHOULD support mimetype for text, wav, mp3, mp4, ogg
-What about multi-part MIME for email?
+    The media types SHOULD be one of the following strings:
+
+        * "text/plain"
+        * "audio/x-wav"
+        * "audio/x-mp3"
+        * "audio/x-mp4"
+        * "audio/ogg"
+        * "video/x-mp4"
+        * "video/ogg"
+
+TODO: What about multi-part MIME for email?
 
 ### filename
+
+It is someimte useful to preserve the name of the file which originally contained this peice of dialog.
+This can be done in the filename parameter.
 
 * filename: "String" (optional)
 
 ### Dialog Content
 
 The Dialog Object SHOULD contain the body and encoding parameters or the url, alg and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
+
+For inline included dialog:
+
+* body: "String"
+* encoding: "String"
+
+Alternatively, for externally referenced dialog:
+
+* url: "String"
+* alg: "String"
+* signature: "String"
 
 ## Analysis Object
 
