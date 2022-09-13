@@ -366,7 +366,7 @@ When a vCon is to be exported from one security domain to another, it SHOULD be 
 The subsequent domain may have need to redact or append data to the vCon.
 Alternatively the originating domain may want to redact the vCon before providing it to an other domain.
 The second or subsequent domain, MAY modify the prior vCon instance version and when complete or exporting to another security domain, it SHOULD sign or encrypt the new vCon instance version.
-The new vCon instance version SHOULD refer to the prior vCon instance version via the redacted ([redacted](#redacted)) or appended ([appended](#appended)).
+The new vCon instance version SHOULD refer to the prior vCon instance version via the redacted ([redacted](#redacted)) or appended ([appended](#appended)) parameters.
 
 ## vCon JSON Object Keys and Values
 
@@ -374,7 +374,7 @@ The keys and values for the top level vCon JSON object are defined in the follow
 
 ### vcon
 
-The the value of vcon contains the syntactic version of the JSON format used in the vCon.
+The the value of vcon parameter contains the syntactic version of the JSON format used in the vCon.
 
 * vcon: "String"
 
@@ -383,30 +383,23 @@ The the value of vcon contains the syntactic version of the JSON format used in 
 ### uuid
 
 The [UUID] for the vCon is used to refer to it when privacy or security may not allow for inclusion or URL reference to a vCon.
-The UUID should be globaly unique.
-The domain creating the vCon should include its fully qualified domain name (FQDN) as part of the UUID and prefix it with a string guarenteed to be unique within it's domain.
+The UUID MUST be globaly unique.
 
 * uuid: "String"
 
-    The value of the string MAY be generated using the following:
-        SHA-1 digest of concatenation of (RFC3338 Date" + ":" + string value of parties array property) + "@" + FQDN
-        Typically the FQDN is the same as that of the signer for the vCon.
-
-    Alteratively if the domain can generate a garenteed unique serial number for all of the vCons created within it's domain, then the UUID may be generated as the concationation of ((serial number) + "@" + FQHN)
-
-### date???
-
-TODO: Does the vCon need a date of completion/`construction or signing?
+    The value of the string SHOULD be generated using the version 5 UUID defined in [UUID].
+    The name string used in generating the uuid SHOULD be the same FQHN as would used in the signing certificate as there are the same domains of uniqness.
 
 ### subject
 
 The subject or the topic of the conversation is provided in the subject parameter.
 This parameter is optional as not all conversations have a defined subject.
 Email threads and prescheduled calls and video conversences typically have a subject which can be captured here.
+The subject may also be derived from analysis of the dialog.
 
 * subject: "String" (optional)
 
-    The string value of the subject is a free formed JSON string with no constrained syntax.
+    The string value of the subject parameter is a free formed JSON string with no constrained syntax.
 
 ### redacted
 
@@ -414,7 +407,7 @@ A redacted vCon SHOULD provide a reference to the unredacted or prior, less reda
 The purpose of the Redacted Object is to provide the reference to the unredacted or less redacted version of the vCon from which this vCon was derived.
 For privacy reasons, it may be necessary to redact a vCon to construct another vCon without the PII.
 This allows the non-PII portion of the vCon to still be analysed or used in a broader scope.
-The Redacted Object SHOULD contain the uuid parameter or alteratively MAY include the vCon inline via the body and encoding parameters or alteratively the url, alg and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
+The Redacted Object SHOULD contain the uuid parameter and MAY include the vCon inline via the body and encoding parameters or alteratively the url, alg and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
 If the unredacted vCon is included in the body, the unredacted vCon MUST be in the encrypted form.
 If a reference to the unredacted vCon is provided in the url parameter, the access to that URL MUST be restricted to only those who should be allowed to see the identity or PII for the redacted vCon.
 
@@ -422,17 +415,24 @@ The method(s) for redaction of text, audio and video can be done with existing p
 The method of redaction is out of scope of this document.
 The assurance of the accuracy of the redaction is made by the entity that creates the redaction which SHOULD signe the redacted version of the vCon.
 
+All data and parameters in the prior, less redacted, vCon instance version are either:
+* Removed entirely in the redacted version
+* Copied and partially redacted
+* Copied as is
+
+Data which is to be completely removed from the redacted version, that is contained in a JSON array in the unredacted vCon, SHOULD create an empty placeholder such that object array indices do not change for the rest of the elements of the array.
+
 TODO: Do we need different levels or rational for redaction?  If so, we need a parameter for the levels or reason of redaction.
 
-* redacted: "Redacted" (optional, mutually excliusive with appended and group parameters)
+* redacted: "Redacted" (optional, mutually exclusive with appended and group parameters)
 
 A Redacted Object contains the following parameters:
 
-* uuid: "String" (optional if inline or external reference provided)
+* uuid: "String"
 
-    The value contains the [uuid string value](#uuid) of the unredacted/original vCon instance version.
+    The value contains the [uuid string value](#uuid) of the unredacted/prior vCon instance version.
 
-Alternatively, as defined in [Inline Files](#inline-files) body and encoding MAY be included:
+As defined in [Inline Files](#inline-files) body and encoding MAY be included:
 
 * body: "String"
 * encoding: "String"
@@ -446,7 +446,7 @@ Alterativelly, as defined in [Externally Referenced Files](#externally-reference
 The following diagram illustrates an example partial JSON object tree for a redacted vCon.
 The top level object is a JWS signed vCon which contains a vCon in the unsigned form in the payload parameter.
 The second level object is the redacted vcon which refers to the encrypted unredacted vCon in it's redacted parameter.
-Note that the redacted vCon may reference the JWE encrypted vCon either by UUID, URL or direct inclusion.
+Note that the redacted vCon references the JWE encrypted vCon by UUID and may reference it by URL or direct inclusion.
 The JWE encrypted unredacted vCon contains the signed version of the unredacted vCon in the cyphertext parameter.
 The signed unredacted vCon contains the unredacted vCon in the unsigned form in it's payload parameter.
 
@@ -462,7 +462,7 @@ In these cases, to allow for adding of additional information a new vCon instanc
 The prior vCon instance version is referenced by the Appended Object.
 Then the appended information is added to the new vCon instance version (i.e. top level vCon object).
 
-The prior vCon instance version SHOULD be referenced via the uuid of the prior vCon instance version, or alteratively MAY include the body and encoding parameters or alteratively the url, alg and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
+The prior vCon instance version SHOULD be referenced via the uuid of the prior vCon instance version, and MAY include the body and encoding parameters or alteratively the url, alg and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
 
 * appended: "Appended" (optional, mutually exclusive with redacted and group parameters)
 
@@ -485,9 +485,9 @@ Alteratively, as defined in [Externally Referenced Files](#externally-referenced
 
 The following figure illustrates an example partial JSON object tree for an appended vCon.
 The top level object is the JWS signed appended vCon which contains the unsigned form of the vCon in it's payload parameter.
-The second level object it the appended vCon with additional conversational data (e.g. analysis data).
-It refers to its original parent (or prior version) of the vCon in its appended parameter.
-Note: the appended parameter may include the orginal in the body parameter or refer to it via UUID or URL.
+The second level object is the appended vCon with additional conversational data (e.g. analysis data).
+It refers to its original parent (or prior vCon instance version) of the vCon in its appended parameter.
+Note: the appended parameter may include the orginal in the body parameter or refer to it via URL.
 The appended vCon in this figure referes to the JWS signed version of the vCon, which in turn contains the original vCon in unsigned form in its payload parameter.
 
 ~~~
@@ -532,6 +532,7 @@ TODO: Should this be a object not an array to make it easier to append parties (
 
 ### dialog Objects Array
 
+The actual conversation which occurred over text, audio or video that was captured, is contained in the dailog Objects Array.
 
 * dialog: "Dialog[]" (optional)
 
@@ -539,11 +540,15 @@ TODO: Should this be a object not an array to make it easier to append parties (
 
 ### analysis Objects Array
 
+Analysis, which is performed on the conversational data, is stored in the analysis Objects array.
+
 * analysis: "Analysis[]" (optional)
 
     The value of the analysis parameter is an array of [Analysis Objects](#analysis-object).
 
 ### attachments Objects Array
+
+Alcillary documents, discussed, presented, referenced or related to the converstaion may be stored in the attachements array.
 
 * attachments: "Attachment[]" (optional)
 
