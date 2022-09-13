@@ -9,8 +9,8 @@ number:
 date:
 consensus: true
 v: 3
-area: ART
-workgroup: Dispatch Working Group
+# area: ART
+# workgroup: Dispatch Working Group
 keyword:
  - next generation
  - unicorn
