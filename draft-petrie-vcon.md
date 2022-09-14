@@ -900,7 +900,7 @@ The vCon MAY be referenced via UUID:
 
 * uuid: "String"
 
-    The string value of the uuis parameter, is the UUID of the referenced vCon to be aggregated.
+    The value of the uuid parameter, is the [uuid string value](#uuid) of the referenced vCon to be aggregated.
 
 The vCon MAY be included in line as the value of the body parameter.
 The encoding parameter MUST be included with the body parameter, if provided, to decribe the encoding of the vCon body.
@@ -925,7 +925,7 @@ The url, alg and signature parameters and values are defined in [Externally Refe
 The security concerts for vCons can put into two categories: making the conversation immutable through integrity verification and protecting the confidentiality of privacy of the parties to the conversation and/or their PII.
 These requirements along with need to evolve a vCon (e.g. adding analysis, translations and transcriptions) conflict in some ways.
 To enable this, multiple verisons of a vCon may be created.
-Versions of a vCon may add information (e.g. analysis added to a prior vCon referenced by the [appended](#appended)) and versions that remove information (e.g. redactions of privacy information removed from the vCon referenced in the [redacted](#redacted)).
+Versions of a vCon may add information (e.g. analysis added to a prior vCon referenced by the appended ([appended](#appended))) and versions that remove information (e.g. redactions of privacy information removed from the vCon referenced in the redacted ([redacted](#redacted))).
 Redactions may be at different levels for example:
 
 * PII masked to remove PII data in the text, audio, video or transcripts
@@ -933,7 +933,7 @@ Redactions may be at different levels for example:
 * De-identified to remove segments or whole recordings that might be used for voice printing or facial recognition
 
 Different parts and versions of a vCon may be created in different security domains over a period of time.
-In addition, some conversation data may be referenced externally through an HTTPS URL as opposed to conpletely contained within the vCon.
+In addition, some conversation data may be referenced externally through an HTTPS URL as opposed to completely contained within the vCon.
 Typically a conversation of one mode, will be hosted or observed in a single domain.
 This will likely fall into one of the following hosting situations:
 
@@ -947,9 +947,9 @@ The distinction among these has gotten clouded over recent years.
 The import consideration is that each is a different security domain.
 Information about a conversation captured in an enterprise communications system (e.g. meta data and Dialog Object(s) recorded in an IP PBX) is a differenct security domain from a SaaS transcription service (i.e. an Analysis Object).
 Before a vCon leaves a security domain, it SHOULD be signed to prevent it from being altered.
-If the new security domain needs to alter it, a new vCon is created with the removed or added data and the prior version is referenced (i.e. via the [redacted](#redacted) or [appended](#appended)).
+If the new security domain needs to alter it, a new vCon is created with the removed or added data and the prior version is referenced (i.e. via the redacted ([redacted](#redacted)) or appended ([appended](#appended))).
 See the redacted vCon object tree figure-1 and appended vCon object tree figure-2.
-If informaiton is redacted for privacy reasons, the vCon referenced in the [redacted](#redacted), if inline, SHOULD be encrypted to protect the privacy information in the unredacted version of the vCon.
+If informaiton is redacted for privacy reasons, the vCon referenced in the redacted ([redacted](#redacted)), if inline, SHOULD be encrypted to protect the privacy information in the unredacted version of the vCon.
 
 The secure storage and access of externally referenced conversation data is considered out of scope from this document.
 Secure mechanisms for HTTPS access and storage of files are well defined.
@@ -957,7 +957,7 @@ Identity and cridentials for accessing externally stored data will be exchanged 
 The one requirement for externally referenced data from the perspective of this document, is proof of integrety of that data.
 
 Using the above described approach for redaction and appending of data, we can reduce the security operations on a vCon to signing and encryption.
-Two approached to signing are needed as we have data, in JSON format, that is contained within the vCon and may have data (typically media and file formats, often binary) not contained, inline in the vCon, that is externally referenced.
+Two approaches to signing are needed as we have data, in JSON format, that is contained within the vCon and may have data (typically media and file formats, often binary) not contained, inline in the vCon, that is externally referenced.
 
 Externally referenced data will be "signed" using [SHA-512] hash which along with the URL of the externally referenced data is included in the vCon.
 [SHA-512] was chosen due to the relatively low cost to generate and verify the signature for what could be very large externally referenced media files.
@@ -971,7 +971,7 @@ A redacted vCon SHOULD reference it's non-redacted version.
 The non-redacted version of the vCon referenced from the redacted vCon MUST be encrypted such that only those with permision to view the non-redacted content can decrypt it.
 
 Any time a vCon is shared outside its original security domain, it SHOULD be signed and optionally encrypted.
-Files externally referenced by a vCon SHOULD always be signed with the verification information included in the vCon that references the external file as defined in [#externally-referenced-files] and [#signing-externally-referenced-files].
+Files externally referenced by a vCon SHOULD always be signed with the verification information included in the vCon that references the external file as defined in [Externally Referenced Files](#externally-referenced-files) and [Signing Externally Referenced Files](#signing-externally-referenced-files).
 Externally referenced files SHOULD only be transported over [HTTPS] and SHOULD be access controlled to those who are permitted to read the contents of that non-redacted vCon.
 vCons transported over non-secure channels such as email MUST be in the encrypted form.
 
@@ -992,7 +992,7 @@ The vCon General JWS JSON Serialization MUST include x5c or x5u in the unprotect
 
 * payload: "String"
 
-    The value of the payload is the Base64Url Encoded string containing the unsigned JSON vCon.
+    The value of the payload is the Base64Url Encoded string containing the unsigned form of the JSON vCon.
     The general construction of the payload string value is described in section 7.2.1 of [JWK]
 
 * signatures "Signature[]"
@@ -1029,7 +1029,7 @@ The x5c or x5u requirement makes the management and use of vCons easier, allowin
 
     The string value of x5u MUST contain an [HTTPS] URL as defined in section 4.1.5 of [JWS].
 
-TODO: How to deal with expired signatures.
+TODO: How to deal with expired signatures?
 
 ## Encrypted Form of vCon Object
 
@@ -1037,11 +1037,10 @@ TODO: Check this terminology:
 
 A vCon MUST be signed first using JWS as defined in [Signed Form of vCon Object](#signed-form-of-vcon-object), then encrypted using JWE as opposed to just encrypted with integrety protection.
 The rationalle is that meta data and dialog will typically be collected in one security domain, then may be stored or exported to another.
-The signing is likely for the lifetime of the vCon, where the encryption may be shorter term or domain specific.vCons may be stored in unencrypted form, but the signed form MUST be maintained to ensure its integrity.
+The signing is likely for the lifetime of the vCon, where the encryption may be shorter term or domain specific.
+vCons may be stored in unencrypted form, but the signed form MUST be maintained to ensure its integrity.
 
-A encrypted vCon uses [JWE] and takes the form General JWE JSON Serialization Syntax form as defined in section 7.2.1 of [JWE].
-
-vCon SHOULD be signed first, then signed form of vCon is plaintext to encryption????
+A encrypted vCon uses [JWE] and takes the General JWE JSON Serialization Syntax form as defined in section 7.2.1 of [JWE].
 
 * unprotected: "Unprotected"
 
@@ -1053,7 +1052,7 @@ vCon SHOULD be signed first, then signed form of vCon is plaintext to encryption
 
 * ciphertext: "String"
 
-    The string value of ciphertext is constructed as defined in section 7.2.1 of [JWE] using the unsigned form of the vCon as the plaintext input for encryption.
+    The string value of ciphertext is constructed as defined in section 7.2.1 of [JWE] using the signed form of the vCon as the plaintext input for encryption.
 
 * tag: "String"
 
@@ -1066,6 +1065,8 @@ vCon SHOULD be signed first, then signed form of vCon is plaintext to encryption
     The string value of cty SHOULD be "application/vcon"
 
 * enc: "String"
+
+    The string value of enc SHOULD be "A256CBC-HS512"
 
 ### Recipient Object
 
