@@ -301,11 +301,11 @@ The encoding parameter describes the type of encoding that was performed on the 
 
     This MUST be one of the following strings:
 
-    + "base64url": The payload of the file has been base64url encoded and provided as the string value of the body parameter.
+    * "base64url": The payload of the file has been base64url encoded and provided as the string value of the body parameter.
 
-    + "json": The value of the body string is a JSON object.
+    * "json": The value of the body string is a JSON object.
 
-    + "none": The payload of the file is a valid JSON string and can be included without modification as the string value to the body parameter.
+    * "none": The payload of the file is a valid JSON string and can be included without modification as the string value to the body parameter.
 
 ## Externally Referenced Files
 
@@ -421,6 +421,7 @@ The method of redaction is out of scope of this document.
 The assurance of the accuracy of the redaction is made by the entity that creates the redaction which SHOULD signe the redacted version of the vCon.
 
 All data and parameters in the prior, less redacted, vCon instance version are either:
+
 * Removed entirely in the redacted version
 * Copied and partially redacted
 * Copied as is
@@ -608,7 +609,7 @@ It is up to the domain creating the vCon to define the set of tokens or values t
 
     The value of the validation string MAY be "none" or enterprise or domain defined token or string values.
 
-### jCard???
+### jCard
 
 TODO: Do we want to support including a jCard for the party?
 
@@ -655,9 +656,9 @@ TODO: Is there a need for any temporal location?
 
 TODO: Do we just specify for the start of the conversation?
 
-### timezone???
+### timezone
 
-TODO: timezone???
+TODO: timezone?
 
 ## Dialog Object
 
@@ -696,7 +697,7 @@ For recordings, it is the duration of the recording.
 
 The party(s) which generated the text or recording for this piece of dialog are indicated in the parties parameter.
 
-* parties: "UnsignedInt" \| "UnsignedInt"[] \| ("UnsignedInt" \| "UnsignedInt"[])[]
+* parties: "UnsignedInt" \| "UnsignedInt[]" \| ("UnsignedInt" \| "UnsignedInt[]")[]
 
     Single channel recordings should have a parties value of the form: "UnisignedInt" or "UnsignedInt[]" where the integer value or array of integer values are the indices to the Party Object(s) in the parties array that contributed to the mix for the single channel recording.
     The index for the Party Object SHOULD be included even if the indicated party was silent the entire piece of dialog.
@@ -775,7 +776,7 @@ The type parameter is used to label the symatic type of analysis data.
 Analysis typically pertains to one or more of the Dialog Objects in the dialog array.
 The dialog parameter is used to indicate which Dialog Objects this analysis was based upon.
 
-* dialog: "UnsignedInt" | "UnsignedInt"[] (optional only if the analysis was not derived from any of the dialog)
+* dialog: "UnsignedInt" \| "UnsignedInt[]" (optional only if the analysis was not derived from any of the dialog)
 
     The value of the dialog parameter is the index to the dialog or array of indices to dialogs in the dialog array to which this analysis object corresponds.
 
@@ -838,7 +839,7 @@ Ancillary documents to the conversation are included or referenced in the Attach
 iThere is no constraint on the types files which can be included or referenced.
 As most modes of communication, that allow the exchange of files, do not constrain the file type, any file type may be included here.
 
-### type or purpose???
+### type or purpose
 
 TODO: Do we want a symantic type like: contract or presentation?  Or a subject or title.
 
@@ -898,6 +899,7 @@ The Group Object SHOULD contain the uuid and either the body and encoding parame
 The vCon MAY be referenced via UUID:
 
 * uuid: "String"
+
     The string value of the uuis parameter, is the UUID of the referenced vCon to be aggregated.
 
 The vCon MAY be included in line as the value of the body parameter.
@@ -1098,7 +1100,11 @@ IANA registration of new media subtype: vcon for media type application:
 
 ## Text Chat vCon
 
+TODO: text vCon example
+
 ## Email Thread vCon
+
+TODO: email thread vCon example
 
 ## Two Party Call vCon With Externally Referenced Recording
 
@@ -1118,12 +1124,17 @@ IANA registration of new media subtype: vcon for media type application:
 
 ## Redacted Signed vCon
 
+TODO: redacted vCon example
+
 ## Appended Signed vCon
+
+TODO: appended vCon example
 
 ## vCon Group
 
+TODO: group vCon example
 
 # Acknowledgments
 {:numbered="false"}
 
-TODO acknowledge.
+TODO: acknowledgements
