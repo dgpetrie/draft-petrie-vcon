@@ -389,8 +389,9 @@ The UUID MUST be globaly unique.
 
     The value of the string SHOULD be generated using the version 8 UUID defined in [UUID] which is generated identically to a version 7 UUID with the exception that:
 
-        * rand_b/custom_c is generated from the high 62 bits of the SHA-1 hash of the FQHN string
-        * the variant and version fields are set as described for version 8 UUID
+    * rand_b/custom_c is generated from the high 62 bits of the SHA-1 hash of the FQHN string
+
+    * the variant and version fields are set as described for version 8 UUID
 
     The DNS name string used in generating the uuid value SHOULD be the same FQHN, or a subdomain to allow for more distributed generation of UUIDs, as would used in the signing certificate as they are the same domains of uniqness.
 
@@ -560,7 +561,7 @@ Alcillary documents, discussed, presented, referenced or related to the converst
 
 ## Party Object
 
-### tel URL
+### tel
 
 If the tel URL for the party is known, it can be included in the tel parameter.
 
@@ -569,9 +570,9 @@ If the tel URL for the party is known, it can be included in the tel parameter.
     The value of the tel parameter SHOULD be a valid [TEL] URL.  The URL scheme prefix (i.e. "tel:") is optional.
 
 
-### STIR
+### stir
 
-If the STIR [PASSporT] was provided to identify the party, the PASSporTcan be included in the stir parameter for the party.
+If the STIR [PASSporT] was provided to identify the party, the PASSporT can be included in the stir parameter for the party.
 
 * stir: "String" (optional)
 
@@ -620,12 +621,15 @@ The gmlpos parameter contains the latitude and longitude of the location of the 
 
     The geopos parameter value contains a string of the same format as the gml:pos element defined in section 3.2 of the [PIDF-LO] PIDF.
 
-### civicaddress Object
+### civicaddress
 
-The civicaddress object is optional and contains civic address information about the location for the party.
-It MAY contain any or all of the following parameters: country, a1, a2, a3, a4, a5, a6, prd, pod, sts, hno, hns, lmk, loc, flr, nam, pc as defined in section 2.2.1 of [GEOPRIV].
+The the civicaddress parameter value contains a Civicaddress Object which is optional and contains civic address information about the location for the party.
+
+* civicaddress: "Civicaddress" (optional)
+
+The Civicaddress Object MAY contain any or all of the following parameters: country, a1, a2, a3, a4, a5, a6, prd, pod, sts, hno, hns, lmk, loc, flr, nam, pc as defined in section 2.2.1 of [GEOPRIV].
 The values of all of these parameters are of type String.
-Note that the parameter names MUST be in lower case when contained in the civicaddress object even though they are in upper case in [GEOPRIV].
+Note that the parameter names MUST be in lower case when contained in the Civicaddress Object even though they are in upper case in [GEOPRIV].
 
 * country: "String" (optional)
 * a1: "String" (optional)
@@ -710,19 +714,19 @@ The mimetype parmeter MUST be provided for inline dialog files and MUST be provi
 
     The media types SHOULD be one of the following strings:
 
-        * "text/plain"
-        * "audio/x-wav"
-        * "audio/x-mp3"
-        * "audio/x-mp4"
-        * "audio/ogg"
-        * "video/x-mp4"
-        * "video/ogg"
+    * "text/plain"
+    * "audio/x-wav"
+    * "audio/x-mp3"
+    * "audio/x-mp4"
+    * "audio/ogg"
+    * "video/x-mp4"
+    * "video/ogg"
 
 TODO: What about multi-part MIME for email?
 
 ### filename
 
-It is someimte useful to preserve the name of the file which originally contained this peice of dialog.
+It is sometimes useful to preserve the name of the file which originally contained this peice of dialog.
 This can be done in the filename parameter.
 
 * filename: "String" (optional)
@@ -747,8 +751,8 @@ Alternatively, for externally referenced dialog:
 Analysis is a broad and in some cases developing field.
 This document does not attempt to suggest a SHOULD support list of types.
 Nor are formats for analysis data defined in this document.
-That is for research and specification in a follow on document.
-For this reason the Analysis Object provide multiple ways to define the media type of the analysis file.
+That is for research and specification outside the scope of this document.
+For this reason the Analysis Object provides multiple ways to define the media type of the analysis file.
 If a well known media or mime type is defined, it SHOULD be used.
 For analysis data or files types for which a media type is not defined, the vendor and schema parameters SHOULD be used.
 
@@ -760,29 +764,33 @@ The type parameter is used to label the symatic type of analysis data.
 
     The string value SHOULD be one of the following:
 
-        + "summary"
-
-        + "transcript"
-
-        + "translation"
-
-        + "sentiment"
-
-        + "tts"
+    * "summary"
+    * "transcript"
+    * "translation"
+    * "sentiment"
+    * "tts"
 
 ### dialog
 
-* dialog: "UnsignedInt"
+Analysis typically pertains to one or more of the Dialog Objects in the dialog array.
+The dialog parameter is used to indicate which Dialog Objects this analysis was based upon.
 
-    The value of the dialog parameter is the index to the dialog in the dialog array to which this analysis object corresponds.
+* dialog: "UnsignedInt" | "UnsignedInt"[] (optional only if the analysis was not derived from any of the dialog)
+
+    The value of the dialog parameter is the index to the dialog or array of indices to dialogs in the dialog array to which this analysis object corresponds.
 
 ### mimetype
 
-* mimetype: "Mime" (optional for externally referenced files in which case, this is provided in the HTTPS Content-Type header)
+The media type for the included or referenced analysis file is provided in the mimetype parameter.
 
-    The mimetype string contains the media type or MIME type of the analysis file.
+* mimetype: "Mime" (optional for externally referenced files, if it this is provided in the [HTTPS] Content-Type header)
+
+    The mimetype string contains the media type or [MIME] type of the analysis file.
 
 ### filename
+
+It is sometimes useful to preserve the name of the file which originally contained this analysis data.
+This can be done in the filename parameter.
 
 * filename: "String" (optional)
 
@@ -790,11 +798,19 @@ The type parameter is used to label the symatic type of analysis data.
 
 ### vendor
 
+There may not be a IANA registered media type for the file format containing the analysis data.
+Even if a media type is defined, it is often useful to keep a record of the vendor that produced the software that produced the analysis.
+Different implementations perform differently and knowing the implementation can be useful in interpreting the analyasis.
+For this reason, the vendor or product name is provided in the vendor parameter.
+
 * vendor: "String"
 
     The vendor string value contains the vendor or product name of the software which generated this analysis.
 
 ### schema
+
+The same vendor or software product may produce different formats or data for the same analysis.
+The schema parameter allows the data format, schema or configuration used to generate the analysis to be saved with the included or referenced analysis data.
 
 * schema: "String" (optional)
 
@@ -805,56 +821,101 @@ The type parameter is used to label the symatic type of analysis data.
 
 The Analysis Object SHOULD contain the body and encoding parameters or the url, alg and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
 
+For inline included analysis:
+
+* body: "String"
+* encoding: "String"
+
+Alternatively, for externally referenced analysis:
+
+* url: "String"
+* alg: "String"
+* signature: "String"
+
 ## Attachment Object
 
-No constraint on file types.  As most modes of communication, that allow the exchange of files, do not constrain the file type, any file type may be included here.  It is suggested that a virus scan be run on any files, before including them in a vCon.
+Ancillary documents to the conversation are included or referenced in the Attachment Object.
+iThere is no constraint on the types files which can be included or referenced.
+As most modes of communication, that allow the exchange of files, do not constrain the file type, any file type may be included here.
 
-### Type or purpose???
-Do we want a type like: contract or presentation?
-Or a subject or title.
+### type or purpose???
+
+TODO: Do we want a symantic type like: contract or presentation?  Or a subject or title.
 
 ### party
 
+In most conversations, ancillary documents originate from one of the parties to the conversation.
+This is not neccisarily the auther, but the person who distributed the document.
+This party is identified by the party parameter in the Attachment Object.
+
 * party: "UnsignedInt"
 
-    The value of the party parameter is the index into the parties array to the party that contributed the attachment.
+    The value of the party parameter is the index into the Parties Object array to the party that contributed the attachment.
 
 ### mimetype
 
-* mimetype: "Mime" (optional for externally referenced files)
+The media type for the included or referenced attachment file is provided in the mimetype parameter.
 
-    The mimetype string contains the media type or MIME type of the attached file.
+* mimetype: "Mime" (optional for externally referenced files, if it this is provided in the [HTTPS] Content-Type header)
+
+    The mimetype string contains the media type or [MIME] type of the attached file.
 
 ### filename
 
+It is sometimes useful to preserve the name of the file which originally contained this attachment file.
+This can be done in the filename parameter.
+
 * filename: "String" (optional)
+
+    The file name string contains an optional name for the attachment file referenced in this Attachment Object.
 
 ### Attachment Content
 
 The Attachment Object SHOULD contain the body and encoding parameters or the url, alg and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
 
+For inline included attachments:
+
+* body: "String"
+* encoding: "String"
+
+Alternatively, for externally referenced attachments:
+
+* url: "String"
+* alg: "String"
+* signature: "String"
+
 ## Group Object
 
-The Group Object SHOULD contain the uuid or body and encoding parameters or the url, alg and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
+A conversation may have take place using different modes (e.g. web chat which evolves to email, which evolves to phone call, which evolves to video conference).
+A conversation could take place over serveral calls (e.g. multiple calls regarding a support incident or problem).
+Each of these examples might be considered a single conversation event though there are multiple sets of dialog in each.
+What is considered the boundry of a conversation is a business decision.
+There are situations in the above example, where it is desired to treat these as a single conversation, but each set of dialog is created in a single vCon (e.g. each dialog occurred in a separate communication silo or security domain) which gets signed.
+For this reason, it may be neccesary to aggregate the separate vCon into a single vCon which is considered the whole of a conversation.
+The Group Object includes or refers to a vCon to be aggregated into the whole of a single vCon conversation.
+
+The Group Object SHOULD contain the uuid and either the body and encoding parameters or the url, alg and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
 The vCon MAY be referenced via UUID:
 
-* uuid: uuid (optional)
+* uuid: "String"
+    The string value of the uuis parameter, is the UUID of the referenced vCon to be aggregated.
 
-Alternatively the vCon MAY be included in line as the value of the body parameter.
+The vCon MAY be included in line as the value of the body parameter.
 The encoding parameter MUST be included with the body parameter, if provided, to decribe the encoding of the vCon body.
 
-* body: vcon (optional)
+* body: "vCon"
+
+    The JSON unsigned form of the vCon, the JWS signed form of the vCon or the JWE encrypted form of the vCon.
 
 * encoding: "String"
+
     The encoding string MUST have the value: "json".
 
-Alteratively, the vCon can be externally refernced.
+Alteratively, the vCon can be externally referenced.
 The url, alg and signature parameters and values are defined in [Externally Referenced Files](#externally-referenced-files).
 
 * url: "String"
-
 * alg: "String"
-
 * signature: "String"
 
 # Security Considerations
