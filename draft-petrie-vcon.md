@@ -1116,9 +1116,11 @@ IANA registration of new media subtype: vcon for media type application:
 
 TODO: text vCon example
 
-## Email Thread vCon
+## Email Thread Multipart vCon
 
-TODO: email thread vCon example
+~~~
+{::include examples/ab_email_acct_prob_thread.pp}
+~~~
 
 ## Two Party Call vCon With Externally Referenced Recording
 
