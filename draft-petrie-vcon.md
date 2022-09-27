@@ -1122,6 +1122,12 @@ TODO: text vCon example
 {::include examples/ab_email_acct_prob_thread.pp}
 ~~~
 
+## Email Thread Text vCon
+
+~~~
+{::include examples/ab_email_prob_followup_text_thread.pp}
+~~~
+
 ## Two Party Call vCon With Externally Referenced Recording
 
 ~~~
