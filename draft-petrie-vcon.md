@@ -12,9 +12,17 @@ v: 3
 # area: ART
 # workgroup: Dispatch Working Group
 keyword:
- - next generation
- - unicorn
- - sparkling distributed ledger
+ - conversation
+ - vcon
+ - CDR
+ - call detail record
+ - call meta data
+ - call recordings
+ - email thread
+ - text conversation
+ - video recording
+ - video conference
+ - conference recording
 venue:
 #  group: WG
 #  type: Working Group
@@ -706,6 +714,8 @@ The party(s) which generated the text or recording for this piece of dialog are 
     The values in that array are either an integer or an array of integers which are the indicies to the parties that contributed to the mix for the associated channel of the recording.
     The index for Party Objects SHOULD be included even if the party was silent the entire conversation.
 
+TODO: For an email thread, To and Cc parties are all passive.  Do we just put the sender as the party or do we want to list all of the recipients and by convention the sender is the first party?  Note that each dialog/email could have a difference set of recipients.
+
 ### mimetype
 
 The media type for the piece of dialog included or referenced is provided in the mimetype parameter.
@@ -722,8 +732,9 @@ The mimetype parmeter MUST be provided for inline dialog files and MUST be provi
     * "audio/ogg"
     * "video/x-mp4"
     * "video/ogg"
+    * "multipart/mixed"
 
-TODO: What about multi-part MIME for email?
+    Note: multi-part will also likely include the boundary parameter
 
 ### filename
 
@@ -1067,6 +1078,8 @@ A encrypted vCon uses [JWE] and takes the General JWE JSON Serialization Syntax 
 * enc: "String"
 
     The string value of enc SHOULD be "A256CBC-HS512"
+
+TODO: do we want to put the vCon UUID in the Unprotected Object so that we can use it as a key?
 
 ### Recipient Object
 
