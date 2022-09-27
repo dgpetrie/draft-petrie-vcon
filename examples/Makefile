@@ -1,6 +1,13 @@
 
 VCON_PATH=../../../
-EXAMPLES=simple-vcon.vcon ab_call_ext_rec.vcon ab_call_int_rec.vcon ab_call_ext_rec_signed.vcon ab_call_ext_rec_encrypted.vcon ab_call_ext_rec_decrypted.vcon ab_call_ext_rec_decrypted_verified.vcon ab_email_acct_prob_thread.vcon
+EXAMPLES=simple-vcon.vcon ab_call_ext_rec.vcon \
+         ab_call_int_rec.vcon \
+         ab_call_ext_rec_signed.vcon \
+         ab_call_ext_rec_encrypted.vcon \
+         ab_call_ext_rec_decrypted.vcon \
+         ab_call_ext_rec_decrypted_verified.vcon \
+         ab_email_acct_prob_thread.vcon \
+         ab_email_prob_followup_text_thread.vcon
 INCLUDES=$(EXAMPLES:.vcon=.pp)
 #VCON_PYPATH="${VCON_PATH}vcon/vcon:${VCON_PATH}vcon/vcon/bin"
 VCON_PYPATH="${VCON_PATH}vcon"
@@ -43,3 +50,14 @@ b_email_acct_prob_image.vcon: email_acct_prob_bob_image.txt
 
 ab_email_acct_prob_thread.vcon: b_email_acct_prob_image.vcon email_acct_prob_alice_reply.txt
 	(export PYTHONPATH=${VCON_PYPATH}:${PATHONPATH} ; ${VCON} -i b_email_acct_prob_image.vcon add in-email email_acct_prob_alice_reply.txt | jq '.' > ab_email_acct_prob_thread.vcon)
+
+ab_email_prob_followup_alice.vcon: email_prob_followup_alice.txt
+	(export PYTHONPATH=${VCON_PYPATH}:${PATHONPATH} ; ${VCON} -n add in-email email_prob_followup_alice.txt | jq '.' > ab_email_prob_followup_alice.vcon)
+
+ab_email_prob_followup_bob_reply.vcon: ab_email_prob_followup_alice.vcon email_prob_followup_bob_reply.txt
+	(export PYTHONPATH=${VCON_PYPATH}:${PATHONPATH} ; ${VCON} -i ab_email_prob_followup_alice.vcon add in-email email_prob_followup_bob_reply.txt | jq '.' > ab_email_prob_followup_bob_reply.vcon)
+
+ab_email_prob_followup_text_thread.vcon: ab_email_prob_followup_bob_reply.vcon email_prob_followup_alice_ack.txt
+	(export PYTHONPATH=${VCON_PYPATH}:${PATHONPATH} ; ${VCON} -i ab_email_prob_followup_bob_reply.vcon add in-email email_prob_followup_alice_ack.txt | jq '.' > ab_email_prob_followup_text_thread.vcon)
+
+
