@@ -22,11 +22,11 @@
       "url": "https://raw.githubusercontent.com/dgpetrie/draft-petrie-vcon/main/examples/ab_call.wav",
       "mimetype": "audio/x-wav",
       "filename": "ab_call.wav",
-      "key": "AAAABLteJFQZZ4HS81-81E_QF9AAAAAAn4tOuvSvTaMooew1G8Dnzk4QWZQM8reHNh_-StPUOZE",
-      "signature": "AAAABBPwpeMcksqrQQrpxpHBRZAqRP4pJyHPLxRE-pwbsHsSUknC839isw-XzrTzHeGh5Lx9lFMDrib52hu1v0bJU7seVMpZc3eV6lUsdGqw_IqQB4KTN_V3K_J7SkWFpGuE0O9PdS5R4X8LZ_PdXBs6H6Hsrd8Z2jsjZMTCEeIPTBU5vBk-8tJFlfTj6tTTY2DEc3aDs6VILnrp5YXkdykv62puIPiIXwz5EIVhTP8E6kysKaGaMQ-yRjllvPmwvPfWc75jvOJmnRHzE_7Yv3y0H1X2UKaLT4WdU9ZEsjgvBluoTB1lPR0YtFr6F0_qCajCK8mbu9Wu35VqPPdCVRtKtZLDRkpdxZLyTKXpxpUCgxq53qDYhjqhuQJqcNBYH_-Gi3hiSaXKCr7Hei9VDv0N5AvExN3gq2DCqLnFNGC8WJg6EmLUjnejgriJcuDGq8iHat7PDcyTncox990pd1R1EDL3jwKSvvruDeOuwroOTWEXCoGO2PlamRuwW3tpVejqB-4hUtcnA23uubNL1ru6WOsYB8EB5YnrnC0okM-MI0PN-cgARq7MGE79ODG6cVTqzcxEN5O_QMM1z0tVW1LHPXx9YXEdsrtgDYkt2APgp52nk_3PsMsiGcmKSGud0SYoJtNcW7UFzVXJff6jhLpzw_CwDJabE53I3AXybXZNmC5zVe8w9NJgiCi5lV_5j65mcWO_zW_Ehu_9z8xJn06DIcTa-XnFH-yJT-pzc2OwGMP4H6qt4gRY6EsVGQJ4fnI0ypsy64cU4-JE9Q1GCD20YdPF9YEMWHlZMGUyX08OAOJ3VVY11N5kx6ZnOoDh_j3L9d19ptye-M1MyFVfoCxM6fU6wo7BKoyo0o2shhc3tbE6pB6zPFb1AYz1s_aa67Fb9-7Y1WjpytavprHZrHtBitZeZAMTkYuANDB0jq9eVnI-fZFtufjbBipT16Q0k1oYrrBdGGib6UWiFCIe8KGQTjw6aPyWdquJ6bZ80ky4XA1RK5kccybNe4x2CRQVmf0IlXq51iJVzezlO7PRDvLEniXBR7pPPHr4HdP-KDgIsmqLLPZsS8RTqqugLOj--oZREJ5DjECmS-bVnQJhAm_WWqTKUKuHVsYtOeXoSLbHlwC636svGCVr7fef12Xft8dNZ_OshaDckgyeXp9mHBgDvmvlGRRSeWBlmKUNFSjRz4X5tA9PlP8uEupTVfh_pFTGK69H5fUzP6LLYJue3CMEBcIrQ4J99Srjgd-JOa96lCMZKaMJgyzbdxzozSmhwnhDvKgJhI7ig91r5PGJOu_3049-AM7v2rwjOczvLpSlHngQQFRD01D3gWdvfUFM5dNfjla7KM1Mlfq3Anpi9kXkpBzyAGR2HoIFELJlZD5wuK7neKbWv2KvpXPToF2z2W37_x4vgW4K5IgZgl5LBEyoE5eTntS3CX3XBqBNInWnYvjyHmzPSatJEctRcltmPX-iuzgH-39ZKGKdeSiKGK1o810",
-      "alg": "LMOTS_SHA256_N32_W8"
+      "signature": "Re9R7UWKaD7yN9kxoYLbFFNSKU8XfH18NFbTc3AgT4_aBubMtvGUEtRmP6XUxSS3Nl4LU-1mOCtezoTHQ67cVQ",
+      "alg": "SHA-512"
     }
   ],
   "analysis": [],
-  "attachments": []
+  "attachments": [],
+  "uuid": "0183878b-dacf-8e27-973a-91e26eb8001b"
 }
