@@ -11,6 +11,7 @@ Cc
 CDR
 civicaddress
 Civicaddress
+certs
 com
 cty
 ciphertext
@@ -32,8 +33,10 @@ fullname
 geolocation
 GEOPRIV
 github
+githubusercontent
 gml
 gmlpos
+grp
 hno
 hns
 howe
@@ -118,7 +121,6 @@ tel
 TEL
 thomas
 TMN
-TODO
 tts
 UnisignedInt
 unredacted
