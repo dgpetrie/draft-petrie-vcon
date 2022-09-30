@@ -111,15 +111,15 @@ informative:
 A vCon is the container for data and information relating to a real-time, human conversation.
 It is analogous to a {{vCard}} which enables the definition, interchange and storage of an individual's various points of contact.
 The data contained in a vCon may be derived from any multimedia session, traditional phone call, video conference, SMS or MMS message exchange, webchat or email thread.
-The data in the container relating to the conversation may include Call Detail Records (CDR), call meta data, participant identity information (e.g. STIR PASSporT), the actual conversational data exchanged (e.g. audio, video, text), realtime or post conversational analysis and attachements of files exchanged during the conversation.
-A standardized conversation container enables many applications, estabilishes a common method of storage and interchange, and supports identity, privacy and security efforts (see {{vCon-white-paper}})
+The data in the container relating to the conversation may include Call Detail Records (CDR), call meta data, participant identity information (e.g. STIR PASSporT), the actual conversational data exchanged (e.g. audio, video, text), realtime or post conversational analysis and attachments of files exchanged during the conversation.
+A standardized conversation container enables many applications, establishes a common method of storage and interchange, and supports identity, privacy and security efforts (see {{vCon-white-paper}})
 
 
 --- middle
 
 # Introduction
 
-The generation of conversational data, contained in transcripts and multi-media files, is common in business, especially in customer facing organizations. However, the storage, analysis and sharing of the data they contain is not currently a standard.  Standardizing a container for conversation data (vCon) has numerous advantages, and enables the management of the conversation's content.  For instance, a standard allows for tools to determine the contents of the conversation, such that privacy guarantees and duties can be accurately performed. As a storage mechanism, vCons can help normalize data lakes and allow for interchange between organizations and networks. The use of vCons can ease service integration by using a common container and format for enterprize communications.  A vCon becomes the standardized input to communication analysis tools and machine learning and categorization.  For a sales lead organization, a vCon can be the container of assets sold to sales teams.  For conversations of record, the vCon can be a legal instrument.
+The generation of conversational data, contained in transcripts and multi-media files, is common in business, especially in customer facing organizations. However, the storage, analysis and sharing of the data they contain is not currently a standard.  Standardizing a container for conversation data (vCon) has numerous advantages, and enables the management of the conversation's content.  For instance, a standard allows for tools to determine the contents of the conversation, such that privacy guarantees and duties can be accurately performed. As a storage mechanism, vCons can help normalize data lakes and allow for interchange between organizations and networks. The use of vCons can ease service integration by using a common container and format for enterprise communications.  A vCon becomes the standardized input to communication analysis tools and machine learning and categorization.  For a sales lead organization, a vCon can be the container of assets sold to sales teams.  For conversations of record, the vCon can be a legal instrument.
 
 
 ## What's in a vCon?
@@ -129,34 +129,34 @@ The metadata portion allows for an expanded set of data from a typical call deta
 The dialog portion contains a set of multimedia and mime elements, each representing the actual, physical conversation in it's original media form: text, audio or video.
 The analysis portion contains data derived from the metadata and dialog portions, intended to carry items like transcripts, translations, summaries, text to speech, sentiment analysis and other semantic tagging.
 Finally, the attachment portion contains any other documents, such as slide deck or sales lead information, which provides context and support for the conversation itself.
-The vCon may also container integrety checking infromation such as the issuer of the vCon and tamerproof features such as signatures.
+The vCon may also container integrity checking information such as the issuer of the vCon and tamperproof features such as signatures.
 
-A vCon acts as the definition of the conversation, and are created by systems during and after the conversation itself.  Some communication modes, like SMS texting, lack natural session boundaries and require explicit definition.  vCons may have two or more parties involved, but at least one should be a human.  For instance, an interaction between a bot and a human is an appropriate scope for vCons, but a converstion between two bots would not.
+A vCon acts as the definition of the conversation, and are created by systems during and after the conversation itself.  Some communication modes, like SMS texting, lack natural session boundaries and require explicit definition.  vCons may have two or more parties involved, but at least one should be a human.  For instance, an interaction between a bot and a human is an appropriate scope for vCons, but a conversation between two bots would not.
 
 Due to the size and complexity of some portions of a vCon, both inline and externally referenced dialog, analysis, attachments and other vCon reference assets are supported.
 For instance, vCons may reference a videoconference media recording as an external URL with an accompanying signature of the contents to detect tampering.
-Alteratively, vCons may directly contain the media of the entire dialog internally, keeping the conversation in one place, and optionally encrypted.
+Alternatively, vCons may directly contain the media of the entire dialog internally, keeping the conversation in one place, and optionally encrypted.
 
 vCons are designed to be a digital asset, versioned and signed.
 For instance, different versions of vCon may arise due to redaction (e.g. for PII or other reasons), added analysis or the addition of other content.
-In the metadata, vCons contain the unique ID of the parent vCon, such that they may be traveressed while maintaining their data integrity and provenance.
+In the metadata, vCons contain the unique ID of the parent vCon, such that they may be traversed while maintaining their data integrity and provenance.
 
 ## Use Cases and Requirements
 
 In large enterprises, different products may be served by different call centers (inhouse or out sourced).
 The call centers may have different communications infrastructure and even different platform vendors (e.g. IP PBX, email servers).
 Consequently, the CDR and meta data as well as the conversation recordings may be stored in different formats and locations.
-This creates artifical silos of storage and analysis.
-Using vCon as a stardard exchange, storage, analysis input and output format, would ease integration efforts and cross enterprise analysis of products and call center metrics.
-This would also ease customer analysis across product lines which may currently be difficutly due to separated, heterogenious communications silos.
+This creates artificial silos of storage and analysis.
+Using vCon as a standard exchange, storage, analysis input and output format, would ease integration efforts and cross enterprise analysis of products and call center metrics.
+This would also ease customer analysis across product lines which may currently be difficult due to separated, heterogeneous communications silos.
 Having conversation data in the vCon format would lower the cost and speed deployment of both inhouse and outsourced analysis tools for import into ML and AI based tools, transcription, translation and sentiment analysis.
 Having conversation data in a standard vCon container would ease the export of conversation data from hosted services.
 This would enable more analysis capabilities.
 
-In some locations, regulations make it manditory for enterprises to delete private information upon request of the individual.
+In some locations, regulations make it mandatory for enterprises to delete private information upon request of the individual.
 Large enterprises with siloed communications systems have difficulty locating or identifying all of the private data for an individual due to the disparate communications systems.
-Using the vCon as the standard container for all communications system, storing the conversation data centrally and removing it from the siloed communcations systems, allows for easier management, correlation, tracking and deletion of individual's private data.
-Without centralizing the storage of the conversations in a standardized container, deleting an individuals private data is untenable and the enterprise cannot assert that they have fulfilled their requirment to locate and delete all of the private data.
+Using the vCon as the standard container for all communications system, storing the conversation data centrally and removing it from the siloed communications systems, allows for easier management, correlation, tracking and deletion of individual's private data.
+Without centralizing the storage of the conversations in a standardized container, deleting an individuals private data is untenable and the enterprise cannot assert that they have fulfilled their requirement to locate and delete all of the private data.
 
 Large call centers may have tens of thousands of call agents making hundreds of thousands of calls a day.
 Supervising the agents and calls in a large call center is a huge efort.
@@ -182,7 +182,7 @@ Requirements:
 
 * Ease of integration of services and analysis
 
-* Better organize conversational data so that it can be handled in a consistant, privacy safer means
+* Better organize conversational data so that it can be handled in a consistent, privacy safer means
 
 * Immutable
 
@@ -226,7 +226,7 @@ The following  are considered not in scope or non-requirements:
 
 * Validation of redactions or appended data beyond the signature of the domain making the changes to the conversational data (e.g. Merkle tree like redactions)
 
-* Standardization of anaysis data formats or file media types
+* Standardization of analysis data formats or file media types
 
 # Conventions and Definitions
 
@@ -234,7 +234,7 @@ The following  are considered not in scope or non-requirements:
 
 ## Terminology
 
-* analysis - analysis, transformations, summary, sentiment, or translation tyically of the dialog data
+* analysis - analysis, transformations, summary, sentiment, or translation typically of the dialog data
 
 * conversation - an exchange of communication using text, audio or video medium between at least one human and one or more bots or humans
 
@@ -242,7 +242,7 @@ The following  are considered not in scope or non-requirements:
 
 * dialog - the captured conversation in its original form (e.g. text, audio or video)
 
-* encrypted form - encrypted JWE document with the JWS signed vCon form contained in the cyphertext
+* encrypted form - encrypted JWE document with the JWS signed vCon form contained in the ciphertext
 
 * file - a data block either included or referenced in a vCon
 
@@ -262,7 +262,7 @@ The following  are considered not in scope or non-requirements:
 
 * vCon instance - a vCon populated with data for a specific conversation
 
-* vCon instance version - a single version of an instance of a convsersation, which may be modified to redact or append additional information  forming a subseqent vCon instance version
+* vCon instance version - a single version of an instance of a conversation, which may be modified to redact or append additional information  forming a subsequent vCon instance version
 
 * vCon syntax version - the version for the data syntax used for form a vCon
 
@@ -285,7 +285,7 @@ Date - A string that MUST have the form of an [RFC3339] date string as defined f
 
 "A[]" and array of values of type A.
 
-All parameters are assumed to be manditory unless other wise noted.
+All parameters are assumed to be mandatory unless other wise noted.
 
 Objects or arrays with no or null values MAY be excluded from the vCon.
 
@@ -319,9 +319,9 @@ The encoding parameter describes the type of encoding that was performed on the 
 
 Files and data stored externally from the vCon MUST be "signed" to ensure that they have not been modified.
 Objects that refer to a file which is externally stored from the vCon MUST have the parameters: url, alg and signature.  These parameters are defined in the following subsections.
-The use of [SHA-512] hash for ensuring that the externnaly referenced data or file has not been modified, is defined in this document.
+The use of [SHA-512] hash for ensuring that the externally referenced data or file has not been modified, is defined in this document.
 Other methods of ensuring integrity may be added in the future.
-The following subsections define how the specific algoritym used and how that signature information is included in a vCon so that the content can be verified.
+The following subsections define how the specific algorithm used and how that signature information is included in a vCon so that the content can be verified.
 
 ### url
 
@@ -349,7 +349,7 @@ The [SHA-512] hash on the externally referenced file is included in the signatur
 
 * signature: "String"
 
-    The string value of the signature parameter is the Base64Ulr Encoded value of the SHA-512 hash (as defined in section 6.3 and 6.4 [SHA-512]) of the body of the content at the given url.
+    The string value of the signature parameter is the Base64Url Encoded value of the SHA-512 hash (as defined in section 6.3 and 6.4 [SHA-512]) of the body of the content at the given url.
 
 # vCon JSON Object
 
@@ -391,7 +391,7 @@ The the value of vcon parameter contains the syntactic version of the JSON forma
 ### uuid
 
 The [UUID] for the vCon is used to refer to it when privacy or security may not allow for inclusion or URL reference to a vCon.
-The UUID MUST be globaly unique.
+The UUID MUST be globally unique.
 
 * uuid: "String"
 
@@ -401,13 +401,13 @@ The UUID MUST be globaly unique.
 
     * the variant and version fields are set as described for version 8 UUID
 
-    The DNS name string used in generating the uuid value SHOULD be the same FQHN, or a subdomain to allow for more distributed generation of UUIDs, as would used in the signing certificate as they are the same domains of uniqness.
+    The DNS name string used in generating the uuid value SHOULD be the same FQHN, or a subdomain to allow for more distributed generation of UUIDs, as would used in the signing certificate as they are the same domains of uniqueness.
 
 ### subject
 
 The subject or the topic of the conversation is provided in the subject parameter.
 This parameter is optional as not all conversations have a defined subject.
-Email threads and prescheduled calls and video conversences typically have a subject which can be captured here.
+Email threads and prescheduled calls and video conferences typically have a subject which can be captured here.
 The subject may also be derived from analysis of the dialog.
 
 * subject: "String" (optional)
@@ -419,14 +419,14 @@ The subject may also be derived from analysis of the dialog.
 A redacted vCon SHOULD provide a reference to the unredacted or prior, less redacted, vCon instance version of itself.
 The purpose of the Redacted Object is to provide the reference to the unredacted or less redacted version of the vCon from which this vCon was derived.
 For privacy reasons, it may be necessary to redact a vCon to construct another vCon without the PII.
-This allows the non-PII portion of the vCon to still be analysed or used in a broader scope.
-The Redacted Object SHOULD contain the uuid parameter and MAY include the vCon inline via the body and encoding parameters or alteratively the url, alg and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
+This allows the non-PII portion of the vCon to still be analyzed or used in a broader scope.
+The Redacted Object SHOULD contain the uuid parameter and MAY include the vCon inline via the body and encoding parameters or alternatively the url, alg and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
 If the unredacted vCon is included in the body, the unredacted vCon MUST be in the encrypted form.
 If a reference to the unredacted vCon is provided in the url parameter, the access to that URL MUST be restricted to only those who should be allowed to see the identity or PII for the redacted vCon.
 
 The method(s) for redaction of text, audio and video can be done with existing post processing of media.
 The method of redaction is out of scope of this document.
-The assurance of the accuracy of the redaction is made by the entity that creates the redaction which SHOULD signe the redacted version of the vCon.
+The assurance of the accuracy of the redaction is made by the entity that creates the redaction which SHOULD sign the redacted version of the vCon.
 
 All data and parameters in the prior, less redacted, vCon instance version are either:
 
@@ -451,7 +451,7 @@ As defined in [Inline Files](#inline-files) body and encoding MAY be included:
 * body: "String"
 * encoding: "String"
 
-Alterativelly, as defined in [Externally Referenced Files](#externally-referenced-files) url, alg and signature MAY be included:
+Alternatively, as defined in [Externally Referenced Files](#externally-referenced-files) url, alg and signature MAY be included:
 
 * url: "String"
 * alg: "String"
@@ -461,7 +461,7 @@ The following diagram illustrates an example partial JSON object tree for a reda
 The top level object is a JWS signed vCon which contains a vCon in the unsigned form in the payload parameter.
 The second level object is the redacted vcon which refers to the encrypted unredacted vCon in it's redacted parameter.
 Note that the redacted vCon references the JWE encrypted vCon by UUID and may reference it by URL or direct inclusion.
-The JWE encrypted unredacted vCon contains the signed version of the unredacted vCon in the cyphertext parameter.
+The JWE encrypted unredacted vCon contains the signed version of the unredacted vCon in the ciphertext parameter.
 The signed unredacted vCon contains the unredacted vCon in the unsigned form in it's payload parameter.
 
 ~~~
@@ -476,7 +476,7 @@ In these cases, to allow for adding of additional information a new vCon instanc
 The prior vCon instance version is referenced by the Appended Object.
 Then the appended information is added to the new vCon instance version (i.e. top level vCon object).
 
-The prior vCon instance version SHOULD be referenced via the uuid of the prior vCon instance version, and MAY include the body and encoding parameters or alteratively the url, alg and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
+The prior vCon instance version SHOULD be referenced via the uuid of the prior vCon instance version, and MAY include the body and encoding parameters or alternatively the url, alg and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
 
 * appended: "Appended" (optional, mutually exclusive with redacted and group parameters)
 
@@ -486,12 +486,12 @@ The Appended Object contains the following parameters:
 
     The value contains the [uuid string value](#uuid) of the unredacted/original vCon instance version.
 
-Alteratively, as defined in [Inline Files](#inline-files) body and encoding MAY be included:
+Alternatively, as defined in [Inline Files](#inline-files) body and encoding MAY be included:
 
 * body: "String"
 * encoding: "String"
 
-Alteratively, as defined in [Externally Referenced Files](#externally-referenced-files) url, alg and signature MAY be included:
+Alternatively, as defined in [Externally Referenced Files](#externally-referenced-files) url, alg and signature MAY be included:
 
 * url: "String"
 * alg: "String"
@@ -501,8 +501,8 @@ The following figure illustrates an example partial JSON object tree for an appe
 The top level object is the JWS signed appended vCon which contains the unsigned form of the vCon in it's payload parameter.
 The second level object is the appended vCon with additional conversational data (e.g. analysis data).
 It refers to its original parent (or prior vCon instance version) of the vCon in its appended parameter.
-Note: the appended parameter may include the orginal in the body parameter or refer to it via URL.
-The appended vCon in this figure referes to the JWS signed version of the vCon, which in turn contains the original vCon in unsigned form in its payload parameter.
+Note: the appended parameter may include the original in the body parameter or refer to it via URL.
+The appended vCon in this figure refers to the JWS signed version of the vCon, which in turn contains the original vCon in unsigned form in its payload parameter.
 
 ~~~
 {::include appended-vcon-tree.ans}
@@ -511,7 +511,7 @@ The appended vCon in this figure referes to the JWS signed version of the vCon, 
 
 ### group Objects Array
 
-The scope of a conversation is defined by the observer.  It may be any of the following in this non-exaustive list:
+The scope of a conversation is defined by the observer.  It may be any of the following in this non-exhaustive list:
 
 * a quick text exchange
 
@@ -521,15 +521,15 @@ The scope of a conversation is defined by the observer.  It may be any of the fo
 
 * a class lecture and question and answer session
 
-* a web chat, evolving to a 2 way call, progressing to a transfered 3-way call transitioning to a video conference
+* a web chat, evolving to a 2 way call, progressing to a transferred 3-way call transitioning to a video conference
 
 * a series of weekly status calls
 
 In support of these constructs, it may be desirable to aggregate a group of vCons as opposed to including all of the dialog in a single vCon.
-The conversations may be over heterogenius or homogenius medium.
+The conversations may be over heterogeneous or homogeneous medium.
 A vCon MAY aggregated a group of vCon instances in the group array, using a Group Object for each vCon instance.
 
-* group: "Group[]" (optional, mutially exclusive with redacted and appended parameters)
+* group: "Group[]" (optional, mutually exclusive with redacted and appended parameters)
 
     The group array contains a [Group Object](#group-object) for each vCon.
 
@@ -546,7 +546,7 @@ TODO: Should this be a object not an array to make it easier to append parties (
 
 ### dialog Objects Array
 
-The actual conversation which occurred over text, audio or video that was captured, is contained in the dailog Objects Array.
+The actual conversation which occurred over text, audio or video that was captured, is contained in the dialog Objects Array.
 
 * dialog: "Dialog[]" (optional)
 
@@ -562,7 +562,7 @@ Analysis, which is performed on the conversational data, is stored in the analys
 
 ### attachments Objects Array
 
-Alcillary documents, discussed, presented, referenced or related to the converstaion may be stored in the attachements array.
+Ancillary documents, discussed, presented, referenced or related to the conversation may be stored in the attachments array.
 
 * attachments: "Attachment[]" (optional)
 
@@ -597,7 +597,7 @@ If the mailto URL is known for the party, it can be included in the mailto param
 
 ### name
 
-If the party's name is known, it can be included in the name paramter.
+If the party's name is known, it can be included in the name parameter.
 
 * name: "String" (optional)
 
@@ -605,8 +605,8 @@ If the party's name is known, it can be included in the name paramter.
 
 ### validation
 
-Proof of authorization of the communation channel through STIR, login or possesion of a device, is often not sufficient proof of the identity of the persion at the other end of the communications channel.
-It is common in call centers to validate the identity of the person on the communication channel through verification of some sort of personal identication information.
+Proof of authorization of the communication channel through STIR, login or possession of a device, is often not sufficient proof of the identity of the person at the other end of the communications channel.
+It is common in call centers to validate the identity of the person on the communication channel through verification of some sort of personal identification information.
 The methods used, often varies with the situation and is business practices specific.
 The purpose of the validation parameter, is to allow the validator to save a label or token which identifies the method of identity validation used to identify the person at the other end of the communication channel.
 For security reasons, it SHOULD NOT contain the data used to validate the name.
@@ -628,7 +628,7 @@ The gmlpos parameter contains the latitude and longitude of the location of the 
 
 * gmlpos: "String" (optional)
 
-    The geopos parameter value contains a string of the same format as the gml:pos element defined in section 3.2 of the [PIDF-LO] PIDF.
+    The gmlpos parameter value contains a string of the same format as the gml:pos element defined in section 3.2 of the [PIDF-LO] PIDF.
 
 ### civicaddress
 
@@ -685,7 +685,7 @@ TODO: Is there other signalling data that we want to capture other than start an
 
 ### start
 
-The start parameter contains the date and time for the begining of the captured piece of dialog.
+The start parameter contains the date and time for the beginning of the captured piece of dialog.
 For text it is the time that the party started typing or if not available, then it is the time the text was sent.
 For audio and video recordings, it is the time which corresponds to the beginning of the recording.
 
@@ -711,7 +711,7 @@ The party(s) which generated the text or recording for this piece of dialog are 
     The index for the Party Object SHOULD be included even if the indicated party was silent the entire piece of dialog.
 
     Multi-channel recordings MUST have a parties value that is an array of the same size as the number of channels in the recording.
-    The values in that array are either an integer or an array of integers which are the indicies to the parties that contributed to the mix for the associated channel of the recording.
+    The values in that array are either an integer or an array of integers which are the indices to the parties that contributed to the mix for the associated channel of the recording.
     The index for Party Objects SHOULD be included even if the party was silent the entire conversation.
 
 TODO: For an email thread, To and Cc parties are all passive.  Do we just put the sender as the party or do we want to list all of the recipients and by convention the sender is the first party?  Note that each dialog/email could have a difference set of recipients.
@@ -719,7 +719,7 @@ TODO: For an email thread, To and Cc parties are all passive.  Do we just put th
 ### mimetype
 
 The media type for the piece of dialog included or referenced is provided in the mimetype parameter.
-The mimetype parmeter MUST be provided for inline dialog files and MUST be provided if the Content-Type header in the [HTTPS] response for the externally referenced URL is not provided.
+The mimetype parameter MUST be provided for inline dialog files and MUST be provided if the Content-Type header in the [HTTPS] response for the externally referenced URL is not provided.
 
 * mimetype: "Mime" (optional for externally referenced files)
 
@@ -738,7 +738,7 @@ The mimetype parmeter MUST be provided for inline dialog files and MUST be provi
 
 ### filename
 
-It is sometimes useful to preserve the name of the file which originally contained this peice of dialog.
+It is sometimes useful to preserve the name of the file which originally contained this piece of dialog.
 This can be done in the filename parameter.
 
 * filename: "String" (optional)
@@ -770,7 +770,7 @@ For analysis data or files types for which a media type is not defined, the vend
 
 ### type
 
-The type parameter is used to label the symatic type of analysis data.
+The type parameter is used to label the semantic type of analysis data.
 
 * type: "String"
 
@@ -812,7 +812,7 @@ This can be done in the filename parameter.
 
 There may not be a IANA registered media type for the file format containing the analysis data.
 Even if a media type is defined, it is often useful to keep a record of the vendor that produced the software that produced the analysis.
-Different implementations perform differently and knowing the implementation can be useful in interpreting the analyasis.
+Different implementations perform differently and knowing the implementation can be useful in interpreting the analysis.
 For this reason, the vendor or product name is provided in the vendor parameter.
 
 * vendor: "String"
@@ -847,17 +847,17 @@ Alternatively, for externally referenced analysis:
 ## Attachment Object
 
 Ancillary documents to the conversation are included or referenced in the Attachment Object.
-iThere is no constraint on the types files which can be included or referenced.
+There is no constraint on the types files which can be included or referenced.
 As most modes of communication, that allow the exchange of files, do not constrain the file type, any file type may be included here.
 
 ### type or purpose
 
-TODO: Do we want a symantic type like: contract or presentation?  Or a subject or title.
+TODO: Do we want a semantic type like: contract or presentation?  Or a subject or title.
 
 ### party
 
 In most conversations, ancillary documents originate from one of the parties to the conversation.
-This is not neccisarily the auther, but the person who distributed the document.
+This is not necessarily the author, but the person who distributed the document.
 This party is identified by the party parameter in the Attachment Object.
 
 * party: "UnsignedInt"
@@ -899,11 +899,11 @@ Alternatively, for externally referenced attachments:
 ## Group Object
 
 A conversation may have take place using different modes (e.g. web chat which evolves to email, which evolves to phone call, which evolves to video conference).
-A conversation could take place over serveral calls (e.g. multiple calls regarding a support incident or problem).
+A conversation could take place over several calls (e.g. multiple calls regarding a support incident or problem).
 Each of these examples might be considered a single conversation event though there are multiple sets of dialog in each.
-What is considered the boundry of a conversation is a business decision.
+What is considered the boundary of a conversation is a business decision.
 There are situations in the above example, where it is desired to treat these as a single conversation, but each set of dialog is created in a single vCon (e.g. each dialog occurred in a separate communication silo or security domain) which gets signed.
-For this reason, it may be neccesary to aggregate the separate vCon into a single vCon which is considered the whole of a conversation.
+For this reason, it may be necessary to aggregate the separate vCon into a single vCon which is considered the whole of a conversation.
 The Group Object includes or refers to a vCon to be aggregated into the whole of a single vCon conversation.
 
 The Group Object SHOULD contain the uuid and either the body and encoding parameters or the url, alg and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
@@ -914,7 +914,7 @@ The vCon MAY be referenced via UUID:
     The value of the uuid parameter, is the [uuid string value](#uuid) of the referenced vCon to be aggregated.
 
 The vCon MAY be included in line as the value of the body parameter.
-The encoding parameter MUST be included with the body parameter, if provided, to decribe the encoding of the vCon body.
+The encoding parameter MUST be included with the body parameter, if provided, to describe the encoding of the vCon body.
 
 * body: "vCon"
 
@@ -924,7 +924,7 @@ The encoding parameter MUST be included with the body parameter, if provided, to
 
     The encoding string MUST have the value: "json".
 
-Alteratively, the vCon can be externally referenced.
+Alternatively, the vCon can be externally referenced.
 The url, alg and signature parameters and values are defined in [Externally Referenced Files](#externally-referenced-files).
 
 * url: "String"
@@ -935,7 +935,7 @@ The url, alg and signature parameters and values are defined in [Externally Refe
 
 The security concerts for vCons can put into two categories: making the conversation immutable through integrity verification and protecting the confidentiality of privacy of the parties to the conversation and/or their PII.
 These requirements along with need to evolve a vCon (e.g. adding analysis, translations and transcriptions) conflict in some ways.
-To enable this, multiple verisons of a vCon may be created.
+To enable this, multiple versions of a vCon may be created.
 Versions of a vCon may add information (e.g. analysis added to a prior vCon referenced by the appended ([appended](#appended))) and versions that remove information (e.g. redactions of privacy information removed from the vCon referenced in the redacted ([redacted](#redacted))).
 Redactions may be at different levels for example:
 
@@ -956,16 +956,16 @@ This will likely fall into one of the following hosting situations:
 
 The distinction among these has gotten clouded over recent years.
 The import consideration is that each is a different security domain.
-Information about a conversation captured in an enterprise communications system (e.g. meta data and Dialog Object(s) recorded in an IP PBX) is a differenct security domain from a SaaS transcription service (i.e. an Analysis Object).
+Information about a conversation captured in an enterprise communications system (e.g. meta data and Dialog Object(s) recorded in an IP PBX) is a different security domain from a SaaS transcription service (i.e. an Analysis Object).
 Before a vCon leaves a security domain, it SHOULD be signed to prevent it from being altered.
 If the new security domain needs to alter it, a new vCon is created with the removed or added data and the prior version is referenced (i.e. via the redacted ([redacted](#redacted)) or appended ([appended](#appended))).
 See the redacted vCon object tree figure-1 and appended vCon object tree figure-2.
-If informaiton is redacted for privacy reasons, the vCon referenced in the redacted ([redacted](#redacted)), if inline, SHOULD be encrypted to protect the privacy information in the unredacted version of the vCon.
+If information is redacted for privacy reasons, the vCon referenced in the redacted ([redacted](#redacted)), if inline, SHOULD be encrypted to protect the privacy information in the unredacted version of the vCon.
 
 The secure storage and access of externally referenced conversation data is considered out of scope from this document.
 Secure mechanisms for HTTPS access and storage of files are well defined.
-Identity and cridentials for accessing externally stored data will be exchanged out of band from the vCon.
-The one requirement for externally referenced data from the perspective of this document, is proof of integrety of that data.
+Identity and credentials for accessing externally stored data will be exchanged out of band from the vCon.
+The one requirement for externally referenced data from the perspective of this document, is proof of integrity of that data.
 
 Using the above described approach for redaction and appending of data, we can reduce the security operations on a vCon to signing and encryption.
 Two approaches to signing are needed as we have data, in JSON format, that is contained within the vCon and may have data (typically media and file formats, often binary) not contained, inline in the vCon, that is externally referenced.
@@ -979,7 +979,7 @@ This document specifies the JSON format for vCons.  So it seemed the logical sol
 Methods of redaction exist for text, audio and video using post processing of the media.
 The method of redaction used is out of the scope of this document.
 A redacted vCon SHOULD reference it's non-redacted version.
-The non-redacted version of the vCon referenced from the redacted vCon MUST be encrypted such that only those with permision to view the non-redacted content can decrypt it.
+The non-redacted version of the vCon referenced from the redacted vCon MUST be encrypted such that only those with permission to view the non-redacted content can decrypt it.
 
 Any time a vCon is shared outside its original security domain, it SHOULD be signed and optionally encrypted.
 Files externally referenced by a vCon SHOULD always be signed with the verification information included in the vCon that references the external file as defined in [Externally Referenced Files](#externally-referenced-files) and [Signing Externally Referenced Files](#signing-externally-referenced-files).
@@ -992,9 +992,9 @@ In some deployments, it is not practical to include all of the file contents of 
 In support of that, a file may be externally referenced.
 When external files are referenced, the signature on the vCon does not secure the file contents from modification.
 For this reason any externally referenced files SHOULD also have a signature.
-vCons use the [SHA-512] hash method for integrety checking of externally referenced file content and include its url, alg and signature in the vCon which are included in the integrety signature for the whole vCon.
+vCons use the [SHA-512] hash method for integrity checking of externally referenced file content and include its url, alg and signature in the vCon which are included in the integrity signature for the whole vCon.
 
-After retriving externally referenced files, before using its content, the payload of the HTTPS request should be verified using the signature parameter value for the hash for the url body using the procedure defined in section 6.3 and 6.4 of [SHA-512].
+After retrieving externally referenced files, before using its content, the payload of the HTTPS request should be verified using the signature parameter value for the hash for the url body using the procedure defined in section 6.3 and 6.4 of [SHA-512].
 
 ## Signed Form of vCon Object
 
@@ -1026,11 +1026,11 @@ The Signature Object MUST contain a header, protected and signature parameter as
 
 The Header Object and its contents are defined in section 4 of [JWS].
 The Header Object for a signed vCon MUST include the alg and either the x5c or x5u arrays.
-The x5c or x5u requirement makes the management and use of vCons easier, allowing the certifcate chain to be found as the vCon is moved.
+The x5c or x5u requirement makes the management and use of vCons easier, allowing the certificate chain to be found as the vCon is moved.
 
 * alg: "String"
 
-    The string value of alg is defined in section 4.1.1 of [JWS].  For a signed vCon this value SHOULD be "RS256" to maximize interoperablity.
+    The string value of alg is defined in section 4.1.1 of [JWS].  For a signed vCon this value SHOULD be "RS256" to maximize interoperability.
 
 * x5c: "String[]" (MUST provide x5c or x5u)
 
@@ -1046,8 +1046,8 @@ TODO: How to deal with expired signatures?
 
 TODO: Check this terminology:
 
-A vCon MUST be signed first using JWS as defined in [Signed Form of vCon Object](#signed-form-of-vcon-object), then encrypted using JWE as opposed to just encrypted with integrety protection.
-The rationalle is that meta data and dialog will typically be collected in one security domain, then may be stored or exported to another.
+A vCon MUST be signed first using JWS as defined in [Signed Form of vCon Object](#signed-form-of-vcon-object), then encrypted using JWE as opposed to just encrypted with integrity protection.
+The rationale is that meta data and dialog will typically be collected in one security domain, then may be stored or exported to another.
 The signing is likely for the lifetime of the vCon, where the encryption may be shorter term or domain specific.
 vCons may be stored in unencrypted form, but the signed form MUST be maintained to ensure its integrity.
 
@@ -1059,7 +1059,7 @@ A encrypted vCon uses [JWE] and takes the General JWE JSON Serialization Syntax 
 
 * iv: "String"
 
-    The string value of iv is the Initization Vector as constructed as defined in section 7.2.1 of [JWE].
+    The string value of iv is the Initialization Vector as constructed as defined in section 7.2.1 of [JWE].
 
 * ciphertext: "String"
 
