@@ -933,7 +933,7 @@ The url, alg and signature parameters and values are defined in [Externally Refe
 
 # Security Considerations
 
-The security concerts for vCons can put into two categories: making the conversation immutable through integrity verification and protecting the confidentiality of privacy of the parties to the conversation and/or their PII.
+The security concerns for vCons can put into two categories: making the conversation immutable through integrity verification and protecting the confidentiality of privacy of the parties to the conversation and/or their PII.
 These requirements along with need to evolve a vCon (e.g. adding analysis, translations and transcriptions) conflict in some ways.
 To enable this, multiple versions of a vCon may be created.
 Versions of a vCon may add information (e.g. analysis added to a prior vCon referenced by the appended ([appended](#appended))) and versions that remove information (e.g. redactions of privacy information removed from the vCon referenced in the redacted ([redacted](#redacted))).
@@ -1106,7 +1106,14 @@ IANA registration of new media subtype: vcon for media type application:
 
 # Example vCons
 
+This appendix contains example vCons in the unsigned, signed and encrypted form.
+The JSON has been indented for readability.
+Long text lines have been wrapped with a left hand white space indent for readability purposes.
+
 ## Two Party Call vCon With Inline Recording
+
+This example vCon is for a simple 2 party PSTN call.
+It has a single Dialog Object which contains a single channel wav format recording with the two parties audio mixed into the single channel.
 
 ~~~
 {::include examples/ab_call_int_rec.pp}
@@ -1118,11 +1125,17 @@ TODO: text vCon example
 
 ## Email Thread Multipart vCon
 
+The following is an unsigned form of an vCon for a 3 message email thread between 2 parties.
+The email messages are multipart MIME message bodies.
+
 ~~~
 {::include examples/ab_email_acct_prob_thread.pp}
 ~~~
 
 ## Email Thread Text vCon
+
+The following is an unsigned form of an vCon for a 3 message email thread between 2 parties.
+The email messages are plain text message bodies.
 
 ~~~
 {::include examples/ab_email_prob_followup_text_thread.pp}
@@ -1130,16 +1143,33 @@ TODO: text vCon example
 
 ## Two Party Call vCon With Externally Referenced Recording
 
+This example vCon is for a simple 2 party PSTN call.
+It has a single Dialog Object which reference a single channel wav format recording with the two parties audio mixed into the single channel.
+
 ~~~
 {::include examples/ab_call_ext_rec.pp}
 ~~~
 
 ## Signed vCon
+
+This example vCon is the signed form of the [Two Party Call vCon With Externally Referenced Recording](#two-party-call-vcon-with-externally-referenced-recording) example.
+The private key used to sign this can be found at:
+
+    https://raw.githubusercontent.com/vcon-dev/vcon/main/certs/fake_grp.key
+
+The certificate chain is included in the x5c parameter of the header Object.
+
 ~~~
 {::include examples/ab_call_ext_rec_signed.pp}
 ~~~
 
 ## Encrypted  vCon
+
+This example vCon is the encrypted form of the [Signed vCon](#signed-vcon) example.
+The private key to decrypt it can be found at:
+
+    https://raw.githubusercontent.com/vcon-dev/vcon/main/certs/fake_grp.key
+ 
 ~~~
 {::include examples/ab_call_ext_rec_encrypted.pp}
 ~~~
