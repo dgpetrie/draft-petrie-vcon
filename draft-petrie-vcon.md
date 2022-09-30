@@ -1169,7 +1169,7 @@ This example vCon is the encrypted form of the [Signed vCon](#signed-vcon) examp
 The private key to decrypt it can be found at:
 
     https://raw.githubusercontent.com/vcon-dev/vcon/main/certs/fake_grp.key
- 
+
 ~~~
 {::include examples/ab_call_ext_rec_encrypted.pp}
 ~~~
