@@ -73,7 +73,7 @@ normative:
 informative:
 
   JWT: RFC7519
-  
+
   SHA-512: RFC6234
 
   JMAP: RFC8620
