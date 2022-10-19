@@ -1125,7 +1125,7 @@ TODO: text vCon example
 
 ## Email Thread Multipart vCon
 
-The following is an unsigned form of an vCon for a 3 message email thread between 2 parties.
+The following is an unsigned form of an vCon for a 2 message email thread between 2 parties.
 The email messages are multipart MIME message bodies.
 
 ~~~
