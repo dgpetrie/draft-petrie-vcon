@@ -134,7 +134,7 @@ However, the storage, analysis and sharing of the data they contain is not curre
 Standardizing a container for conversation data (vCon) has numerous advantages, and enables the management of the conversation's content.
 For instance, a standard allows for tools to determine the contents of the conversation, such that privacy guarantees and duties can be accurately performed.
 As a storage mechanism, vCons can help normalize data lakes and allow for interchange between organizations and networks.
-The use of vCons can ease service integration by using a common container and format for enterprize communications.
+The use of vCons can ease service integration by using a common container and format for enterprise communications.
 A vCon becomes the standardized input to communication analysis tools and machine learning and categorization.
 For a sales lead organization, a vCon can be the container of assets sold to sales teams.
 For conversations of record, the vCon can be a legal instrument.
@@ -192,8 +192,8 @@ A conversation can become a verbal contract, making the conversation data a lega
 Having a standard container for the conversation data and asserting the integrity of the data make it easier to distribute the conversation data to the parties involved.
 
 The initial set of use cases for vCons are expected to be in the interchange between front end and back end application and lower layers of the network stack, critical for enablement of analysis of conversations.
-It is expected that javascript handling of vCons in the front end and RESTful intefaces and back end platforms will be used for operations and manipulaiton of vCons.
-Many media anaysis services which will be used with vCons, such as transcription, already use JSON based interfaces.
+It is expected that JavaScript handling of vCons in the front end and RESTful interfaces and back end platforms will be used for operations and manipulation of vCons.
+Many media analysis services which will be used with vCons, such as transcription, already use JSON based interfaces.
 For this reason, JSON has been chosen for the initial format binding of vCons and the scope of this document.
 Other bindings (e.g. [CBOR] or [ISOBMFF]) may be consider for vCon in the future in other documents.
 
@@ -431,7 +431,7 @@ The UUID MUST be globally unique.
 
     The DNS name string used in generating the uuid value SHOULD be the same FQHN, or a subdomain to allow for more distributed generation of UUIDs, as would used in the signing certificate as they are the same domains of uniqueness.
 
-### iat or createdat
+### iat or created_at
 
 TODO: Do we need a creation or signing date (e.g. [JWT] iat)?
 
