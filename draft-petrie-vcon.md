@@ -72,12 +72,12 @@ normative:
 
 informative:
 
-  CBOR: RFC7949
+  CBOR: RFC7049
 
   ISOBMFF:
     target: https://www.iso.org/standard/83102.html
     title: "Information technology -- Coding of audio-visual objects -- Part 12: ISO base media file format"
-    refcontext: ISO/IEC 14496-12:2022
+    refcontent: ISO/IEC 14496-12:2022
     date: January 2022
     org: International Organization for Standardization
 
