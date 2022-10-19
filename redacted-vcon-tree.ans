@@ -1,0 +1,31 @@
+                --------------
+Signed          | JWS        |
+redacted vCon:  |            | payload parameter
+                |    payload-|-- contains unsigned
+                -------------- / redacted vCon
+                              /
+            -------------    /
+vCon which  |vCon       |<---
+has been    |           | redacted parameter contains
+redacted:   |  redacted-|-- or refers to JWE
+            ------------- / encrypted unredacted vCon
+                         /
+                        /
+                       /
+                      /
+                     /
+                    / ---------------
+                    ->| JWE         | cyphertext
+Encrypted signed      |             | parameter
+unredacted vCon:      |  cyphertext-|--- contains
+                      ---------------  / JWS signed
+                                      / unredacted
+                  -------------      / vCon
+Signed            |JWS        |<-----
+unredacted vcon:  |           | payload contains 
+                  |   payload-|-- unsigned
+                  -------------  \ unredacted vCon
+                                  \   ----------
+                                   -->| vCon   |
+Unsigned unredacted vCon:             |        |
+                                      ----------

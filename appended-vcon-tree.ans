@@ -1,0 +1,29 @@
+                --------------
+Signed          | JWS        |
+appended vCon:  |            | payload parameter
+                |    payload-|-- contains unsigned
+                -------------- / appended vCon
+                              /
+            -------------    /
+vCon with   |vCon       |<---
+appended    |           | appended parameter contains
+data:       |  appended-|--- or refers to JWS
+            |  analysis |  / signed original vCon
+            ------------- / along with additional
+                         / converstational data
+                        / (e.g. analysis)
+                       /
+                      /
+                     /
+                    / ------------
+                    ->| JWS      | payload
+Encrypted signed      |          | parameter
+original vCon:        |  payload-|--- contains
+                      ------------  / unsigned
+                                   / original
+                  -------------   / vCon
+Original vCon:    |vCon       |<--
+                  |           |
+                  |   parties |
+                  |   dialog  |
+                  -------------

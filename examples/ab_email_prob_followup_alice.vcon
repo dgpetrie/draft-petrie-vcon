@@ -1,0 +1,31 @@
+{
+  "vcon": "0.0.1",
+  "parties": [
+    {
+      "mailto": "a@example.com",
+      "name": "Alice"
+    },
+    {
+      "mailto": "b@example.com",
+      "name": "Bob"
+    }
+  ],
+  "dialog": [
+    {
+      "type": "text",
+      "start": "2022-09-23T23:24:59.000+00:00",
+      "duration": 0,
+      "parties": [
+        0,
+        1
+      ],
+      "mimetype": "text/plain",
+      "encoding": "None",
+      "body": "Hi Bob:\nI just wanted to follow up to see that your account is ok now.\n\nRegards,\nAlice\n\n"
+    }
+  ],
+  "analysis": [],
+  "attachments": [],
+  "subject": "Account issue followup",
+  "uuid": "018380f8-60db-8464-973a-91e26eb8001b"
+}
