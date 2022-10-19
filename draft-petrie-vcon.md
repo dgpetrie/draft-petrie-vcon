@@ -72,11 +72,20 @@ normative:
 
 informative:
 
+  CBOR: RFC7949
+
+  ISOBMFF:
+    target: https://www.iso.org/standard/83102.html
+    title: "Information technology -- Coding of audio-visual objects -- Part 12: ISO base media file format"
+    refcontext: ISO/IEC 14496-12:2022
+    date: January 2022
+    org: International Organization for Standardization
+
+  JMAP: RFC8620
+
   JWT: RFC7519
 
   SHA-512: RFC6234
-
-  JMAP: RFC8620
 
   vCard: RFC7095
 
@@ -181,6 +190,12 @@ Conversations can have legal and regulatory significance.
 Regulations may require conversation of record to be stored for compliance.
 A conversation can become a verbal contract, making the conversation data a legal instrument.
 Having a standard container for the conversation data and asserting the integrity of the data make it easier to distribute the conversation data to the parties involved.
+
+The initial set of use cases for vCons are expected to be in the interchange between front end and back end application and lower layers of the network stack, critical for enablement of analysis of conversations.
+It is expected that javascript handling of vCons in the front end and RESTful intefaces and back end platforms will be used for operations and manipulaiton of vCons.
+Many media anaysis services which will be used with vCons, such as transcription, already use JSON based interfaces.
+For this reason, JSON has been chosen for the initial format binding of vCons and the scope of this document.
+Other bindings (e.g. [CBOR] or [ISOBMFF]) may be consider for vCon in the future in other documents.
 
 Requirements:
 
@@ -374,6 +389,7 @@ The JSON form of a vCon is contained in a JSON object in one of three forms:
 The unsigned form of the vCon has a single top level object.
 This top level vCon object is also contained as described in the [signed](#signed-form-of-vcon-object) and [encrypted](#encrypted-form-of-vcon-object) forms of the vCon.
 The selection of the JSON format enables interchange between application and lower layers of the network stack, critical for enablement of analysis of conversations.
+
 # Unsigned Form of vCon Object
 
 The unsigned form of the top level vCon object is necessary as in many cases, a vCon will be partially constructed and in process as conversation data is collected.
