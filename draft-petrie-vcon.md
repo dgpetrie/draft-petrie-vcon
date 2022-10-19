@@ -72,6 +72,8 @@ normative:
 
 informative:
 
+  JWT: RFC7519
+  
   SHA-512: RFC6234
 
   JMAP: RFC8620
@@ -114,13 +116,20 @@ The data contained in a vCon may be derived from any multimedia session, traditi
 The data in the container relating to the conversation may include Call Detail Records (CDR), call meta data, participant identity information (e.g. STIR PASSporT), the actual conversational data exchanged (e.g. audio, video, text), realtime or post conversational analysis and attachments of files exchanged during the conversation.
 A standardized conversation container enables many applications, establishes a common method of storage and interchange, and supports identity, privacy and security efforts (see {{vCon-white-paper}})
 
-
 --- middle
 
 # Introduction
 
-The generation of conversational data, contained in transcripts and multi-media files, is common in business, especially in customer facing organizations. However, the storage, analysis and sharing of the data they contain is not currently a standard.  Standardizing a container for conversation data (vCon) has numerous advantages, and enables the management of the conversation's content.  For instance, a standard allows for tools to determine the contents of the conversation, such that privacy guarantees and duties can be accurately performed. As a storage mechanism, vCons can help normalize data lakes and allow for interchange between organizations and networks. The use of vCons can ease service integration by using a common container and format for enterprise communications.  A vCon becomes the standardized input to communication analysis tools and machine learning and categorization.  For a sales lead organization, a vCon can be the container of assets sold to sales teams.  For conversations of record, the vCon can be a legal instrument.
-
+The generation of conversational data, contained in transcripts and multi-media files, is common in business, especially in customer facing organizations.
+However, the storage, analysis and sharing of the data they contain is not currently a standard.
+Standardizing a container for conversation data (vCon) has numerous advantages, and enables the management of the conversation's content.
+For instance, a standard allows for tools to determine the contents of the conversation, such that privacy guarantees and duties can be accurately performed.
+As a storage mechanism, vCons can help normalize data lakes and allow for interchange between organizations and networks.
+The use of vCons can ease service integration by using a common container and format for enterprize communications.
+A vCon becomes the standardized input to communication analysis tools and machine learning and categorization.
+For a sales lead organization, a vCon can be the container of assets sold to sales teams.
+For conversations of record, the vCon can be a legal instrument.
+For machine learning efforts, vCons can track what information was used in the training of models, so that as the result of a customer requested deletion of their data, the affected models can be identified.
 
 ## What's in a vCon?
 
@@ -131,7 +140,10 @@ The analysis portion contains data derived from the metadata and dialog portions
 Finally, the attachment portion contains any other documents, such as slide deck or sales lead information, which provides context and support for the conversation itself.
 The vCon may also container integrity checking information such as the issuer of the vCon and tamperproof features such as signatures.
 
-A vCon acts as the definition of the conversation, and are created by systems during and after the conversation itself.  Some communication modes, like SMS texting, lack natural session boundaries and require explicit definition.  vCons may have two or more parties involved, but at least one should be a human.  For instance, an interaction between a bot and a human is an appropriate scope for vCons, but a conversation between two bots would not.
+A vCon acts as the definition of the conversation, and are created by systems during and after the conversation itself.
+Some communication modes, like SMS texting, lack natural session boundaries and require explicit definition.
+vCons may have two or more parties involved, but at least one should be a human.
+For instance, an interaction between a bot and a human is an appropriate scope for vCons, but a conversation between two bots would not.
 
 Due to the size and complexity of some portions of a vCon, both inline and externally referenced dialog, analysis, attachments and other vCon reference assets are supported.
 For instance, vCons may reference a videoconference media recording as an external URL with an accompanying signature of the contents to detect tampering.
@@ -361,7 +373,7 @@ The JSON form of a vCon is contained in a JSON object in one of three forms:
 
 The unsigned form of the vCon has a single top level object.
 This top level vCon object is also contained as described in the [signed](#signed-form-of-vcon-object) and [encrypted](#encrypted-form-of-vcon-object) forms of the vCon.
-
+The selection of the JSON format enables interchange between application and lower layers of the network stack, critical for enablement of analysis of conversations.
 # Unsigned Form of vCon Object
 
 The unsigned form of the top level vCon object is necessary as in many cases, a vCon will be partially constructed and in process as conversation data is collected.
@@ -402,6 +414,10 @@ The UUID MUST be globally unique.
     * the variant and version fields are set as described for version 8 UUID
 
     The DNS name string used in generating the uuid value SHOULD be the same FQHN, or a subdomain to allow for more distributed generation of UUIDs, as would used in the signing certificate as they are the same domains of uniqueness.
+
+### iat or createdat
+
+TODO: Do we need a creation or signing date (e.g. [JWT] iat)?
 
 ### subject
 
