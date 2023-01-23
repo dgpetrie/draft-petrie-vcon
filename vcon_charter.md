@@ -10,6 +10,29 @@ Having a standard container for conversation data also allows for easier managem
 
 The VCON working group will define a standard container for conversation data and specify mechanisms to ensure the integrity and privacy of the data in the container.
 
+## Use Case 1: Privacy and Customer Data Protection Scenarios
+
+Having a cohesive, well defined container for conversation data, makes it easier to solve, track or answer the following:
+
+    * One company sent my customer recording to another for analysis. 
+        * How is the recipient assured of the integrity of the communication?
+        * How are they sure of the privacy?
+        * Where did this customer information come from?
+    * What information does a company have about me, and how can they express it when it's in analog form?
+    * In what machine learning models was my data used for training or testing?
+    * Does this recorded conversation contain personal information?  Can they guarantee that it doesn't?
+    * How can I measure the effectiveness of customer redaction tools?
+    * I want to switch carriers. How is my conversation data moved between them?
+    * I want to consolidate the conversation data across all modes of communication which are spread across silos for different product support teams and communication modes (e.g. text, web chat, email, VoIP).
+
+## Use Case 2: Integration of Conversation Analysis Services
+
+Service exist in the cloud and enterprise to perform analysis of conversation data.
+These all use proprietary means of containing the conversation data for input and output of analysis and machine learning processing.
+Without a standard container, the integration and use of these service requires custom and one off development.
+
+    * Define a standard for containing all conversation related data to ease integration of services which consume or output conversation data and analysis
+ 
 ## In Scope
 
 The scope of the VCON working group is:
