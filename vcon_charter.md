@@ -27,11 +27,15 @@ Having a cohesive, well defined container for conversation data, makes it easier
 
 ## Use Case 2: Integration of Conversation Analysis Services
 
-Service exist in the cloud and enterprise to perform analysis of conversation data.
+Services exist in the cloud and enterprise to perform analysis of conversation data.
 These all use proprietary means of containing the conversation data for input and output of analysis and machine learning processing.
 Without a standard container, the integration and use of these service requires custom and one off development.
 
   * Define a standard for containing all conversation related data to ease integration of services which consume or output conversation data and analysis
+  * My enterprise has multiple call centers (in house and hosted).  The call data has different formats for each of them.  I want to be able to feed the data into any hosted transcription server.
+  * I want to feed email, web chat, SMS and phone conversations for a given customer into machine learning based analysis to derive customer satisfaction over time or at specific points.
+  * I want to be able to easily switch from one call transcription service to another.
+  * My enterprise needs to label (or perform some analysis on) all email, web chat, SMS and phone conversations with the product(s) to which they reference.
  
 ## In Scope
 
@@ -51,7 +55,7 @@ The following are out of scope:
   * Transport mechanisms
   * Storage or databases specifications
 
-## Products
+## Milestones
 
 This group will produce:
   * Specification for a JSON based container for conversation data
