@@ -27,15 +27,22 @@ Having a cohesive, well defined container for conversation data, makes it easier
 
 ## Use Case 2: Integration of Conversation Analysis Services
 
-Services exist in the cloud and enterprise to perform analysis of conversation data.
-These all use proprietary means of containing the conversation data for input and output of analysis and machine learning processing.
-Without a standard container, the integration and use of these service requires custom and one off development.
+Various services exist in the cloud and enterprise to perform generation, analysis and storage of conversational data.
+Without a standard, these proprietary means of describing conversation data create information silos.
+In turn, these data silos create security and compliance issues, lower collaboration and less choice in the marketplace.
+A standard container that tracks data sharing, analysis and usage enables data orchestration and eliminates walled gardens of capability.
 
   * Define a standard for containing all conversation related data to ease integration of services which consume or output conversation data and analysis
-  * My enterprise has multiple call centers (in house and hosted).  The call data has different formats for each of them.  I want to be able to feed the data into any hosted transcription server.
+  * Define a standard that describes the analysis that was performed on the contained conversation, to establish a relationship between the conversations and which systems accessed it.
+  * Define a standard by which I can modify a conversation, and indicate the original conversation, without exposing the contents of the original conversation.
+  * I want to definitively answer what customer data exists in a recorded conversation, and assure its redaction or deletion in compliance with "Right to be Forgotten" Laws.
+  * I want to express the source of the conversation, and the express the path by which it has travelled across security boundaries.
+  * I want to express the parties in the conversation, so I can relate identity to the data that's been collected, across security boundaries.
+  * My enterprise has multiple call centers (in house and hosted). The call data has different formats for each of them. I want to be able to feed the data into any hosted transcription server.
   * I want to feed email, web chat, SMS and phone conversations for a given customer into machine learning based analysis to derive customer satisfaction over time or at specific points.
   * I want to be able to easily switch from one call transcription service to another.
   * My enterprise needs to label (or perform some analysis on) all email, web chat, SMS and phone conversations with the product(s) to which they reference.
+
  
 ## In Scope
 
