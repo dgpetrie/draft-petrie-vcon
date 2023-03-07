@@ -754,7 +754,7 @@ TODO: For an email thread, To and Cc parties are all passive.  Do we just put th
 
 ### originator
 
-The originator party for this dialog.  
+The originator party for this dialog.
 For email and text, this is the sender of the text.
 For audio and video, this is the caller or host of the call or conference.
 The originator attribute is only provided if the first party of the dialog Object parties list is NOT the originator.
