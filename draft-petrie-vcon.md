@@ -746,7 +746,22 @@ The party(s) which generated the text or recording for this piece of dialog are 
     The values in that array are either an integer or an array of integers which are the indices to the parties that contributed to the mix for the associated channel of the recording.
     The index for Party Objects SHOULD be included even if the party was silent the entire conversation.
 
+    It is implied that the first party in the dialog Object parties list, is the originator of the dialog.
+    However, in some situations, it is difficult to impose the constraint that the first channel of a recording is the originator.
+    If it is not possible to ensure the first channel and party listed is the originator, the optional originator attribute may be used to indicate the originator party.
+
 TODO: For an email thread, To and Cc parties are all passive.  Do we just put the sender as the party or do we want to list all of the recipients and by convention the sender is the first party?  Note that each dialog/email could have a difference set of recipients.
+
+### originator
+
+The originator party for this dialog.  
+For email and text, this is the sender of the text.
+For audio and video, this is the caller or host of the call or conference.
+The originator attribute is only provided if the first party of the dialog Object parties list is NOT the originator.
+
+* originator: "UnsignedInt" (optional)
+
+    The originator value is the index into the parties Objects Array, to the party that originated the dialog.
 
 ### mimetype
 
