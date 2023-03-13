@@ -758,7 +758,7 @@ The party(s) which generated the text or recording for this piece of dialog are 
 
     It is implied that the first party in the dialog Object parties list, is the originator of the dialog.
     However, in some situations, it is difficult to impose the constraint that the first channel of a recording is the originator.
-    If it is not possible to ensure the first channel and party listed is the originator, the optional originator parameter may be used to indicate the originator party.
+    If ensuring that the first channel and party listed is the originator is not possible, the optional originator parameter indicates the originator party.
     In other cases, there may be a separate recording file for each party in a conversation, where only one party is recorded per file.
     In this situation, it is necessary to indicate the originator as the dialog Object parties parameter will contain only one party and may not be the originator.
 
