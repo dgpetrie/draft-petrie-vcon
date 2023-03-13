@@ -798,7 +798,7 @@ This can be done in the filename parameter.
 
 ### Dialog Content
 
-The Dialog Object SHOULD contain the body and encoding parameters or the url, alg and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
+The Dialog Object SHOULD contain the body and encoding parameters or the url, alg and signature parameters for all dialog types other than "incomplete", MUST NOT be present for "incomplete" dialog types (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
 
 For inline included dialog:
 
@@ -818,7 +818,7 @@ The value of the disposition attribute provides the reason that the "call contro
 The term: "call control" is used in a loose sense, as there in not always a call involved, to differentiate from a call disposition that an agent may assign to a call to indicate the reason, issue addressed or outcome of a conversation.
 This latter definition of call disposition is not dialog, but analysis of the conversation and is not included in the dialog portion.
 
-* disposition: "String" (required for incomplete type dialogs)
+* disposition: "String" (required for incomplete type dialogs, SHOULD NOT be present for other dialog types)
 
     The value of the disposition attribute MUST be one of the following string:
 
@@ -826,8 +826,9 @@ This latter definition of call disposition is not dialog, but analysis of the co
     * "congestion" - a call or connection was attempted, but was unable to be completed due to system load
     * "failed" - a call or connection was attempted, but failed
     * "busy" - a call or connection was attempted, but the party was busy with another conversation
-    * "hung-up" - a call or connection was attempted, but the party hung-up before any conversation occurred
-    * "voicemail-no-message" - a call or connection was attempted, voicemail system answered, but no message was left (Note: if a message was left with the voicemail system this is no longer an "incomplete" type dialog, it is a "recording" type and the conversation SHOULD be included in the Dialog Content)
+    * "hung-up" - a call or connection was made, but the party hung-up before any conversation occurred
+    * "voicemail-no-message" - a call or connection was made, the voicemail system answered, but no message was left
+    Note: if a message was left with the voicemail system this is no longer an "incomplete" type dialog, it is a "recording" type and the conversation SHOULD be included in the Dialog Content
 
 ## Analysis Object
 
