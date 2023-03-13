@@ -828,7 +828,7 @@ This latter definition of call disposition is not dialog, but analysis of the co
     * "busy" - a call or connection was attempted, but the party was busy with another conversation
     * "hung-up" - a call or connection was attempted, but the party hung-up before any conversation occurred
     * "voicemail-no-message" - a call or connection was attempted, voicemail system answered, but no message was left (Note: if a message was left with the voicemail system this is no longer an "incomplete" type dialog, it is a "recording" type and the conversation SHOULD be included in the Dialog Content)
-    
+
 ## Analysis Object
 
 Analysis is a broad and in some cases developing field.
