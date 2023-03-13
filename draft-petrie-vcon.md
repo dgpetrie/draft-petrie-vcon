@@ -712,7 +712,11 @@ TODO: Is there other signalling data that we want to capture other than start an
 
 * type: "String"
 
-    The sting MUST have the value of either "recording" or "text"
+    The sting MUST have the value of either "recording", "text" or "incomplete".
+    A dialog of type "recording" has Dialog Content that either contains a body or refers to via url, which is a recording of the video and/or audio of a segment of the conversation.
+    A dialog of type "text" had  has Dialog Content that either contains a body or refers to via url, which contains the text from one of the parties for a segment of the conversation.
+    A dialog of type "incomplete" MUST NOT have Dialog Content, as the call or conversation failed to be setup to the point of exchanging any conversation.
+    Incomplete dialogs MUST have a disposition attribute which indicates why the call or conversations failed.
 
 
 ### start
@@ -807,6 +811,24 @@ Alternatively, for externally referenced dialog:
 * alg: "String"
 * signature: "String"
 
+### disposition
+
+If the dialog type is "incomplete", it must have a disposition attribute.
+The value of the disposition attribute provides the reason that the "call control" failed.
+The term: "call control" is used in a loose sense, as there in not always a call involved, to differentiate from a call disposition that an agent may assign to a call to indicate the reason, issue addressed or outcome of a conversation.
+This latter definition of call disposition is not dialog, but analysis of the conversation and is not included in the dialog portion.
+
+* disposition: "String" (required for incomplete type dialogs)
+
+    The value of the disposition attribute MUST be one of the following string:
+
+    * "no-answer" - a call or connection was attempted, but no one answered or accepted the connection
+    * "congestion" - a call or connection was attempted, but was unable to be completed due to system load
+    * "failed" - a call or connection was attempted, but failed
+    * "busy" - a call or connection was attempted, but the party was busy with another conversation
+    * "hung-up" - a call or connection was attempted, but the party hung-up before any conversation occurred
+    * "voicemail-no-message" - a call or connection was attempted, voicemail system answered, but no message was left (Note: if a message was left with the voicemail system this is no longer an "incomplete" type dialog, it is a "recording" type and the conversation SHOULD be included in the Dialog Content)
+    
 ## Analysis Object
 
 Analysis is a broad and in some cases developing field.
