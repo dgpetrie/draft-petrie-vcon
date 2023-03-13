@@ -87,6 +87,8 @@ informative:
 
   SHA-512: RFC6234
 
+  SIP-XFER: RFC5589
+
   vCard: RFC7095
 
   vCon-white-paper:
@@ -712,11 +714,15 @@ TODO: Is there other signalling data that we want to capture other than start an
 
 * type: "String"
 
-    The sting MUST have the value of either "recording", "text" or "incomplete".
+    The sting MUST have the value of either "recording", "text", "transfer" or "incomplete".
     A dialog of type "recording" has Dialog Content that either contains a body or refers to via url, which is a recording of the video and/or audio of a segment of the conversation.
     A dialog of type "text" had  has Dialog Content that either contains a body or refers to via url, which contains the text from one of the parties for a segment of the conversation.
-    A dialog of type "incomplete" MUST NOT have Dialog Content, as the call or conversation failed to be setup to the point of exchanging any conversation.
+    A dialog of type "transfer" does not capture actual conversation exchange, but rather captures operations, parties and relations between dialog segments.
+    A dialog of type "incomplete" or "transfer" MUST NOT have Dialog Content.
+    In the "incomplete" case the call or conversation failed to be setup to the point of exchanging any conversation.
     Incomplete dialogs MUST have a disposition parameter which indicates why the call or conversations failed.
+    In the "transfer" case, the conversation is recorded in other dialogs.
+    The Dialog Transfer parameters, are used to show the roles and relationships between the parties and other dialogs as the transfer process occurred.
 
 
 ### start
@@ -798,7 +804,7 @@ This can be done in the filename parameter.
 
 ### Dialog Content
 
-The Dialog Object SHOULD contain the body and encoding parameters or the url, alg and signature parameters for all dialog types other than "incomplete", these parameters MUST NOT be present for "incomplete" dialog types (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
+The Dialog Object SHOULD contain the body and encoding parameters or the url, alg and signature parameters for all dialog types other than "incomplete" and "transfer", these parameters MUST NOT be present for "incomplete" or "transfer" dialog types (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
 
 For inline included dialog:
 
@@ -829,7 +835,53 @@ This latter definition of call disposition is not dialog, but analysis of the co
     * "hung-up" - a call or connection was made, but the party hung-up before any conversation occurred
     * "voicemail-no-message" - a call or connection was made, the voicemail system answered, but no message was left
 
-    Note: if a message was left with the voicemail system this is no longer an "incomplete" type dialog, it is a "recording" type and the conversation SHOULD be included in the Dialog Content
+    Note: if a message was left with the voicemail system this is no longer an "incomplete" type dialog, it is a "recording" type and the conversation SHOULD be included in the Dialog Content.
+
+### Dialog Transfer
+
+A dialog of type "transfer" documents the rolls of three parties and the relationship between 2 or three dialog segments.
+In a transfer operation, the roles of the three parties to a transfer are defined in [SIP-XFER] as:
+
+    * Transferee
+    * Transferor
+    * Transfer Target
+
+There are two or three calls in which the parties are connected:
+
+    * original call
+    * consultative call (optional as this call may not get created)
+    * target call
+
+To capture the above roles and dialog segments, the following parameters are defined and SHOULD be present in the "transfer" type dialog and MUST NOT be present in other dialog types.
+
+    * transferee: "UnsignedInt"
+
+    The value of the transferee parameter is the index into the parties Object array to the party that played the role of the Transferee.
+
+    * transferor: "UnsignedInt"
+
+    The value of the transferor parameter is the index into the parties Object array to the party that played the role of the Transferor.
+
+    * transfer-target: "UnsignedInt"
+
+    The value of the transfer-target parameter is the index into the parties Object array to the party that played the role of the Transfer Target.
+
+    * original: "UnsignedInt"
+
+    The value of the original parameter is the index into the dialogs Object array to the "recording" or "text" type dialog for the original dialog between the Transferee and the Transferor.
+
+    * consultation: "UnsignedInt" (optional)
+
+    The value of the consultation parameter is the index into the dialogs Object array to the "recording", "text" or "incomplete" type dialog for the consultative dialog between the Transferor and the Transfer Target.
+
+    * target-dialog: "UnsignedInt"
+
+    The value of the target-dialog parameter is the index into the dialogs Object array to the "recording", "text" or "incomplete" type dialog for the target dialog between the Transferee and the Transfer Target.
+
+    A "transfer" type dialog MUST NOT contain the parties, originator, mimetype, filename or Dialog Content parameters.
+
+The "transfer" type dialog only captures the roles, operations and events of the parties and the dialog setup.
+It does not capture the purpose or reason for the transfer as that is analysis to be captures in the analysis section of the Vcon after the conversation has occurred.
 
 ## Analysis Object
 
