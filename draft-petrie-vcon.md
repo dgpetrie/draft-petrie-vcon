@@ -716,7 +716,7 @@ TODO: Is there other signalling data that we want to capture other than start an
     A dialog of type "recording" has Dialog Content that either contains a body or refers to via url, which is a recording of the video and/or audio of a segment of the conversation.
     A dialog of type "text" had  has Dialog Content that either contains a body or refers to via url, which contains the text from one of the parties for a segment of the conversation.
     A dialog of type "incomplete" MUST NOT have Dialog Content, as the call or conversation failed to be setup to the point of exchanging any conversation.
-    Incomplete dialogs MUST have a disposition attribute which indicates why the call or conversations failed.
+    Incomplete dialogs MUST have a disposition parameter which indicates why the call or conversations failed.
 
 
 ### start
@@ -752,9 +752,9 @@ The party(s) which generated the text or recording for this piece of dialog are 
 
     It is implied that the first party in the dialog Object parties list, is the originator of the dialog.
     However, in some situations, it is difficult to impose the constraint that the first channel of a recording is the originator.
-    If it is not possible to ensure the first channel and party listed is the originator, the optional originator attribute may be used to indicate the originator party.
+    If it is not possible to ensure the first channel and party listed is the originator, the optional originator parameter may be used to indicate the originator party.
     In other cases, there may be a separate recording file for each party in a conversation, where only one party is recorded per file.
-    In this situation, it is necessary to indicate the originator as the dialog Object parties attribute will contain only one party and may not be the originator.
+    In this situation, it is necessary to indicate the originator as the dialog Object parties parameter will contain only one party and may not be the originator.
 
 TODO: For an email thread, To and Cc parties are all passive.  Do we just put the sender as the party or do we want to list all of the recipients and by convention the sender is the first party?  Note that each dialog/email could have a difference set of recipients.
 
@@ -763,7 +763,7 @@ TODO: For an email thread, To and Cc parties are all passive.  Do we just put th
 The originator party for this dialog.
 For email and text, this is the sender of the text.
 For audio and video, this is the caller or host of the call or conference.
-The originator attribute is only provided if the first party of the dialog Object parties list is NOT the originator.
+The originator parameter is only provided if the first party of the dialog Object parties list is NOT the originator.
 
 * originator: "UnsignedInt" (optional)
 
@@ -798,7 +798,7 @@ This can be done in the filename parameter.
 
 ### Dialog Content
 
-The Dialog Object SHOULD contain the body and encoding parameters or the url, alg and signature parameters for all dialog types other than "incomplete", MUST NOT be present for "incomplete" dialog types (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
+The Dialog Object SHOULD contain the body and encoding parameters or the url, alg and signature parameters for all dialog types other than "incomplete", these parameters MUST NOT be present for "incomplete" dialog types (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
 
 For inline included dialog:
 
@@ -813,14 +813,14 @@ Alternatively, for externally referenced dialog:
 
 ### disposition
 
-If the dialog type is "incomplete", it must have a disposition attribute.
-The value of the disposition attribute provides the reason that the "call control" failed.
+If the dialog type is "incomplete", it must have a disposition parameter.
+The value of the disposition parameter provides the reason that the "call control" failed.
 The term: "call control" is used in a loose sense, as there in not always a call involved, to differentiate from a call disposition that an agent may assign to a call to indicate the reason, issue addressed or outcome of a conversation.
 This latter definition of call disposition is not dialog, but analysis of the conversation and is not included in the dialog portion.
 
 * disposition: "String" (required for incomplete type dialogs, SHOULD NOT be present for other dialog types)
 
-    The value of the disposition attribute MUST be one of the following string:
+    The value of the disposition parameter MUST be one of the following string:
 
     * "no-answer" - a call or connection was attempted, but no one answered or accepted the connection
     * "congestion" - a call or connection was attempted, but was unable to be completed due to system load
@@ -828,6 +828,7 @@ This latter definition of call disposition is not dialog, but analysis of the co
     * "busy" - a call or connection was attempted, but the party was busy with another conversation
     * "hung-up" - a call or connection was made, but the party hung-up before any conversation occurred
     * "voicemail-no-message" - a call or connection was made, the voicemail system answered, but no message was left
+
     Note: if a message was left with the voicemail system this is no longer an "incomplete" type dialog, it is a "recording" type and the conversation SHOULD be included in the Dialog Content
 
 ## Analysis Object
