@@ -10,6 +10,45 @@ Responsible AD: [Murray Kucherawy](mailto:superuser@gmail.com)
 
 BOF proponents: [Dan Petrie](mailto:dpetrie@sipez.com) and [Thomas Howe](mailto:ghostofbasho@gmail.com)
 
+[Meeting coordinates](https://notes.ietf.org/#Meeting-Coordinates)
+
+----
+## Administrivia - Chairs, 10 minutes
+
+### Greetings and welcome from the chairs
+
+* The ritual capture of Notetakers:
+
+* The gentler recruiting of someone to watch Meetecho/Zulip chat for questions:
+
+### Agenda Bash
+
+* Any changes to the posted agenda, before we get started?
+
+## Overview - Chairs, 10 minutes
+
+*
+
+## Use Cases driving the BOF request and charter - Thomas McCarthy-Howe, 20 minutes
+
+*
+
+## Proposed charter walkthrough - Dan Petrie, 20 minutes
+
+*
+
+## Open Discussion - Chairs, 20 minutes
+
+*
+
+## [RFC 5434](https://www.rfc-editor.org/rfc/rfc5434#section-4)-Style Questions - Chairs with AD support, 20 minutes
+
+*
+
+## Next Steps - AD, 10 minutes
+
+*
+
 ----
 ## Meeting Coordinates:
 
@@ -27,29 +66,5 @@ Zulip chat for this session is [here](https://zulip.ietf.org/#narrow/stream/vcon
 
 See in datatracker schedule [here](https://datatracker.ietf.org/meeting/116/agenda#row-116-2023-03-29-wed-0030-art-vcon).
 
-----
-## Administrivia - Chairs, 10 minutes
-
-Greetings and welcome from the chairs
-
-* The ritual capture of Notetakers:
-
-* The gentler recruiting of someone to watch Meetecho/Zulip chat for questions:
-
-Agenda Bash
-
-* Any changes to the posted agenda, before we get started?
-
-## Overview - Chairs, 10 minutes
-
-## Use Cases driving the BOF request and charter - Proponents, 20 minutes
-
-## Proposed charter walkthrough - Chairs, 20 minutes
-
-## Open Discussion - Chairs, 20 minutes
-
-## [RFC 5434](https://www.rfc-editor.org/rfc/rfc5434#section-4)-Style Questions - Chairs with AD support, 20 minutes
-
-## Next Steps - AD, 10 minutes
 
 
