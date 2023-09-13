@@ -2,46 +2,71 @@
 
 ## Introduction and Group Overview
 
-The generation of conversational data, contained in transcripts and multi-media files, is common in business, especially in customer facing organizations.
-However, the storage, analysis and sharing of the data they contain is not currently a standard.
-Standardizing a container for conversation data (vCon) has numerous advantages, and enables the management of the conversation's content.
-For instance, a standard allows for tools to determine the contents of the conversation, such that privacy guarantees and duties can be accurately performed.
-Having a standard container for conversation data also allows for easier management of conversation data, privacy concerns and management of party related data.
+The vCon work group is about passing conversational data.
+Such data is commonly generated and collected in business environments, from chat logs to transcripts to recordings.
+Most systems provide way to store such information, but there are not many standards or interoperability within the storage or transmission mechanisms or formats.
 
-The VCON working group will define a standard container for conversation data and specify mechanisms to ensure the integrity and privacy of the data in the container.
+The two opposing forces influencing such information passing is trying to enforce privacy of personal data and the ability and interest to use conversations in various ways, e.g.,  AI analysis.
+For the first force the key is knowing what information exists, where it comes from, and being able to protect it appropriately. Or being able to refer to conversations without exposing their contents or assure suitable redaction has been performed.
+For the second force the key is being able to integrate data between multiple systems (phones, chat systems, email, etc.), move data when transitioning from one software or provider to another, and so on.
+There is a lot of conversational data already being exchanged, but using proprietary formats and per-case engineered exchange solutions, from using FTP and other legacy components, file naming conventions, and so on.
+There are also three open source systems implementing vCon.
 
-## Use Case 1: Privacy and Customer Data Protection Scenarios
+The work group is to define a JSON-based container for conversational data, along with mechanisms to protect the integrity and privacy of data in the container.
+The group may also work on new media types to support analysis, annotation or transcription, in case such media types do not exist today. Transport and storage are not in scope, nor are APIs.
 
-Having a cohesive, well defined container for conversation data, makes it easier to solve, track or answer the following:
 
-  * One company sent my customer recording to another for analysis. 
-    * How is the recipient assured of the integrity of the communication?
-    * How are they sure of the privacy?
-    * Where did this customer information come from?
-  * What information does a company have about me, and how can they express it when it's in analog form?
-  * In what machine learning models was my data used for training or testing?
-  * Does this recorded conversation contain personal information?  Can they guarantee that it doesn't?
-  * How can I measure the effectiveness of customer redaction tools?
-  * I want to switch carriers. How is my conversation data moved between them?
-  * I want to consolidate the conversation data across all modes of communication which are spread across silos for different product support teams and communication modes (e.g. text, web chat, email, VoIP).
+## Use Case 1: Contact Center Data Exchange
 
-## Use Case 2: Integration of Conversation Analysis Services
+Contact centers manage communications with a company's customers.
+Staff in a contact center have conversations with customers using phone calls, emails, texts, and other messaging systems.
+The contact center may be operated by the company or a 3rd party.
+The company would like to have a standard way to:
 
-Various services exist in the cloud and enterprise to perform generation, analysis and storage of conversational data.
-Without a standard, these proprietary means of describing conversation data create information silos.
-In turn, these data silos create security and compliance issues, lower collaboration and less choice in the marketplace.
-A standard container that tracks data sharing, analysis and usage enables data orchestration and eliminates walled gardens of capability.
+  * Retrieve the conversation data from the in house or 3rd party contact center
+  * Provide the conversation data to a service to keep recordings for conversations of record or for compliance reasons
+  * Provide the conversation data to a service to analyze and provide quality management in the contact center
+  * Provide the conversation data to a service to provide speech analytics
+  * Redact or hide information in the conversation such personally identifiable information (PII) and payment card information (PCI) that does not need to be disclosed to some consumers of the conversation data
+  * Contain the entire conversation or omni channel where the conversation takes place in multiple modes of communication such as SMS, phone call, emails, texts, and other messaging
+  * Provide means of protecting privacy during exchange using encryption
 
-  * Define a standard for containing all conversation related data to ease integration of services which consume or output conversation data and analysis
-  * Define a standard that describes the analysis that was performed on the contained conversation, to establish a relationship between the conversations and which systems accessed it.
-  * Define a standard by which I can modify a conversation, and indicate the original conversation, without exposing the contents of the original conversation.
-  * I want to definitively answer what customer data exists in a recorded conversation, and assure its redaction or deletion in compliance with "Right to be Forgotten" Laws.
-  * I want to express the source of the conversation, and the express the path by which it has travelled across security boundaries.
-  * I want to express the parties in the conversation, so I can relate identity to the data that's been collected, across security boundaries.
-  * My enterprise has multiple call centers (in house and hosted). The call data has different formats for each of them. I want to be able to feed the data into any hosted transcription server.
-  * I want to feed email, web chat, SMS and phone conversations for a given customer into machine learning based analysis to derive customer satisfaction over time or at specific points.
-  * I want to be able to easily switch from one call transcription service to another.
-  * My enterprise needs to label (or perform some analysis on) all email, web chat, SMS and phone conversations with the product(s) to which they reference.
+## Use Case 2: Non-Call Center Customer Relationship Management
+
+People working outside of a contact centers may have customer relationship management (CRM) responsibilities at their companies.
+They may be performing as sales persons, account management, business development or general management.
+The customer they they interact with may be internal to the company.
+The requirements for this case, at a high level are not largely different from the Contact Center case.
+The primary difference is that they do not have contact center staff or an IT organization providing them support
+The user has no control or choice over the phone or communication systems that they must use.
+Having a standard container for conversation data enables them to:
+
+  * Retrieve the conversation data from their phone system provider or communications systems providers
+  * Feed the conversation data to a SAAS provider accepting a standard conversation container as input and providing numerous services such as:
+    * transcription
+    * note taking
+    * annotations such as action items
+    * importing to a CRM system
+    * coaching and mentoring
+
+
+## Use Case 3: Conversations of Record
+
+In some contact centers or company functions, it may be required to capture conversation data and maintain them as a conversation of record.
+For examples emergency service contact centers (ECRIT) may be required to record all information related to an emergency call.
+In some call centers, compliance reasons may require cording of conversation and related information
+
+  * The integrity of the captured conversation and meta data may be the most critical feature in this used case
+  * Location of one or more of the parties to the conversation may be relevant to the conversation of record
+
+
+## Use Case 4: Message History Exchange
+
+Today many instant messaging applications allow multiple clients for the same user, ex: laptop and mobile, or old mobile phone migrating to new mobile phone.
+Being able to share the message history from an existing device to a new device seems like a nice way to share messages that the new client could not have an end-to-end session for.
+
+Another case is when you have a group chat with substantive discussion and then add some other users who were not party to the conversation.
+Allowing an administrator in the group be able to catch them up by sharing message history from some relevant point in the past would be a nice to have feature.
 
  
 ## In Scope
@@ -50,8 +75,11 @@ The scope of the VCON working group is:
 
   * Define a JSON based standard container and Media type to contain and/or reference conversational data including: call style meta data, recordings, data exchanged or presented in the conversations, conversation analysis, transcriptions, translations and annotations
   * Define/specify a mechanism for proving integrity of the conversation data
-  * Define/specify a mechanism for encrypting conversation data protect the privacy of conversation parties
+  * Define/specify a mechanism for encrypting of the objects enclosed in the vCon conversation data container to  provide confidentiality of the data independent of transport such that some parts of the vCon may be disclosed to different parties
+
   * Determine if there is need for defining media types and standard containers for some small set of analysis, annotation or transcription data
+  * Data minimization should be considered for each of the use case
+  * Create one or more use cases I-Ds to expand upon the use cases in this charter
 
 ## Out of Scope
 
@@ -61,6 +89,7 @@ The following are out of scope:
   * Real-time streaming or updating of conversational data
   * Transport mechanisms
   * Storage or databases specifications
+  * The encryption keying.
 
 ## Milestones
 
