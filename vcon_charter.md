@@ -10,11 +10,12 @@ The two opposing forces influencing such information passing are trying to enfor
 For the first force the key is knowing what information exists, where it comes from, and being able to protect it appropriately. Or being able to refer to conversations without exposing their contents or assure suitable redaction has been performed.
 For the second force the key is being able to integrate data between multiple systems (phones, chat systems, email, etc.), move data when transitioning from one software or provider to another, and so on.
 There is a lot of conversational data already being exchanged, but using proprietary formats and per-case engineered exchange solutions, from using FTP and other legacy components, to file naming conventions, and so on.
-There are also three open source systems implementing vCon.
+There are also open source systems implementing vCon which may yield input to the requirements.
 
-The working group will define a JSON-based container for conversational data, along with mechanisms to protect the integrity and privacy of data in the container.
-The group may also work on new media types to support analysis, annotation or transcription, in case such media types do not exist today. Transport and storage are not in scope, nor are APIs.
-
+TODO:
+Communicaitons System -> Data Owner/Consumer
+Data Owner/Consumer -> Analysis or Storage Services
+Analysis Services -> Data Consumer
 
 ## Use Case 1: Contact Center Data Exchange
 
@@ -28,8 +29,8 @@ The company would like to have a standard way to accomplish at least the followi
   * Provide the conversation data to a service to analyze and provide quality management in the contact center
   * Provide the conversation data to a service to provide speech analytics
   * Redact or hide information in the conversation such as personally identifiable information (PII) and payment card information (PCI) that does not need to be disclosed to some consumers of the conversation data
-  * Contain the entire conversation or omni channel where the conversation takes place in multiple modes of communication such as SMS, phone call, emails, texts, and other messaging
-  * Provide means of protecting privacy during exchange using encryption
+  * Contain the entire conversation or omnichannel where the conversation takes place in multiple modes of communication such as SMS, phone call, emails, texts, and other messaging
+  * Provide means of protecting privacy or confidentiality during exchange using encryption
 
 ## Use Case 2: Non-Call Center Customer Relationship Management
 
@@ -42,9 +43,9 @@ The user has no control or choice over the phone or communication systems that t
 Having a standard container for conversation data enables them to:
 
   * Retrieve the conversation data from their phone system provider or communications systems providers
-  * Feed the conversation data to a SAAS provider accepting a standard conversation container as input and providing numerous services such as:
+  * Feed the conversation data to a SaaS provider accepting a standard conversation container as input and providing numerous services such as:
     * transcription
-    * note taking
+    * note-taking
     * annotations such as action items
     * importing to a CRM system
     * coaching and mentoring
@@ -56,7 +57,7 @@ In some contact centers or company functions, it may be required to capture conv
 For example emergency service contact centers (ECRIT) may be required to record all information related to an emergency call.
 In some call centers, compliance reasons may require recording of conversation and related information
 
-  * The integrity of the captured conversation and meta data may be the most critical feature in this use case
+  * The integrity of the captured conversation and metadata may be the most critical feature in this use case
   * Location of one or more of the parties to the conversation may be relevant to the conversation of record
 
 
@@ -73,9 +74,9 @@ Allowing an administrator in the group be able to catch them up by sharing messa
 
 The scope of the VCON working group is:
 
-  * Define a JSON based standard container and Media type to contain and/or reference conversational data including: call style meta data, recordings, data exchanged or presented in the conversations, conversation analysis, transcriptions, translations and annotations
-  * Define/specify a mechanism for proving integrity of the conversation data
-  * Define/specify a mechanism for encrypting of the objects enclosed in the vCon conversation data container to  provide confidentiality of the data independent of transport such that some parts of the vCon may be disclosed to different parties
+  * Define a JSON based standard container and Media type to contain and/or reference conversational data including: call style metadata, recordings, data exchanged or presented in the conversations, conversation analysis, transcriptions, translations and annotations
+  * Define/specify the use of an existing mechanism for proving integrity and optionally authenticity of the conversation data
+  * Define/specify the use of an existing mechanism for encrypting of the objects enclosed in the vCon conversation data container to provide privacy of the participants and/or confidentiality of the data independent of transport such that some parts of the vCon may be disclosed to different parties
 
   * Determine if there is need for defining media types and standard containers for some small set of analysis, annotation or transcription data
   * Consider data minimization for each of the use cases
@@ -89,7 +90,10 @@ The following are out of scope:
   * Real-time streaming or updating of conversational data
   * Transport mechanisms
   * Storage or databases specifications
-  * The encryption keying.
+  * The key management
+  * API definitions
+  * Definition of a new object security model  
+    It is expected that JOSE or other existing IETF technology is suffient.
 
 ## Milestones
 
