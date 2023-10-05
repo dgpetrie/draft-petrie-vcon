@@ -6,13 +6,13 @@ The vCon work group is about passing conversational data.
 Such data is commonly generated and collected in business environments, from chat logs to transcripts to recordings.
 Most systems provide way to store such information, but there are not many standards or interoperability within the storage or transmission mechanisms or formats.
 
-The two opposing forces influencing such information passing is trying to enforce privacy of personal data and the ability and interest to use conversations in various ways, e.g.,  AI analysis.
+The two opposing forces influencing such information passing are trying to enforce privacy of personal data and providing the ability and interest to use conversations in various ways, e.g.,  AI analysis.
 For the first force the key is knowing what information exists, where it comes from, and being able to protect it appropriately. Or being able to refer to conversations without exposing their contents or assure suitable redaction has been performed.
 For the second force the key is being able to integrate data between multiple systems (phones, chat systems, email, etc.), move data when transitioning from one software or provider to another, and so on.
-There is a lot of conversational data already being exchanged, but using proprietary formats and per-case engineered exchange solutions, from using FTP and other legacy components, file naming conventions, and so on.
+There is a lot of conversational data already being exchanged, but using proprietary formats and per-case engineered exchange solutions, from using FTP and other legacy components, to file naming conventions, and so on.
 There are also three open source systems implementing vCon.
 
-The work group is to define a JSON-based container for conversational data, along with mechanisms to protect the integrity and privacy of data in the container.
+The working group will define a JSON-based container for conversational data, along with mechanisms to protect the integrity and privacy of data in the container.
 The group may also work on new media types to support analysis, annotation or transcription, in case such media types do not exist today. Transport and storage are not in scope, nor are APIs.
 
 
@@ -21,23 +21,23 @@ The group may also work on new media types to support analysis, annotation or tr
 Contact centers manage communications with a company's customers.
 Staff in a contact center have conversations with customers using phone calls, emails, texts, and other messaging systems.
 The contact center may be operated by the company or a 3rd party.
-The company would like to have a standard way to:
+The company would like to have a standard way to accomplish at least the following:
 
   * Retrieve the conversation data from the in house or 3rd party contact center
   * Provide the conversation data to a service to keep recordings for conversations of record or for compliance reasons
   * Provide the conversation data to a service to analyze and provide quality management in the contact center
   * Provide the conversation data to a service to provide speech analytics
-  * Redact or hide information in the conversation such personally identifiable information (PII) and payment card information (PCI) that does not need to be disclosed to some consumers of the conversation data
+  * Redact or hide information in the conversation such as personally identifiable information (PII) and payment card information (PCI) that does not need to be disclosed to some consumers of the conversation data
   * Contain the entire conversation or omni channel where the conversation takes place in multiple modes of communication such as SMS, phone call, emails, texts, and other messaging
   * Provide means of protecting privacy during exchange using encryption
 
 ## Use Case 2: Non-Call Center Customer Relationship Management
 
-People working outside of a contact centers may have customer relationship management (CRM) responsibilities at their companies.
+People working outside of contact centers may have customer relationship management (CRM) responsibilities at their companies.
 They may be performing as sales persons, account management, business development or general management.
-The customer they they interact with may be internal to the company.
-The requirements for this case, at a high level are not largely different from the Contact Center case.
-The primary difference is that they do not have contact center staff or an IT organization providing them support
+The customer that they interact with may be internal to the company.
+The requirements for this case, at a high level, are not largely different from the Contact Center case.
+The primary difference is that they do not have contact center staff or an IT organization providing them support.
 The user has no control or choice over the phone or communication systems that they must use.
 Having a standard container for conversation data enables them to:
 
@@ -53,10 +53,10 @@ Having a standard container for conversation data enables them to:
 ## Use Case 3: Conversations of Record
 
 In some contact centers or company functions, it may be required to capture conversation data and maintain them as a conversation of record.
-For examples emergency service contact centers (ECRIT) may be required to record all information related to an emergency call.
-In some call centers, compliance reasons may require cording of conversation and related information
+For example emergency service contact centers (ECRIT) may be required to record all information related to an emergency call.
+In some call centers, compliance reasons may require recording of conversation and related information
 
-  * The integrity of the captured conversation and meta data may be the most critical feature in this used case
+  * The integrity of the captured conversation and meta data may be the most critical feature in this use case
   * Location of one or more of the parties to the conversation may be relevant to the conversation of record
 
 
@@ -78,8 +78,8 @@ The scope of the VCON working group is:
   * Define/specify a mechanism for encrypting of the objects enclosed in the vCon conversation data container to  provide confidentiality of the data independent of transport such that some parts of the vCon may be disclosed to different parties
 
   * Determine if there is need for defining media types and standard containers for some small set of analysis, annotation or transcription data
-  * Data minimization should be considered for each of the use case
-  * Create one or more use cases I-Ds to expand upon the use cases in this charter
+  * Consider data minimization for each of the use cases
+  * Create one or more use case I-Ds to expand upon the use cases in this charter
 
 ## Out of Scope
 
