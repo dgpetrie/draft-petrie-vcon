@@ -17,22 +17,26 @@ The use of a standard for conversation container will focus on the following dat
   * Data Owner/Consumer to Analysis or Storage Services
   * Analysis Services to Data Consumer
 
-The Communication System is an application, service or system which is able to capture the the conversation metadata and the conversation.  The Analysis Services will likely add data to an existing conversation container.  It should be noted that these entities are not always distinct.  For example the Communcations System may also provide some analysis data.
+The Communication System is an application, service or system which is able to capture the the conversation metadata and the conversation.
+The Analysis Services will add data to existing conversation data container.
+It should be noted that these entities are not always distinct.
+For example the Communications System may also provide some analysis data.
+It should also be noted that these entities may also exist in multitude.
+For example an enterprise may have a communication system for each mode (e.g. text, message, voice, video) or for each corporate product or division.
 
  
 ## In Scope
 
 The scope of the VCON working group is:
 
-### Standards Track RFC Outputs
+### Standards Track RFC Output
 
-    * Define a JSON based standard container and Media type to contain and/or reference conversational data including: call style metadata, recordings, data exchanged or presented in the conversations, conversation analysis, transcriptions, translations and annotations
-    * Define/specify the use of an existing mechanism for proving integrity and optionally authenticity of the conversation data
-    * Define/specify the use of an existing mechanism for encrypting of the objects enclosed in the vCon conversation data container to provide privacy of the participants and/or confidentiality of the data independent of transport such that some parts of the vCon may be disclosed to different parties
+  * Define a JSON based standard container and Media type to contain and/or reference conversational data including: call style metadata, recordings, data exchanged or presented in the conversations, conversation analysis, transcriptions, translations and annotations
+  * Define/specify the use of an existing mechanism for proving integrity and optionally authenticity of the conversation data
+  * Define/specify the use of an existing mechanism for encrypting of the objects enclosed in the vCon conversation data container to provide privacy of the participants and/or confidentiality of the data independent of transport such that some parts of the vCon may be disclosed to different parties
+  * Determine if there is need for defining media types and standard containers for some small set of analysis, annotation or transcription data
 
-    * Determine if there is need for defining media types and standard containers for some small set of analysis, annotation or transcription data
-
-### Informational Internet Draft Outputs
+### Informational Internet Draft Output
 The Working Group may develop use cases in drafts for reference, but there is no expectation they will be published as an RFC.
 The use cases should include considerations for data minimization.
 The Working Group may consider the following as well as other use cases:
