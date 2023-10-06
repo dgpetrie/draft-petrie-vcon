@@ -12,7 +12,7 @@ For the second force the key is being able to integrate data between multiple sy
 There is a lot of conversational data already being exchanged, but using proprietary formats and per-case engineered exchange solutions, from using FTP and other legacy components, to file naming conventions, and so on.
 There are also open source systems implementing vCon which may yield input to the requirements.
 
-The use of a standard for conversation container will focus on the following data exchange scenarios:
+The use of a standard for a conversation data container will focus on the following data exchange scenarios:
   * Communication System to Data Owner/Consumer
   * Data Owner/Consumer to Analysis or Storage Services
   * Analysis Services to Data Consumer
