@@ -4,7 +4,7 @@
 
 The vCon work group is about passing conversational data.
 Such data is commonly generated and collected in business environments, from chat logs to transcripts to recordings.
-Most systems provide way to store such information, but there are not many standards or interoperability within the storage or transmission mechanisms or formats.
+Most systems provide a way to store such information, but there are not many standards or interoperability within the storage or transmission mechanisms or formats.
 
 The two opposing forces influencing such information passing are trying to enforce privacy of personal data and providing the ability and interest to use conversations in various ways, e.g.,  AI analysis.
 For the first force the key is knowing what information exists, where it comes from, and being able to protect it appropriately. Or being able to refer to conversations without exposing their contents or assure suitable redaction has been performed.
@@ -17,12 +17,12 @@ The use of a standard for a conversation data container will focus on the follow
   * Data Owner/Consumer to Analysis or Storage Services
   * Analysis Services to Data Consumer
 
-The Communication System is an application, service or system which is able to capture the the conversation metadata and the conversation.
-The Analysis Services will add data to existing conversation data container.
+The Communication System is an application, service or system which is able to capture the conversation metadata and the conversation.
+The Analysis Services will add data to an existing conversation data container.
 It should be noted that these entities are not always distinct.
-For example the Communications System may also provide some analysis data.
+For example, the Communications System may also provide some analysis data.
 It should also be noted that these entities may also exist in multitude.
-For example an enterprise may have a communication system for each mode (e.g. text, message, voice, video) or for each corporate product or division.
+For example, an enterprise may have a communication system for each mode (e.g., text, message, voice, video) or for each corporate product or division.
 
  
 ## In Scope
@@ -31,7 +31,7 @@ The scope of the VCON working group is:
 
 ### Standards Track RFC Output
 
-  * Define a JSON based standard container and Media type to contain and/or reference conversational data including: call style metadata, recordings, data exchanged or presented in the conversations, conversation analysis, transcriptions, translations and annotations
+  * Define a JSON based standard container and Media type to contain and/or reference conversational data, including call style metadata, recordings, data exchanged or presented in the conversations, conversation analysis, transcriptions, translations and annotations
   * Define/specify the use of an existing mechanism for proving integrity and optionally authenticity of the conversation data
   * Define/specify the use of an existing mechanism for encrypting of the objects enclosed in the vCon conversation data container to provide privacy of the participants and/or confidentiality of the data independent of transport such that some parts of the vCon may be disclosed to different parties
   * Determine if there is need for defining media types and standard containers for some small set of analysis, annotation or transcription data
