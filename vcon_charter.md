@@ -1,4 +1,4 @@
-#The  VCON BOF Charter Proposal
+#The vCon Charter Proposal
 
 ## Introduction and Group Overview
 
