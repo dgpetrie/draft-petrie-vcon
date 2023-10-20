@@ -10,13 +10,13 @@ EXAMPLES=simple-vcon.vcon ab_call_ext_rec.vcon \
          ab_email_prob_followup_text_thread.vcon
 INCLUDES=$(EXAMPLES:.vcon=.pp)
 #VCON_PYPATH="${VCON_PATH}vcon/vcon:${VCON_PATH}vcon/vcon/bin"
-VCON_PYPATH="${VCON_PATH}vcon"
-VCON=${VCON_PATH}vcon/vcon/bin/vcon
-CERTPATH=${VCON_PATH}vcon/certs/
+VCON_PYPATH="${VCON_PATH}py-vcon"
+VCON=${VCON_PATH}py-vcon/vcon/bin/vcon
+CERTPATH=${VCON_PATH}py-vcon/certs/
 
 all: ${VCON_PATH}vcon ${INCLUDES}
 
-${VCON_PATH}/vcon:
+${VCON_PATH}/py-vcon:
 	(cd ${VCON_PATH} ; git clone https://github.com/vcon-dev/vcon.git)
 
 vcon_includes: $(INCLUDES)
