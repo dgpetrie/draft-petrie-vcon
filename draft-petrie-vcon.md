@@ -979,6 +979,12 @@ As most modes of communication, that allow the exchange of files, do not constra
 
 TODO: Do we want a semantic type like: contract or presentation?  Or a subject or title.
 
+### start
+
+The start parameter contains the date and time that the Attachment Object was sent/exchanged.
+
+* start: "Date"
+
 ### party
 
 In most conversations, ancillary documents originate from one of the parties to the conversation.
