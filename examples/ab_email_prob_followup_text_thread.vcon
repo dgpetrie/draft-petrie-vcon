@@ -21,7 +21,7 @@
         1
       ],
       "mimetype": "text/plain",
-      "encoding": "None",
+      "encoding": "none",
       "body": "Hi Bob:\nI just wanted to follow up to see that your account is ok now.\n\nRegards,\nAlice\n\n"
     },
     {
@@ -33,7 +33,7 @@
         0
       ],
       "mimetype": "text/plain; charset=UTF-8",
-      "encoding": "None",
+      "encoding": "none",
       "body": "Hi Alice:\nAll is fine. Thanks.\n\n    On Friday, September 23, 2022, 23:24:59 PM UTC, Alice <a@example.com> wrote:  \n \n  Hi Bob:\n  I just wanted to follow up to see that your account is ok now.\n  \n  Regards,\n  Alice\n"
     },
     {
@@ -45,14 +45,14 @@
         1
       ],
       "mimetype": "text/plain",
-      "encoding": "None",
+      "encoding": "none",
       "body": "Awesome!\n\n    On Friday, September 23, 2022, 23:34: PM UTC, Bob <b@example.com> wrote:  \n\n  Hi Alice:\n  All is fine. Thanks.\n  \n      On Friday, September 23, 2022, 23:24:59 PM UTC, Alice <a@example.com> wrote:  \n   \n    Hi Bob:\n    I just wanted to follow up to see that your account is ok now.\n    \n    Regards,\n    Alice\n"
     }
   ],
   "analysis": [],
   "attachments": [],
-  "created_at": "2023-10-20T18:01:35.636+00:00",
+  "created_at": "2023-10-20T23:36:51.450+00:00",
   "redacted": {},
   "subject": "Account issue followup",
-  "uuid": "018b4e3f-f297-8876-b9a2-279e0d16bc46"
+  "uuid": "018b4f72-e3fb-8770-b9a2-279e0d16bc46"
 }
