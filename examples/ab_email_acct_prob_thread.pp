@@ -1,5 +1,6 @@
 {
   "vcon": "0.0.1",
+  "group": [],
   "parties": [
     {
       "mailto": "b@example.com",
@@ -116,6 +117,8 @@
   ],
   "analysis": [],
   "attachments": [],
+  "created_at": "2023-10-20T18:01:34.578+00:00",
+  "redacted": {},
   "subject": "Account problem",
-  "uuid": "0183806b-f18f-8c84-973a-91e26eb8001b"
+  "uuid": "018b4e3f-ee7e-83ec-b9a2-279e0d16bc46"
 }
