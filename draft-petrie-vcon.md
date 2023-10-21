@@ -142,8 +142,9 @@ The vCon may also container integrity checking information such as the issuer of
 
 A vCon acts as the definition of the conversation, and are created by systems during and after the conversation itself.
 Some communication modes, like SMS texting, lack natural session boundaries and require explicit definition.
-vCons may have two or more parties involved, but at least one should be a human.
-For instance, an interaction between a bot and a human is an appropriate scope for vCons, but a conversation between two bots would not.
+vCons may involve two or more parties, but in terminology of the GDPR, at least one party should be a natural person to ensure the protection of personal data. 
+For example, an interaction between a bot and a natural person falls within the appropriate scope for vCons. However, a conversation exclusively between two bots would not meet this criterion.
+
 
 Due to the size and complexity of some portions of a vCon, both inline and externally referenced dialog, analysis, attachments and other vCon reference assets are supported.
 For instance, vCons may reference a videoconference media recording as an external URL with an accompanying signature of the contents to detect tampering.
@@ -415,9 +416,15 @@ The UUID MUST be globally unique.
 
     The DNS name string used in generating the uuid value SHOULD be the same FQHN, or a subdomain to allow for more distributed generation of UUIDs, as would used in the signing certificate as they are the same domains of uniqueness.
 
-### iat or createdat
+### created_at
 
-TODO: Do we need a creation or signing date (e.g. [JWT] iat)?
+The creation time of this vcon is provided in the created_at parameter, which MUST be present.
+For unsigned forms of the vCon object, the created_at MAY be updated as it is generated
+to assist the coordination between systems that construct them. 
+
+* created_at: "Date"
+
+
 
 ### subject
 
