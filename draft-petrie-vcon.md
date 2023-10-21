@@ -944,6 +944,12 @@ For this reason, the vendor or product name is provided in the vendor parameter.
 
     The vendor string value contains the vendor or product name of the software which generated this analysis.
 
+### product
+
+As the vendor may have more than one product, the product parameter may be used to differentiate it from other products which may have different schemas of analyis data.
+
+* product: "string" (optional)
+
 ### schema
 
 The same vendor or software product may produce different formats or data for the same analysis.
