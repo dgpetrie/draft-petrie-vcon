@@ -134,8 +134,8 @@ A standardized conversation container enables many applications, establishes a c
 The generation of conversational data, contained in transcripts and multi-media files, is common in business, especially in customer facing organizations.
 However, the storage, analysis and sharing of the data they contain is not currently a standard.
 Standardizing a container for conversation data (vCon) has numerous advantages, and enables the management of the conversation's content.
-For instance, a standard allows for tools to determine the contents of the conversation, such that privacy guarantees and duties can be accurately performed.
-As a storage mechanism, vCons can help normalize data lakes and allow for interchange between organizations and networks.
+Very often the system providing the communications service, the consumer and/or owner of the communications data and the communications analysis services are distinct systems and in many case separate business entities.
+The point of a vCon is to provide a standard means of exchanging communications data between these systems and services.
 The use of vCons can ease service integration by using a common container and format for enterprise communications.
 A vCon becomes the standardized input to communication analysis tools and machine learning and categorization.
 For a sales lead organization, a vCon can be the container of assets sold to sales teams.
@@ -946,7 +946,7 @@ For this reason, the vendor or product name is provided in the vendor parameter.
 
 ### product
 
-As the vendor may have more than one product, the product parameter may be used to differentiate it from other products which may have different schemas of analyis data.
+As the vendor may have more than one product, the product parameter may be used to differentiate it from other products which may have different schemas of analysis data.
 
 * product: "string" (optional)
 
@@ -1286,6 +1286,10 @@ It has a single Dialog Object which reference a single channel wav format record
 ~~~
 {::include examples/ab_call_ext_rec.pp}
 ~~~
+
+## Two Party Call vCon with Analysis
+
+TODO: vCon with analysis example
 
 ## Signed vCon
 
