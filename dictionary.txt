@@ -7,6 +7,7 @@ bcp
 bot
 bots
 CBC
+CBOR
 Cc
 CDR
 civicaddress
@@ -24,6 +25,7 @@ dgpetrie
 DOB
 docname
 efort
+enablement
 enc
 encyrpted
 ext
@@ -45,13 +47,17 @@ html
 https
 HTTPS
 IAB
+iat
 IANA
+IEC
 ietf
 IETF
 inhouse
 int
 io
 IRTF
+iso
+ISOBMFF
 itu
 ITU
 jCard
@@ -61,6 +67,7 @@ JSON
 JWE
 JWK
 JWS
+JWT
 LLC
 lmk
 loc
@@ -99,6 +106,8 @@ realtime
 rec
 REC
 redaction
+refcontent
+RESTful
 RSA
 SaaS
 SHA
@@ -137,8 +146,10 @@ vcon
 vCon
 vCons
 versioned
+voicemail
 wav
 webchat
 WEBRTC
 WG
 www
+xfer

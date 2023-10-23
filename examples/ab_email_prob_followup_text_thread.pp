@@ -1,5 +1,6 @@
 {
   "vcon": "0.0.1",
+  "group": [],
   "parties": [
     {
       "mailto": "a@example.com",
@@ -20,7 +21,7 @@
         1
       ],
       "mimetype": "text/plain",
-      "encoding": "None",
+      "encoding": "none",
       "body": "Hi Bob:\nI just wanted to follow up to see that yo
         our account is ok now.\n\nRegards,\nAlice\n\n"
     },
@@ -33,7 +34,7 @@
         0
       ],
       "mimetype": "text/plain; charset=UTF-8",
-      "encoding": "None",
+      "encoding": "none",
       "body": "Hi Alice:\nAll is fine. Thanks.\n\n    On Friday, 
          September 23, 2022, 23:24:59 PM UTC, Alice <a@example.co
         > wrote:  \n \n  Hi Bob:\n  I just wanted to follow up to
@@ -49,7 +50,7 @@
         1
       ],
       "mimetype": "text/plain",
-      "encoding": "None",
+      "encoding": "none",
       "body": "Awesome!\n\n    On Friday, September 23, 2022, 23:
         :34: PM UTC, Bob <b@example.com> wrote:  \n\n  Hi Alice:\
           All is fine. Thanks.\n  \n      On Friday, September 23
@@ -60,6 +61,8 @@
   ],
   "analysis": [],
   "attachments": [],
+  "created_at": "2023-10-20T23:36:51.450+00:00",
+  "redacted": {},
   "subject": "Account issue followup",
-  "uuid": "018380f8-60db-8464-973a-91e26eb8001b"
+  "uuid": "018b4f72-e3fb-8770-b9a2-279e0d16bc46"
 }

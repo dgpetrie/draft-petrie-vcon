@@ -1,6 +1,6 @@
 
 VCON_PATH=../../../
-EXAMPLES=simple-vcon.vcon ab_call_ext_rec.vcon \
+GENERATED_EXAMPLES=ab_call_ext_rec.vcon \
          ab_call_int_rec.vcon \
          ab_call_ext_rec_signed.vcon \
          ab_call_ext_rec_encrypted.vcon \
@@ -8,20 +8,27 @@ EXAMPLES=simple-vcon.vcon ab_call_ext_rec.vcon \
          ab_call_ext_rec_decrypted_verified.vcon \
          ab_email_acct_prob_thread.vcon \
          ab_email_prob_followup_text_thread.vcon
+GENERATED_DEPENDENCIES= ab_email_prob_followup_alice.vcon \
+         ab_email_prob_followup_bob_reply.vcon \
+         b_email_acct_prob_image.vcon
+EXAMPLES=simple-vcon.vcon ${GENERATED_EXAMPLES}
 INCLUDES=$(EXAMPLES:.vcon=.pp)
 #VCON_PYPATH="${VCON_PATH}vcon/vcon:${VCON_PATH}vcon/vcon/bin"
-VCON_PYPATH="${VCON_PATH}vcon"
-VCON=${VCON_PATH}vcon/vcon/bin/vcon
-CERTPATH=${VCON_PATH}vcon/certs/
+VCON_PYPATH="${VCON_PATH}py-vcon"
+VCON=${VCON_PATH}py-vcon/vcon/bin/vcon
+CERTPATH=${VCON_PATH}py-vcon/certs/
 
 all: ${VCON_PATH}vcon ${INCLUDES}
 
-${VCON_PATH}/vcon:
+${VCON_PATH}/py-vcon:
 	(cd ${VCON_PATH} ; git clone https://github.com/vcon-dev/vcon.git)
 
 vcon_includes: $(INCLUDES)
 	echo "Making $(INCLUDES)"
 	echo "from: $(EXAMPLES)"
+
+clean:
+	rm -f ${INCLUDES} ${GENERATED_EXAMPLES} ${GENERATED_DEPENDENCIES}
 
 %.pp: %.vcon
 	echo "building $@ from $^"

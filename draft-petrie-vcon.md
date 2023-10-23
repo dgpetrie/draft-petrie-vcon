@@ -72,11 +72,22 @@ normative:
 
 informative:
 
-  JWT: RFC7519
-  
-  SHA-512: RFC6234
+  CBOR: RFC7049
+
+  ISOBMFF:
+    target: https://www.iso.org/standard/83102.html
+    title: "Information technology -- Coding of audio-visual objects -- Part 12: ISO base media file format"
+    refcontent: ISO/IEC 14496-12:2022
+    date: January 2022
+    org: International Organization for Standardization
 
   JMAP: RFC8620
+
+  JWT: RFC7519
+
+  SHA-512: RFC6234
+
+  SIP-XFER: RFC5589
 
   vCard: RFC7095
 
@@ -123,9 +134,9 @@ A standardized conversation container enables many applications, establishes a c
 The generation of conversational data, contained in transcripts and multi-media files, is common in business, especially in customer facing organizations.
 However, the storage, analysis and sharing of the data they contain is not currently a standard.
 Standardizing a container for conversation data (vCon) has numerous advantages, and enables the management of the conversation's content.
-For instance, a standard allows for tools to determine the contents of the conversation, such that privacy guarantees and duties can be accurately performed.
-As a storage mechanism, vCons can help normalize data lakes and allow for interchange between organizations and networks.
-The use of vCons can ease service integration by using a common container and format for enterprize communications.
+Very often the system providing the communications service, the consumer and/or owner of the communications data and the communications analysis services are distinct systems and in many case separate business entities.
+The point of a vCon is to provide a standard means of exchanging communications data between these systems and services.
+The use of vCons can ease service integration by using a common container and format for enterprise communications.
 A vCon becomes the standardized input to communication analysis tools and machine learning and categorization.
 For a sales lead organization, a vCon can be the container of assets sold to sales teams.
 For conversations of record, the vCon can be a legal instrument.
@@ -181,6 +192,12 @@ Conversations can have legal and regulatory significance.
 Regulations may require conversation of record to be stored for compliance.
 A conversation can become a verbal contract, making the conversation data a legal instrument.
 Having a standard container for the conversation data and asserting the integrity of the data make it easier to distribute the conversation data to the parties involved.
+
+The initial set of use cases for vCons are expected to be in the interchange between front end and back end application and lower layers of the network stack, critical for enablement of analysis of conversations.
+It is expected that JavaScript handling of vCons in the front end and RESTful interfaces and back end platforms will be used for operations and manipulation of vCons.
+Many media analysis services which will be used with vCons, such as transcription, already use JSON based interfaces.
+For this reason, JSON has been chosen for the initial format binding of vCons and the scope of this document.
+Other bindings (e.g. [CBOR] or [ISOBMFF]) may be consider for vCon in the future in other documents.
 
 Requirements:
 
@@ -374,6 +391,7 @@ The JSON form of a vCon is contained in a JSON object in one of three forms:
 The unsigned form of the vCon has a single top level object.
 This top level vCon object is also contained as described in the [signed](#signed-form-of-vcon-object) and [encrypted](#encrypted-form-of-vcon-object) forms of the vCon.
 The selection of the JSON format enables interchange between application and lower layers of the network stack, critical for enablement of analysis of conversations.
+
 # Unsigned Form of vCon Object
 
 The unsigned form of the top level vCon object is necessary as in many cases, a vCon will be partially constructed and in process as conversation data is collected.
@@ -709,7 +727,15 @@ TODO: Is there other signalling data that we want to capture other than start an
 
 * type: "String"
 
-    The sting MUST have the value of either "recording" or "text"
+    The sting MUST have the value of either "recording", "text", "transfer" or "incomplete".
+    A dialog of type "recording" has Dialog Content that either contains a body or refers to via url, which is a recording of the video and/or audio of a segment of the conversation.
+    A dialog of type "text" had  has Dialog Content that either contains a body or refers to via url, which contains the text from one of the parties for a segment of the conversation.
+    A dialog of type "transfer" does not capture actual conversation exchange, but rather captures operations, parties and relations between dialog segments.
+    A dialog of type "incomplete" or "transfer" MUST NOT have Dialog Content.
+    In the "incomplete" case the call or conversation failed to be setup to the point of exchanging any conversation.
+    Incomplete dialogs MUST have a disposition parameter which indicates why the call or conversations failed.
+    In the "transfer" case, the conversation is recorded in other dialogs.
+    The Dialog Transfer parameters, are used to show the roles and relationships between the parties and other dialogs as the transfer process occurred.
 
 
 ### start
@@ -743,7 +769,24 @@ The party(s) which generated the text or recording for this piece of dialog are 
     The values in that array are either an integer or an array of integers which are the indices to the parties that contributed to the mix for the associated channel of the recording.
     The index for Party Objects SHOULD be included even if the party was silent the entire conversation.
 
+    It is implied that the first party in the dialog Object parties list, is the originator of the dialog.
+    However, in some situations, it is difficult to impose the constraint that the first channel of a recording is the originator.
+    If ensuring that the first channel and party listed is the originator is not possible, the optional originator parameter indicates the originator party.
+    In other cases, there may be a separate recording file for each party in a conversation, where only one party is recorded per file.
+    In this situation, it is necessary to indicate the originator as the dialog Object parties parameter will contain only one party and may not be the originator.
+
 TODO: For an email thread, To and Cc parties are all passive.  Do we just put the sender as the party or do we want to list all of the recipients and by convention the sender is the first party?  Note that each dialog/email could have a difference set of recipients.
+
+### originator
+
+The originator party for this dialog.
+For email and text, this is the sender of the text.
+For audio and video, this is the caller or host of the call or conference.
+The originator parameter is only provided if the first party of the dialog Object parties list is NOT the originator.
+
+* originator: "UnsignedInt" (optional)
+
+    The originator value is the index into the parties Objects Array, to the party that originated the dialog.
 
 ### mimetype
 
@@ -774,7 +817,7 @@ This can be done in the filename parameter.
 
 ### Dialog Content
 
-The Dialog Object SHOULD contain the body and encoding parameters or the url, alg and signature parameters (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
+The Dialog Object SHOULD contain the body and encoding parameters or the url, alg and signature parameters for all dialog types other than "incomplete" and "transfer", these parameters MUST NOT be present for "incomplete" or "transfer" dialog types (see [Inline Files](#inline-files) and [Externally Referenced Files](#externally-referenced-files)).
 
 For inline included dialog:
 
@@ -786,6 +829,72 @@ Alternatively, for externally referenced dialog:
 * url: "String"
 * alg: "String"
 * signature: "String"
+
+### disposition
+
+If the dialog type is "incomplete", it must have a disposition parameter.
+The value of the disposition parameter provides the reason that the "call control" failed.
+The term: "call control" is used in a loose sense, as there in not always a call involved, to differentiate from a call disposition that an agent may assign to a call to indicate the reason, issue addressed or outcome of a conversation.
+This latter definition of call disposition is not dialog, but analysis of the conversation and is not included in the dialog portion.
+
+* disposition: "String" (required for incomplete type dialogs, SHOULD NOT be present for other dialog types)
+
+    The value of the disposition parameter MUST be one of the following string:
+
+    * "no-answer" - a call or connection was attempted, but no one answered or accepted the connection
+    * "congestion" - a call or connection was attempted, but was unable to be completed due to system load
+    * "failed" - a call or connection was attempted, but failed
+    * "busy" - a call or connection was attempted, but the party was busy with another conversation
+    * "hung-up" - a call or connection was made, but the party hung-up before any conversation occurred
+    * "voicemail-no-message" - a call or connection was made, the voicemail system answered, but no message was left
+
+    Note: if a message was left with the voicemail system this is no longer an "incomplete" type dialog, it is a "recording" type and the conversation SHOULD be included in the Dialog Content.
+
+### Dialog Transfer
+
+A dialog of type "transfer" documents the rolls of three parties and the relationship between 2 or three dialog segments.
+In a transfer operation, the roles of the three parties to a transfer are defined in [SIP-XFER] as:
+
+    * Transferee
+    * Transferor
+    * Transfer Target
+
+There are two or three calls in which the parties are connected:
+
+    * original call
+    * consultative call (optional as this call may not get created)
+    * target call
+
+To capture the above roles and dialog segments, the following parameters are defined and SHOULD be present in the "transfer" type dialog and MUST NOT be present in other dialog types.
+
+    * transferee: "UnsignedInt"
+
+    The value of the transferee parameter is the index into the parties Object array to the party that played the role of the Transferee.
+
+    * transferor: "UnsignedInt"
+
+    The value of the transferor parameter is the index into the parties Object array to the party that played the role of the Transferor.
+
+    * transfer-target: "UnsignedInt"
+
+    The value of the transfer-target parameter is the index into the parties Object array to the party that played the role of the Transfer Target.
+
+    * original: "UnsignedInt"
+
+    The value of the original parameter is the index into the dialogs Object array to the "recording" or "text" type dialog for the original dialog between the Transferee and the Transferor.
+
+    * consultation: "UnsignedInt" (optional)
+
+    The value of the consultation parameter is the index into the dialogs Object array to the "recording", "text" or "incomplete" type dialog for the consultative dialog between the Transferor and the Transfer Target.
+
+    * target-dialog: "UnsignedInt"
+
+    The value of the target-dialog parameter is the index into the dialogs Object array to the "recording", "text" or "incomplete" type dialog for the target dialog between the Transferee and the Transfer Target.
+
+    A "transfer" type dialog MUST NOT contain the parties, originator, mimetype, filename or Dialog Content parameters.
+
+The "transfer" type dialog only captures the roles, operations and events of the parties and the dialog setup.
+It does not capture the purpose or reason for the transfer as that is analysis to be captures in the analysis section of the Vcon after the conversation has occurred.
 
 ## Analysis Object
 
@@ -848,6 +957,12 @@ For this reason, the vendor or product name is provided in the vendor parameter.
 
     The vendor string value contains the vendor or product name of the software which generated this analysis.
 
+### product
+
+As the vendor may have more than one product, the product parameter may be used to differentiate it from other products which may have different schemas of analysis data.
+
+* product: "string" (optional)
+
 ### schema
 
 The same vendor or software product may produce different formats or data for the same analysis.
@@ -882,6 +997,12 @@ As most modes of communication, that allow the exchange of files, do not constra
 ### type or purpose
 
 TODO: Do we want a semantic type like: contract or presentation?  Or a subject or title.
+
+### start
+
+The start parameter contains the date and time that the Attachment Object was sent/exchanged.
+
+* start: "Date"
 
 ### party
 
@@ -1154,7 +1275,7 @@ TODO: text vCon example
 
 ## Email Thread Multipart vCon
 
-The following is an unsigned form of an vCon for a 3 message email thread between 2 parties.
+The following is an unsigned form of an vCon for a 2 message email thread between 2 parties.
 The email messages are multipart MIME message bodies.
 
 ~~~
@@ -1178,6 +1299,10 @@ It has a single Dialog Object which reference a single channel wav format record
 ~~~
 {::include examples/ab_call_ext_rec.pp}
 ~~~
+
+## Two Party Call vCon with Analysis
+
+TODO: vCon with analysis example
 
 ## Signed vCon
 
