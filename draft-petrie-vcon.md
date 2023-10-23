@@ -415,9 +415,22 @@ The UUID MUST be globally unique.
 
     The DNS name string used in generating the uuid value SHOULD be the same FQHN, or a subdomain to allow for more distributed generation of UUIDs, as would used in the signing certificate as they are the same domains of uniqueness.
 
-### iat or createdat
+### created_at
 
-TODO: Do we need a creation or signing date (e.g. [JWT] iat)?
+The created_at parameter provides the creation time of this vcon, which MUST be present, 
+and should not changed once the vcon object is created. 
+
+* created_at: "Date"
+
+### updated_at
+
+The updated_at parameter provides the last modified time of this vcon, which MAY be present.
+For unsigned forms, the updated_at of the vcon object SHOULD be updated as it is modified. 
+For signed forms of the vCon object, the updated_at contains the 
+time when this vcon was last signed. Future updates MUST first
+set the updated_at to the new signing time as the vcon object is signed again.
+
+* updated_at: "Date"
 
 ### subject
 
