@@ -26,7 +26,7 @@ The following table maps meta-data requirements defined in draft-rosenberg-vcon-
 |Number of Conferences |Dialog Object: parties |4.3.4 ||
 |Number of Transfers |Dialog Object: Dialog Transfer |4.3.10 ||
 |Number of holds | | |New Dialog Object type or additional parameter?? |
-|Hangup Party | | |Add parameter with list of drop and reconnect times to Dialog Object?? |
+|Hangup Party | | |Add parameter with list of party drop and reconnect times to Dialog Object?? List for each or one list with event type? |
 |Disposition |Dialog Object: disposition |4.3.9 ||
-|Dialing List | | |Add TBD parameter to Party Object?? contact_list or name_list or dialing_list | 
+|Dialing List | | |Add TBD parameter to Party Object?? contact_list or address_book or name_list or dialing_list | 
 
