@@ -17,7 +17,7 @@ BCP 78, 79, the TLP, and the TLP rules regarding code components (e.g. being
 subject to a Simplified BSD License) in Contributions.
 ## Working Group Information
 
-Discussion of this work occurs on the [vCon
+Discussion of this work occurs on the [Virtualized Conversations
 Working Group mailing list](mailto:vcon@ietf.org)
 ([archive](https://mailarchive.ietf.org/arch/browse/vcon/),
 [subscribe](https://www.ietf.org/mailman/listinfo/vcon)).
