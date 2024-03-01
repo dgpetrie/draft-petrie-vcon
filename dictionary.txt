@@ -13,6 +13,7 @@ CDR
 civicaddress
 Civicaddress
 certs
+cohost
 com
 cty
 ciphertext
@@ -135,6 +136,8 @@ UnisignedInt
 unredacted
 UnsignedFloat
 UnsignedInt
+unhold
+unmute
 url
 Url
 uuid
