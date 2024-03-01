@@ -490,6 +490,11 @@ A Redacted Object contains the following parameters:
 
     The value contains the [uuid string value](#uuid) of the unredacted/prior vCon instance version.
 
+* type: "String"
+
+    The value of the redacted type parameter is used to indicate the type of redaction that was performed on this vCon relative to the less redacted version indicated by the redacted uuid parameter.
+    This should indicate the type of information that was redacted.
+
 As defined in [Inline Files](#inline-files) body and encoding MAY be included:
 
 * body: "String"
@@ -653,7 +658,7 @@ Proof of authorization of the communication channel through STIR, login or posse
 It is common in call centers to validate the identity of the person on the communication channel through verification of some sort of personal identification information.
 The methods used, often varies with the situation and is business practices specific.
 The purpose of the validation parameter, is to allow the validator to save a label or token which identifies the method of identity validation used to identify the person at the other end of the communication channel.
-For security reasons, it SHOULD NOT contain the data used to validate the name.
+For confidentially reasons, it SHOULD NOT contain the data used to validate the name.
 However it MAY name the data used to validate the name (e.g. "SSN", "DOB", "user ID and password").
 It is up to the domain creating the vCon to define the set of tokens or values to be used for the validation parameter.
 
@@ -711,6 +716,25 @@ TODO: Do we just specify for the start of the conversation?
 ### timezone
 
 TODO: timezone?
+
+#### uuid
+
+The uuid is a unique identifier for the participant.
+In a contact center, this is particularly important for the call agent participant, and must be static across interactions to allow correlation with the actual agent configuration provisioned into the systems.
+
+* uuid: "String" (optional)
+
+
+#### role
+
+The role that the participant played in the conversation.
+In a call center there are roles: such as: agents, customer, supervisor and specialist.
+In conferences there are roles: host, cohost, speaker, panelist, participant and other roles.
+The role parameter provides the ability to label the role that the part played in the conversation.
+
+* role: "String" (optional)
+
+TODO: Should we define a set of tokens for some roles and also let this parameter be open ended?
 
 ## Dialog Object
 
@@ -846,6 +870,39 @@ This latter definition of call disposition is not dialog, but analysis of the co
     * "voicemail-no-message" - a call or connection was made, the voicemail system answered, but no message was left
 
     Note: if a message was left with the voicemail system this is no longer an "incomplete" type dialog, it is a "recording" type and the conversation SHOULD be included in the Dialog Content.
+
+### party_history Objects Array
+
+Participants in a dialog may not all join and leave at the same time.
+To support the capturing of the information when parties join, drop, go on hold or mute and unmute, the party_history array may be added to the Dialog Object.
+
+* party_history: "Party_History[]" (optional)
+
+#### Party_History Object
+
+The Party_History Object contains the following parameters:
+
+* party: "UnsignedInt"
+
+    The index of the party for this event.
+
+* event: "String"
+
+    The string token for the event which MUST be one of the following:
+
+    * "join" - when the party joins the dialog
+
+    * "drop" - when the party drops out of the dialog
+
+    * "hold" - when the party is put on hold
+
+    * "unhold" - when the part is taken off hold
+
+    * "mute" - when the party is muted
+
+    * "unmute" - when the part is taken off mute
+
+* time: "Date"
 
 ### Dialog Transfer
 
