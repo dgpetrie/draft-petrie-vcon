@@ -480,8 +480,6 @@ All data and parameters in the prior, less redacted, vCon instance version are e
 
 Data which is to be completely removed from the redacted version, that is contained in a JSON array in the unredacted vCon, SHOULD create an empty placeholder such that object array indices do not change for the rest of the elements of the array.
 
-TODO: Do we need different levels or rational for redaction?  If so, we need a parameter for the levels or reason of redaction.
-
 * redacted: "Redacted" (optional, mutually exclusive with appended and group parameters)
 
 A Redacted Object contains the following parameters:
@@ -489,10 +487,11 @@ A Redacted Object contains the following parameters:
 * uuid: "String"
 
     The value contains the [uuid string value](#uuid) of the unredacted/prior vCon instance version.
+    The absence of a value for uuid indicates that the less redacted version of this vCon is not available or does not exist.
 
 * type: "String"
 
-    The value of the redacted type parameter is used to indicate the type of redaction that was performed on this vCon relative to the less redacted version indicated by the redacted uuid parameter.
+    The value of the redacted type parameter is used to indicate the type of redaction that was performed on this vCon relative to the less redacted version referenced by the redacted uuid parameter.
     This should indicate the type of information that was redacted.
 
 As defined in [Inline Files](#inline-files) body and encoding MAY be included:
@@ -709,13 +708,13 @@ Note that the parameter names MUST be in lower case when contained in the Civica
 
 TODO: Do we need RFC6848 civic address extensions?
 
-TODO: Is there a need for any temporal location?
+TODO: Is there a need for any temporal location?  For example should location be an array, each element with a time stamp?
 
 TODO: Do we just specify for the start of the conversation?
 
 ### timezone
 
-TODO: timezone?
+TODO: timezone for the location of the party?
 
 #### uuid
 
