@@ -1,0 +1,192 @@
+{
+  "magic": "E!vIA5L86J2I",
+  "timestamp": "2023-03-30T01:39:34.539723+00:00",
+  "repo": "dgpetrie/draft-petrie-vcon",
+  "labels": [
+    {
+      "name": "bug",
+      "description": "Something isn't working",
+      "color": "d73a4a"
+    },
+    {
+      "name": "documentation",
+      "description": "Improvements or additions to documentation",
+      "color": "0075ca"
+    },
+    {
+      "name": "duplicate",
+      "description": "This issue or pull request already exists",
+      "color": "cfd3d7"
+    },
+    {
+      "name": "enhancement",
+      "description": "New feature or request",
+      "color": "a2eeef"
+    },
+    {
+      "name": "good first issue",
+      "description": "Good for newcomers",
+      "color": "7057ff"
+    },
+    {
+      "name": "help wanted",
+      "description": "Extra attention is needed",
+      "color": "008672"
+    },
+    {
+      "name": "invalid",
+      "description": "This doesn't seem right",
+      "color": "e4e669"
+    },
+    {
+      "name": "question",
+      "description": "Further information is requested",
+      "color": "d876e3"
+    },
+    {
+      "name": "wontfix",
+      "description": "This will not be worked on",
+      "color": "ffffff"
+    }
+  ],
+  "issues": [
+    {
+      "number": 4,
+      "id": "I_kwDOHTznOs5h9eF2",
+      "title": "Add IM use cases from Rohan Mahy to charter",
+      "url": "https://github.com/dgpetrie/draft-petrie-vcon/issues/4",
+      "state": "OPEN",
+      "author": "dgpetrie",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "From vcon@ietf.org email list Mon, Mar 27 at 12:15 AM:\r\n\r\nToday many instant messaging applications allow multiple clients for the same user, ex: laptop and mobile, or old mobile phone migrating to new mobile phone. Being able to securely share the message history from an existing device to a new device seems like a nice way to share messages that the new client could not have an end-to-end session for.\r\n\r\nAnother case is when you have a group chat with substantive discussion and then add some other users who were not party to the conversation. Allowing an admin in the group be able to catch them up by sharing message history from some relevant point in the past would be a nice to have feature.",
+      "createdAt": "2023-03-28T09:00:09Z",
+      "updatedAt": "2023-03-28T09:00:09Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 5,
+      "id": "I_kwDOHTznOs5h9fJw",
+      "title": "Resolve use case detail for Vcon charter",
+      "url": "https://github.com/dgpetrie/draft-petrie-vcon/issues/5",
+      "state": "OPEN",
+      "author": "dgpetrie",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Should the Vcon charter have a condensed set of use cases where most of the detail is in the I-D?\r\nAlternatively do we keep adding use cases and details to the charter?",
+      "createdAt": "2023-03-28T09:02:46Z",
+      "updatedAt": "2023-03-28T09:02:46Z",
+      "closedAt": null,
+      "comments": []
+    }
+  ],
+  "pulls": [
+    {
+      "number": 1,
+      "id": "PR_kwDOHTznOs49bCVO",
+      "title": "Update draft-petrie-vcon.md",
+      "url": "https://github.com/dgpetrie/draft-petrie-vcon/pull/1",
+      "state": "MERGED",
+      "author": "howethomas",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2022-08-18T21:32:50Z",
+      "updatedAt": "2022-08-19T17:15:06Z",
+      "baseRepository": "dgpetrie/draft-petrie-vcon",
+      "baseRefName": "main",
+      "baseRefOid": "c183387ad7ac8b751ef2eab4c62012ec54a4a892",
+      "headRepository": "howethomas/draft-petrie-vcon",
+      "headRefName": "main",
+      "headRefOid": "3f6254d26aead1a9e2c25d27ba3a7209c181f386",
+      "closedAt": "2022-08-19T17:15:06Z",
+      "mergedAt": "2022-08-19T17:15:05Z",
+      "mergedBy": "dgpetrie",
+      "mergeCommit": {
+        "oid": "e84c97438e737ba9d266fb6dcabdd9e7af72fa84"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 2,
+      "id": "PR_kwDOHTznOs5BDk_K",
+      "title": "More intro, less typos.",
+      "url": "https://github.com/dgpetrie/draft-petrie-vcon/pull/2",
+      "state": "MERGED",
+      "author": "howethomas",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Please check this and merge. Appreciate it.",
+      "createdAt": "2022-10-18T23:39:14Z",
+      "updatedAt": "2022-10-19T18:31:38Z",
+      "baseRepository": "dgpetrie/draft-petrie-vcon",
+      "baseRefName": "main",
+      "baseRefOid": "f6649e34d691961529a6eede4eecc06afbd6a7e0",
+      "headRepository": "howethomas/draft-petrie-vcon",
+      "headRefName": "main",
+      "headRefOid": "541eeeecee89a87f4c7485f7a5eeda93badda633",
+      "closedAt": "2022-10-19T18:31:37Z",
+      "mergedAt": "2022-10-19T18:31:37Z",
+      "mergedBy": "dgpetrie",
+      "mergeCommit": {
+        "oid": "f16b43ffb1ceca43de81ef33f81efc41aa20a49d"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHTznOs5Ebexs",
+          "commit": {
+            "abbreviatedOid": "3c96168"
+          },
+          "author": "dgpetrie",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2022-10-19T18:00:42Z",
+          "updatedAt": "2022-10-19T18:00:42Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "id": "PR_kwDOHTznOs5MWGTG",
+      "title": "Add directory for meeting agendas",
+      "url": "https://github.com/dgpetrie/draft-petrie-vcon/pull/3",
+      "state": "OPEN",
+      "author": "SpencerDawkins",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "I updated the README.md file to mention the proposed charter and meeting agenda. Optimistically, I created a directory for agendas, to accommodate future working group meetings as well.",
+      "createdAt": "2023-03-18T00:28:10Z",
+      "updatedAt": "2023-03-26T05:28:24Z",
+      "baseRepository": "dgpetrie/draft-petrie-vcon",
+      "baseRefName": "main",
+      "baseRefOid": "1fa0bb98b779f33294ecdbd6203e90e4017f2fdb",
+      "headRepository": "dgpetrie/draft-petrie-vcon",
+      "headRefName": "AddAgenda",
+      "headRefOid": "e7dd1ccb23b48a6d28bc6ee41e895cfdb975aca8",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "SpencerDawkins",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Hi, @dgpetrie and @howethomas, I wanted to give (at least one of) you two a chance to look at this before merging it. I'll go ahead and upload the agenda (which we can always revise) to the datatracker now.",
+          "createdAt": "2023-03-18T00:30:21Z",
+          "updatedAt": "2023-03-18T00:30:21Z"
+        }
+      ],
+      "reviews": []
+    }
+  ]
+}
