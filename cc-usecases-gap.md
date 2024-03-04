@@ -20,7 +20,7 @@ The following table maps meta-data requirements defined in draft-rosenberg-vcon-
 |Participant Info |Party Object: tel, stir, mailto, jCard, etc | 4.3.1, 4.2.2, 4.2.3, 4.2.6 and 4.2.X |
 |PII and PCI Information | | |Add type parameter to Redacted Object. Added to 4.1.6 |
 |Skill | | |Add skills parameter to Party Object.  Is this a vCon or Dialog Object property too? |
-|Campaign | | |Add TBD parameter to Dialog Object?? Is there overlap or dedundency between this and Dialing List? |
+|Campaign | | |Add TBD parameter to Dialog Object?? Is there overlap or redundency between this and Dialing List? |
 |Transfer Bit Flag |Dialog Object: Dialog Transfer |4.3.10 ||
 |Conference Bit Flag |Dialog Object: parties |4.3.4 ||
 |Number of Conferences |Dialog Object: parties |4.3.4 ||
