@@ -649,7 +649,7 @@ If the party's name is known, it can be included in the name parameter.
 
 * name: "String" (optional)
 
-    The string value of the name parameter is a free form JSON string in which part or all of the parity's name can be included.
+    The string value of the name parameter is a free form JSON string in which part or all of the party's name can be included.
 
 ### validation
 
@@ -734,6 +734,14 @@ The role parameter provides the ability to label the role that the part played i
 * role: "String" (optional)
 
 TODO: Should we define a set of tokens for some roles and also let this parameter be open ended?
+
+#### contact_list
+
+In a contact center scenario, the conversation with this party may be part of a larger effort of contacting a group of parties, individually or perhaps in groups.
+It is sometimes useful to reference the list from which this party was included.
+The contact_list may be used as a label for foreign key reference to the contact list that this party was on.
+
+*  contact_list "String" (optional)
 
 ## Dialog Object
 
@@ -948,6 +956,24 @@ To capture the above roles and dialog segments, the following parameters are def
 
 The "transfer" type dialog only captures the roles, operations and events of the parties and the dialog setup.
 It does not capture the purpose or reason for the transfer as that is analysis to be captures in the analysis section of the Vcon after the conversation has occurred.
+
+### campaign
+
+In a contact center scenario, a dialog may be initiated as part of a campaign or set of dialogs initiated with a common goal or focus or to be handled or treated in a specific way.
+The campaign parameter is string that may be used as a label or foreign key in reference to an external specification for how the communication is to be initiated, handled or treated.
+In some case it may be appropriate to attached the campaign data as an Attachment Object.
+
+* campaign: "String" (optional)
+
+### interaction
+
+In a contact center scenario, interactions with a party are often labeled.
+In some case the interaction is contained in a single dialog.
+In others there may be multiple dialogs (e.g. messages or calls) that are all part of a single interaction.
+There may also be many interactions for a single conversation or vCon.
+The interaction parameter is used as a label or foreign key in reference to the interaction ID.
+
+* interaction "String" (optional)
 
 ## Analysis Object
 
