@@ -5,8 +5,8 @@
 Network Working Group                                       D. G. Petrie
 Internet-Draft                                                 SIPez LLC
 Intended status: Standards Track                        T. McCarthy-Howe
-Expires: 5 September 2024                                        Strolid
-                                                            4 March 2024
+Expires: 28 September 2024                                       Strolid
+                                                           27 March 2024
 
 
          The JSON format for vCon - Conversation Data Container
@@ -56,7 +56,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 5 September 2024.
+   This Internet-Draft will expire on 28 September 2024.
 
 Copyright Notice
 
@@ -124,6 +124,8 @@ Table of Contents
        4.3.9.  disposition
        4.3.10. party_history Objects Array
        4.3.11. Dialog Transfer
+       4.3.12. campaign
+       4.3.13. interaction
      4.4.  Analysis Object
        4.4.1.  type
        4.4.2.  dialog
@@ -963,7 +965,7 @@ Table of Contents
    *  name: "String" (optional)
 
       The string value of the name parameter is a free form JSON string
-      in which part or all of the parity's name can be included.
+      in which part or all of the party's name can be included.
 
 4.2.5.  validation
 
@@ -1088,6 +1090,17 @@ Table of Contents
 
    TODO: Should we define a set of tokens for some roles and also let
    this parameter be open ended?
+
+4.2.9.3.  contact_list
+
+   In a contact center scenario, the conversation with this party may be
+   part of a larger effort of contacting a group of parties,
+   individually or perhaps in groups.  It is sometimes useful to
+   reference the list from which this party was included.  The
+   contact_list may be used as a label for foreign key reference to the
+   contact list that this party was on.
+
+   *  contact_list "String" (optional)
 
 4.3.  Dialog Object
 
@@ -1384,6 +1397,30 @@ A "transfer" type dialog MUST NOT contain the parties, originator, mimetype, fil
    purpose or reason for the transfer as that is analysis to be captures
    in the analysis section of the Vcon after the conversation has
    occurred.
+
+4.3.12.  campaign
+
+   In a contact center scenario, a dialog may be initiated as part of a
+   campaign or set of dialogs initiated with a common goal or focus or
+   to be handled or treated in a specific way.  The campaign parameter
+   is string that may be used as a label or foreign key in reference to
+   an external specification for how the communication is to be
+   initiated, handled or treated.  In some case it may be appropriate to
+   attached the campaign data as an Attachment Object.
+
+   *  campaign: "String" (optional)
+
+4.3.13.  interaction
+
+   In a contact center scenario, interactions with a party are often
+   labeled.  In some case the interaction is contained in a single
+   dialog.  In others there may be multiple dialogs (e.g. messages or
+   calls) that are all part of a single interaction.  There may also be
+   many interactions for a single conversation or vCon.  The interaction
+   parameter is used as a label or foreign key in reference to the
+   interaction ID.
+
+   *  interaction "String" (optional)
 
 4.4.  Analysis Object
 
