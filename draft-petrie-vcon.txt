@@ -5,8 +5,8 @@
 Network Working Group                                       D. G. Petrie
 Internet-Draft                                                 SIPez LLC
 Intended status: Standards Track                        T. McCarthy-Howe
-Expires: 28 September 2024                                       Strolid
-                                                           27 March 2024
+Expires: 22 December 2024                                        Strolid
+                                                            20 June 2024
 
 
          The JSON format for vCon - Conversation Data Container
@@ -56,7 +56,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 28 September 2024.
+   This Internet-Draft will expire on 22 December 2024.
 
 Copyright Notice
 
@@ -156,18 +156,19 @@ Table of Contents
    7.  References
      7.1.  Normative References
      7.2.  Informative References
-   Appendix A.  Example vCons
-     A.1.  Two Party Call vCon With Inline Recording
-     A.2.  Text Chat vCon
-     A.3.  Email Thread Multipart vCon
-     A.4.  Email Thread Text vCon
-     A.5.  Two Party Call vCon With Externally Referenced Recording
-     A.6.  Two Party Call vCon with Analysis
-     A.7.  Signed vCon
-     A.8.  Encrypted vCon
-     A.9.  Redacted Signed vCon
-     A.10. Appended Signed vCon
-     A.11. vCon Group
+   Appendix A.  vCon CDDL Schema
+   Appendix B.  Example vCons
+     B.1.  Two Party Call vCon With Inline Recording
+     B.2.  Text Chat vCon
+     B.3.  Email Thread Multipart vCon
+     B.4.  Email Thread Text vCon
+     B.5.  Two Party Call vCon With Externally Referenced Recording
+     B.6.  Two Party Call vCon with Analysis
+     B.7.  Signed vCon
+     B.8.  Encrypted vCon
+     B.9.  Redacted Signed vCon
+     B.10. Appended Signed vCon
+     B.11. vCon Group
    Acknowledgments
    Authors' Addresses
 
@@ -2031,14 +2032,233 @@ A "transfer" type dialog MUST NOT contain the parties, originator, mimetype, fil
               <https://github.com/vcon-dev/vcon/blob/main/docs/vCons_%20
               an%20Open%20Standard%20for%20Conversation%20Data.pdf>.
 
-Appendix A.  Example vCons
+Appendix A.  vCon CDDL Schema
+
+vcon = {
+    vcon_version_type,
+    uuid_type,
+    ? subject: tstr,
+    ? created_at: date_type,
+    ? updated_at: date_type,
+    ? redacted: redacted_reference_type / empty_object_type,
+    ? ammended: vcon_reference_type / empty_object_type,
+    ? group: [* vcon_reference_type],
+    ? parties: [* party_object_type],
+    ? dialog: [* dialog_object_type],
+    ? attachments: [* attachment_object_type],
+    ? analysis: [* analysis_object_type],
+    extension_object_type
+  }
+
+; Object and multi-parameter types
+;_________________________________
+
+
+redacted_reference_type = {
+    type: tstr,
+    ~vcon_reference_type
+  }
+
+vcon_reference_type = {
+    ~vcon_uuid_reference_type // ~vcon_inline_type // ~vcon_url_reference_type
+  }
+
+party_object_type = {
+    ? tel: tstr,
+    ? str: tstr,
+    ? mailto: tstr,
+    ? name: tstr,
+    ? validataion: tstr,
+    ? gmlpos: tstr,
+    ? civicaddress: civicaddress_type,
+    ? uuid_type,
+    ? role: tstr,
+    extension_object_type
+  }
+
+dialog_object_type = {
+    start: date_type,
+    ? party_history: [* party_event_type],
+    (dialog_recording_object_type // dialog_text_object_type // dialog_transfer_object_type // dialog_incomplete_object_type),
+    ? campaign: tstr,
+    ? interaction: tstr,
+    extension_object_type
+  }
+
+vcon_uuid_reference_type = {
+    uuid_type
+  }
+
+vcon_inline_type = {
+    inline_content_type
+  }
+
+vcon_url_reference_type = {
+    url_referenced_content_type
+  }
+
+dialog_recording_object_type = (
+    type: "recording",
+    ? duration: uint,
+    parties: dialog_parties_type,
+    content_parameters_type,
+    ? originator: party_index_type,
+    inline_content_type // url_referenced_content_type
+  )
+
+dialog_text_object_type = (
+    type: "text",
+    ? duration: uint,
+    parties: dialog_parties_type,
+    content_parameters_type,
+    ? originator: party_index_type,
+    inline_content_type // url_referenced_content_type
+  )
+
+dialog_transfer_object_type = (
+    type: "transfer",
+    transferee: party_index_type,
+    transferor: party_index_type,
+    transfer-target: party_index_type,
+    original: dialog_index_type,
+    ? consulation: dialog_index_type,
+    target-dialog: dialog_index_type,
+  )
+
+dialog_incomplete_object_type = (
+    type: "incomplete",
+    disposition: tstr
+  )
+
+attachment_object_type = {
+    type: tstr,
+    start: date_type,
+    party: party_index_type,
+    content_parameters_type,
+    (inline_content_type // url_referenced_content_type),
+    extension_object_type
+  }
+
+analysis_object_type = {
+    type: tstr,
+    dialog: dialog_index_type,
+    content_parameters_type,
+    ? vendor: tstr,
+    ? product: tstr,
+    ? schema: tstr,
+    (inline_content_type // url_referenced_content_type),
+    extension_object_type
+  }
+
+url_referenced_content_type = (
+    url_type,
+    signature_algorithm_type,
+    signature_type
+  )
+
+inline_content_type = (
+    ( text_body_type // binary_body_type )
+  )
+
+text_body_type = (
+    encoding: "none" / "json"
+    body: tstr
+  )
+
+binary_body_type = (
+    encoding: "base64url"
+    body: #6.21(bstr)
+  )
+
+content_parameters_type = (
+    ? mime_type,
+    ? filename: tstr,
+  )
+
+party_event_type = {
+    party: party_index_type,
+    event: "join" / "drop" / "hold" / "unhold" / "mute" / "unmute",
+    time: date_type,
+    extension_object_type
+  }
+
+civicaddress_type = {
+    ? country: tstr,
+    ? a1: tstr,
+    ? a2: tstr,
+    ? a3: tstr,
+    ? a4: tstr,
+    ? a5: tstr,
+    ? a6: tstr,
+    ? prd: tstr,
+    ? pod: tstr,
+    ? sts: tstr,
+    ? hno: tstr,
+    ? hns: tstr,
+    ? lmk: tstr,
+    ? loc: tstr,
+    ? flr: tstr,
+    ? nam: tstr,
+    ? pc: tstr,
+    extension_object_type
+  }
+
+; Basic types and single parameter types
+; ______________________________________
+
+
+date_type = tdate
+; Ruby cddl seems to always find tdate strings invalid, even ones it generates.
+;date_type = tstr
+
+dialog_index_type = uint
+
+dialog_parties_type =
+    party_index_type / [* party_index_or_list_type]
+
+empty_object_type = {}
+
+extension_object_type = (
+   * tstr => any
+  )
+
+mime_type = (
+    mimetype: tstr
+  )
+
+party_index_or_list_type =
+    party_index_type / [* party_index_type]
+
+party_index_type = uint
+
+signature_algorithm_type = (
+    alg: tstr
+  )
+
+signature_type = (
+    signature: tstr
+  )
+
+uuid_type = (
+    uuid: tstr
+  )
+
+url_type = (
+    url: tstr
+  )
+
+vcon_version_type = (
+    "vcon": tstr
+  )
+
+Appendix B.  Example vCons
 
    This appendix contains example vCons in the unsigned, signed and
    encrypted form.  The JSON has been indented for readability.  Long
    text lines have been wrapped with a left hand white space indent for
    readability purposes.
 
-A.1.  Two Party Call vCon With Inline Recording
+B.1.  Two Party Call vCon With Inline Recording
 
    This example vCon is for a simple 2 party PSTN call.  It has a single
    Dialog Object which contains a single channel wav format recording
@@ -2253,11 +2473,11 @@ A.1.  Two Party Call vCon With Inline Recording
      "uuid": "018b4f72-d342-8696-b9a2-279e0d16bc46"
    }
 
-A.2.  Text Chat vCon
+B.2.  Text Chat vCon
 
    TODO: text vCon example
 
-A.3.  Email Thread Multipart vCon
+B.3.  Email Thread Multipart vCon
 
    The following is an unsigned form of an vCon for a 2 message email
    thread between 2 parties.  The email messages are multipart MIME
@@ -2388,7 +2608,7 @@ A.3.  Email Thread Multipart vCon
      "uuid": "018b4f72-df56-82ac-b9a2-279e0d16bc46"
    }
 
-A.4.  Email Thread Text vCon
+B.4.  Email Thread Text vCon
 
    The following is an unsigned form of an vCon for a 3 message email
    thread between 2 parties.  The email messages are plain text message
@@ -2463,7 +2683,7 @@ A.4.  Email Thread Text vCon
      "uuid": "018b4f72-e3fb-8770-b9a2-279e0d16bc46"
    }
 
-A.5.  Two Party Call vCon With Externally Referenced Recording
+B.5.  Two Party Call vCon With Externally Referenced Recording
 
    This example vCon is for a simple 2 party PSTN call.  It has a single
    Dialog Object which reference a single channel wav format recording
@@ -2504,14 +2724,14 @@ A.5.  Two Party Call vCon With Externally Referenced Recording
      "uuid": "018b4f72-d0e7-8d8e-b9a2-279e0d16bc46"
    }
 
-A.6.  Two Party Call vCon with Analysis
+B.6.  Two Party Call vCon with Analysis
 
    TODO: vCon with analysis example
 
-A.7.  Signed vCon
+B.7.  Signed vCon
 
    This example vCon is the signed form of the Two Party Call vCon With
-   Externally Referenced Recording (Appendix A.5) example.  The private
+   Externally Referenced Recording (Appendix B.5) example.  The private
    key used to sign this can be found at:
 
  https://raw.githubusercontent.com/vcon-dev/vcon/main/certs/fake_grp.key
@@ -2764,10 +2984,10 @@ A.7.  Signed vCon
      ]
    }
 
-A.8.  Encrypted vCon
+B.8.  Encrypted vCon
 
    This example vCon is the encrypted form of the Signed vCon
-   (Appendix A.7) example.  The private key to decrypt it can be found
+   (Appendix B.7) example.  The private key to decrypt it can be found
    at:
 
  https://raw.githubusercontent.com/vcon-dev/vcon/main/certs/fake_grp.key
@@ -3075,15 +3295,15 @@ A.8.  Encrypted vCon
      ]
    }
 
-A.9.  Redacted Signed vCon
+B.9.  Redacted Signed vCon
 
    TODO: redacted vCon example
 
-A.10.  Appended Signed vCon
+B.10.  Appended Signed vCon
 
    TODO: appended vCon example
 
-A.11.  vCon Group
+B.11.  vCon Group
 
    TODO: group vCon example
 
