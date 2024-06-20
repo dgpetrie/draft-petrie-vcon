@@ -1333,6 +1333,12 @@ IANA registration of new media subtype: vcon for media type application:
 
 --- back
 
+# vCon CDDL Schema
+
+~~~
+{::include vcon.cddl}
+~~~
+
 # Example vCons
 
 This appendix contains example vCons in the unsigned, signed and encrypted form.
