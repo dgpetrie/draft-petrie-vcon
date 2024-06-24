@@ -716,7 +716,7 @@ TODO: Do we just specify for the start of the conversation?
 
 TODO: timezone for the location of the party?
 
-#### uuid
+### uuid
 
 The uuid is a unique identifier for the participant.
 In a contact center, this is particularly important for the call agent participant, and must be static across interactions to allow correlation with the actual agent configuration provisioned into the systems.
@@ -724,7 +724,7 @@ In a contact center, this is particularly important for the call agent participa
 * uuid: "String" (optional)
 
 
-#### role
+### role
 
 The role that the participant played in the conversation.
 In a call center there are roles: such as: agents, customer, supervisor and specialist.
@@ -735,7 +735,7 @@ The role parameter provides the ability to label the role that the part played i
 
 TODO: Should we define a set of tokens for some roles and also let this parameter be open ended?
 
-#### contact_list
+### contact_list
 
 In a contact center scenario, the conversation with this party may be part of a larger effort of contacting a group of parties, individually or perhaps in groups.
 It is sometimes useful to reference the list from which this party was included.
