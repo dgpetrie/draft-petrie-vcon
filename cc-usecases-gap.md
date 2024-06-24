@@ -7,7 +7,7 @@ The following table maps meta-data requirements defined in draft-rosenberg-vcon-
 | ------------ | --------- | ------- | --------- |
 | **CC Meta-Data** | **Parameter** | **Section** | **Action** |
 |Interaction Type |Dialog Object: type and mimetype?? |4.3.1 and 4.3.6 |Perhaps more needed?  Currently no differentiation between email, SMS and web chat; or video and screen recording. |
-|Interaction ID | | |Add interaction parameter to Dialog Object.  Added 4.3.11 ||
+|Interaction ID | | |Add interaction parameter to Dialog Object.  Added 4.3.13 ||
 |File Type |Dialog Object: type and mimetype |4.3.1 and 4.3.6 ||
 |Media meta-data |Dialog Object and Dialog Content |4.3 ||
 |Start Time |Dialog Object: start |4.3.2 ||
@@ -21,10 +21,10 @@ The following table maps meta-data requirements defined in draft-rosenberg-vcon-
 |PII and PCI Information | | |Add type parameter to Redacted Object. Added to 4.1.6 |
 |Skill | | |Add skills parameter to Party Object.  Is this a vCon or Dialog Object property too? |
 |Campaign | | |Add campaign parameter to Dialog Object. Added 4.3.12 |
-|Transfer Bit Flag |Dialog Object: Dialog Transfer |4.3.10 ||
+|Transfer Bit Flag |Dialog Object: Dialog Transfer |4.3.11 ||
 |Conference Bit Flag |Dialog Object: parties |4.3.4 ||
 |Number of Conferences |Dialog Object: parties |4.3.4 ||
-|Number of Transfers |Dialog Object: Dialog Transfer |4.3.10 ||
+|Number of Transfers |Dialog Object: Dialog Transfer |4.3.11 ||
 |Number of holds | | |Add party_history array parameter to Dialog Object.  Added 4.3.10 |
 |Hangup Party | | |Add party_history array parameter to Dialog Object.  Added 4.3.10 |
 |Disposition |Dialog Object: disposition |4.3.9 ||
