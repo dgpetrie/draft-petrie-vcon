@@ -5,8 +5,8 @@
 Network Working Group                                       D. G. Petrie
 Internet-Draft                                                 SIPez LLC
 Intended status: Standards Track                        T. McCarthy-Howe
-Expires: 22 December 2024                                        Strolid
-                                                            20 June 2024
+Expires: 26 December 2024                                        Strolid
+                                                            24 June 2024
 
 
          The JSON format for vCon - Conversation Data Container
@@ -56,7 +56,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 22 December 2024.
+   This Internet-Draft will expire on 26 December 2024.
 
 Copyright Notice
 
@@ -112,6 +112,9 @@ Table of Contents
        4.2.7.  gmlpos
        4.2.8.  civicaddress
        4.2.9.  timezone
+       4.2.10. uuid
+       4.2.11. role
+       4.2.12. contact_list
      4.3.  Dialog Object
        4.3.1.  type
        4.3.2.  start
@@ -1068,7 +1071,7 @@ Table of Contents
 
    TODO: timezone for the location of the party?
 
-4.2.9.1.  uuid
+4.2.10.  uuid
 
    The uuid is a unique identifier for the participant.  In a contact
    center, this is particularly important for the call agent
@@ -1078,7 +1081,7 @@ Table of Contents
 
    *  uuid: "String" (optional)
 
-4.2.9.2.  role
+4.2.11.  role
 
    The role that the participant played in the conversation.  In a call
    center there are roles: such as: agents, customer, supervisor and
@@ -1092,7 +1095,7 @@ Table of Contents
    TODO: Should we define a set of tokens for some roles and also let
    this parameter be open ended?
 
-4.2.9.3.  contact_list
+4.2.12.  contact_list
 
    In a contact center scenario, the conversation with this party may be
    part of a larger effort of contacting a group of parties,
