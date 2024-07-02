@@ -67,4 +67,5 @@ ab_email_prob_followup_bob_reply.vcon: ab_email_prob_followup_alice.vcon email_p
 ab_email_prob_followup_text_thread.vcon: ab_email_prob_followup_bob_reply.vcon email_prob_followup_alice_ack.txt
 	(export PYTHONPATH=${VCON_PYPATH}:${PATHONPATH} ; ${VCON} -i ab_email_prob_followup_bob_reply.vcon add in-email email_prob_followup_alice_ack.txt | jq '.' > ab_email_prob_followup_text_thread.vcon)
 
-
+ab_call_int_rec_analysis.vcon: ab_call_int_rec.vcon
+	(export PYTHONPATH=${VCON_PYPATH}:${PATHONPATH} ; ${VCON} -i ab_call_int_rec.vcon filter deepgram | jq '.' > ab_call_int_rec_analysis.vcon)
