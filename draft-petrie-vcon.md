@@ -1,6 +1,6 @@
 ---
-title: "The JSON format for vCon - Conversation Data Container"
-abbrev: "JSON vCon"
+title: "The CDDL format for vCon - Conversation Data Container"
+abbrev: "CDDL vCon"
 category: std
 
 docname: draft-petrie-vcon-latest
@@ -47,6 +47,10 @@ normative:
   RFC3339:
 
   GEOPRIV: RFC4119
+
+  CBOR: RFC8949
+
+  CDDL: RFC8610
 
   HTTPS: RFC9110
 
@@ -197,7 +201,8 @@ The initial set of use cases for vCons are expected to be in the interchange bet
 It is expected that JavaScript handling of vCons in the front end and RESTful interfaces and back end platforms will be used for operations and manipulation of vCons.
 Many media analysis services which will be used with vCons, such as transcription, already use JSON based interfaces.
 For this reason, JSON has been chosen for the initial format binding of vCons and the scope of this document.
-Other bindings (e.g. [CBOR] or [ISOBMFF]) may be consider for vCon in the future in other documents.
+The [CDDL] schema definition for vCon is included in [vCon CDDL Schema](#vcon-cddl-schema) to enable formatting vCOn in either [JSOn] or [CBOR] formats.
+Other bindings may be consider for vCon in the future in other documents.
 
 Requirements:
 
@@ -299,7 +304,10 @@ The following  are considered not in scope or non-requirements:
 
 ## JSON Notation
 
-The convention for [JSON] notation used in this document is copied from sections 1.1-1.5 of [JMAP].
+For the ease of documentation, the convention for [JSON] notation used in this document is copied from sections 1.1-1.5 of [JMAP].
+It is also acceptable to format vCon using [CBOR].
+It is intended that both of these formats are easily coverted to the other and that the parameters and objects are compatible with the exceptions of binary parameters which are express in [BASE64URL] in [JSON] and binary text in [CBOR].
+[CCDL] provides for this dualality with type 6.21.
 
 Date - A string that MUST have the form of an [RFC3339] date string as defined for the Date type in section 1.4 of [JMAP].
 
@@ -1334,6 +1342,8 @@ IANA registration of new media subtype: vcon for media type application:
 --- back
 
 # vCon CDDL Schema
+
+The following is the [CDDL] schema for vCon.
 
 ~~~
 {::include vcon.cddl}
