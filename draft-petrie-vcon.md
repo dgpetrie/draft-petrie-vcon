@@ -76,8 +76,6 @@ normative:
 
 informative:
 
-  CBOR: RFC7049
-
   ISOBMFF:
     target: https://www.iso.org/standard/83102.html
     title: "Information technology -- Coding of audio-visual objects -- Part 12: ISO base media file format"
