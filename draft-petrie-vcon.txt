@@ -5,11 +5,11 @@
 Network Working Group                                       D. G. Petrie
 Internet-Draft                                                 SIPez LLC
 Intended status: Standards Track                        T. McCarthy-Howe
-Expires: 3 January 2025                                          Strolid
-                                                             2 July 2024
+Expires: 6 January 2025                                          Strolid
+                                                             5 July 2024
 
 
-         The JSON format for vCon - Conversation Data Container
+         The CDDL format for vCon - Conversation Data Container
                         draft-petrie-vcon-latest
 
 Abstract
@@ -56,7 +56,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 3 January 2025.
+   This Internet-Draft will expire on 6 January 2025.
 
 Copyright Notice
 
@@ -306,8 +306,10 @@ Table of Contents
    services which will be used with vCons, such as transcription,
    already use JSON based interfaces.  For this reason, JSON has been
    chosen for the initial format binding of vCons and the scope of this
-   document.  Other bindings (e.g.  [CBOR] or [ISOBMFF]) may be consider
-   for vCon in the future in other documents.
+   document.  The [CDDL] schema definition for vCon is included in vCon
+   CDDL Schema (Appendix A) to enable formatting vCOn in either [JSON]
+   or [CBOR] formats.  Other bindings may be consider for vCon in the
+   future in other documents.
 
    Requirements:
 
@@ -433,8 +435,13 @@ Table of Contents
 
 2.2.  JSON Notation
 
-   The convention for [JSON] notation used in this document is copied
-   from sections 1.1-1.5 of [JMAP].
+   For the ease of documentation, the convention for [JSON] notation
+   used in this document is copied from sections 1.1-1.5 of [JMAP].  It
+   is also acceptable to format vCon using [CBOR].  It is intended that
+   both of these formats are easily coverted to the other and that the
+   parameters and objects are compatible with the exceptions of binary
+   parameters which are express in [BASE64URL] in [JSON] and binary text
+   in [CBOR].  [CCDL] provides for this dualality with type 6.21.
 
    Date - A string that MUST have the form of an [RFC3339] date string
    as defined for the Date type in section 1.4 of [JMAP].
@@ -1924,6 +1931,17 @@ A "transfer" type dialog MUST NOT contain the parties, originator, mimetype, fil
 
 7.1.  Normative References
 
+   [CBOR]     Bormann, C. and P. Hoffman, "Concise Binary Object
+              Representation (CBOR)", STD 94, RFC 8949,
+              DOI 10.17487/RFC8949, December 2020,
+              <https://www.rfc-editor.org/rfc/rfc8949>.
+
+   [CDDL]     Birkholz, H., Vigano, C., and C. Bormann, "Concise Data
+              Definition Language (CDDL): A Notational Convention to
+              Express Concise Binary Object Representation (CBOR) and
+              JSON Data Structures", RFC 8610, DOI 10.17487/RFC8610,
+              June 2019, <https://www.rfc-editor.org/rfc/rfc8610>.
+
    [GEOPRIV]  Peterson, J., "A Presence-based GEOPRIV Location Object
               Format", RFC 4119, DOI 10.17487/RFC4119, December 2005,
               <https://www.rfc-editor.org/rfc/rfc4119>.
@@ -1994,10 +2012,6 @@ A "transfer" type dialog MUST NOT contain the parties, originator, mimetype, fil
 
 7.2.  Informative References
 
-   [CBOR]     Bormann, C. and P. Hoffman, "Concise Binary Object
-              Representation (CBOR)", RFC 7049, DOI 10.17487/RFC7049,
-              October 2013, <https://www.rfc-editor.org/rfc/rfc7049>.
-
    [CDR]      ITU, "Recommendation Q.825: Specification of TMN
               applications at the Q3 interface: Call detail recording",
               n.d., <https://www.itu.int/rec/T-REC-Q.825>.
@@ -2036,6 +2050,8 @@ A "transfer" type dialog MUST NOT contain the parties, originator, mimetype, fil
               an%20Open%20Standard%20for%20Conversation%20Data.pdf>.
 
 Appendix A.  vCon CDDL Schema
+
+   The following is the [CDDL] schema for vCon.
 
 vcon = {
     vcon_version_type,

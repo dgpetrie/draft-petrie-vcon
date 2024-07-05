@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta content="Common,Latin" name="scripts">
 <meta content="initial-scale=1.0" name="viewport">
-<title>The JSON format for vCon - Conversation Data Container</title>
+<title>The CDDL format for vCon - Conversation Data Container</title>
 <meta content="Daniel G Petrie" name="author">
 <meta content="Thomas McCarthy-Howe" name="author">
 <meta content="
@@ -14,7 +14,7 @@ The data contained in a vCon may be derived from any multimedia session, traditi
 The data in the container relating to the conversation may include Call Detail Records (CDR), call meta data, participant identity information (e.g. STIR PASSporT), the actual conversational data exchanged (e.g. audio, video, text), realtime or post conversational analysis and attachments of files exchanged during the conversation.
 A standardized conversation container enables many applications, establishes a common method of storage and interchange, and supports identity, privacy and security efforts (see  ) 
     " name="description">
-<meta content="xml2rfc 3.21.0" name="generator">
+<meta content="xml2rfc 3.22.0" name="generator">
 <meta content="conversation" name="keyword">
 <meta content="vcon" name="keyword">
 <meta content="CDR" name="keyword">
@@ -28,7 +28,7 @@ A standardized conversation container enables many applications, establishes a c
 <meta content="conference recording" name="keyword">
 <meta content="draft-petrie-vcon-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.21.0
+  xml2rfc 3.22.0
     Python 3.12.3
     ConfigArgParse 1.7
     google-i18n-address 3.1.0
@@ -38,9 +38,8 @@ A standardized conversation container enables many applications, establishes a c
     platformdirs 4.2.2
     pycountry 22.3.5
     PyYAML 6.0.1
-    requests 2.31.0
+    requests 2.32.3
     setuptools 69.5.1
-    six 1.16.0
     wcwidth 0.2.13
 -->
 <link href="draft-petrie-vcon.xml" rel="alternate" type="application/rfc+xml">
@@ -1039,12 +1038,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <table class="ears">
 <thead><tr>
 <td class="left">Internet-Draft</td>
-<td class="center">JSON vCon</td>
+<td class="center">CDDL vCon</td>
 <td class="right">July 2024</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Petrie &amp; McCarthy-Howe</td>
-<td class="center">Expires 3 January 2025</td>
+<td class="center">Expires 6 January 2025</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1057,12 +1056,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-petrie-vcon-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-07-02" class="published">2 July 2024</time>
+<time datetime="2024-07-05" class="published">5 July 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2025-01-03">3 January 2025</time></dd>
+<dd class="expires"><time datetime="2025-01-06">6 January 2025</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1076,7 +1075,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </dd>
 </dl>
 </div>
-<h1 id="title">The JSON format for vCon - Conversation Data Container</h1>
+<h1 id="title">The CDDL format for vCon - Conversation Data Container</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
 <p id="section-abstract-1">A vCon is the container for data and information relating to a real-time, human conversation.
@@ -1115,7 +1114,7 @@ A standardized conversation container enables many applications, establishes a c
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 3 January 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 6 January 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1548,7 +1547,8 @@ Having a standard container for the conversation data and asserting the integrit
 It is expected that JavaScript handling of vCons in the front end and RESTful interfaces and back end platforms will be used for operations and manipulation of vCons.
 Many media analysis services which will be used with vCons, such as transcription, already use JSON based interfaces.
 For this reason, JSON has been chosen for the initial format binding of vCons and the scope of this document.
-Other bindings (e.g. <span>[<a href="#CBOR" class="cite xref">CBOR</a>]</span> or <span>[<a href="#ISOBMFF" class="cite xref">ISOBMFF</a>]</span>) may be consider for vCon in the future in other documents.<a href="#section-1.2-5" class="pilcrow">¶</a></p>
+The <span>[<a href="#CDDL" class="cite xref">CDDL</a>]</span> schema definition for vCon is included in <span><a href="#vcon-cddl-schema" class="internal xref">vCon CDDL Schema</a> (<a href="#vcon-cddl-schema" class="auto internal xref">Appendix A</a>)</span> to enable formatting vCOn in either <span>[<a href="#JSON" class="cite xref">JSON</a>]</span> or <span>[<a href="#CBOR" class="cite xref">CBOR</a>]</span> formats.
+Other bindings may be consider for vCon in the future in other documents.<a href="#section-1.2-5" class="pilcrow">¶</a></p>
 <p id="section-1.2-6">Requirements:<a href="#section-1.2-6" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-1.2-7.1">
@@ -1712,7 +1712,10 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
         <h3 id="name-json-notation">
 <a href="#section-2.2" class="section-number selfRef">2.2. </a><a href="#name-json-notation" class="section-name selfRef">JSON Notation</a>
         </h3>
-<p id="section-2.2-1">The convention for <span>[<a href="#JSON" class="cite xref">JSON</a>]</span> notation used in this document is copied from sections 1.1-1.5 of <span>[<a href="#JMAP" class="cite xref">JMAP</a>]</span>.<a href="#section-2.2-1" class="pilcrow">¶</a></p>
+<p id="section-2.2-1">For the ease of documentation, the convention for <span>[<a href="#JSON" class="cite xref">JSON</a>]</span> notation used in this document is copied from sections 1.1-1.5 of <span>[<a href="#JMAP" class="cite xref">JMAP</a>]</span>.
+It is also acceptable to format vCon using <span>[<a href="#CBOR" class="cite xref">CBOR</a>]</span>.
+It is intended that both of these formats are easily coverted to the other and that the parameters and objects are compatible with the exceptions of binary parameters which are express in [BASE64URL] in <span>[<a href="#JSON" class="cite xref">JSON</a>]</span> and binary text in <span>[<a href="#CBOR" class="cite xref">CBOR</a>]</span>.
+[CCDL] provides for this dualality with type 6.21.<a href="#section-2.2-1" class="pilcrow">¶</a></p>
 <p id="section-2.2-2">Date - A string that <span class="bcp14">MUST</span> have the form of an <span>[<a href="#RFC3339" class="cite xref">RFC3339</a>]</span> date string as defined for the Date type in section 1.4 of <span>[<a href="#JMAP" class="cite xref">JMAP</a>]</span>.<a href="#section-2.2-2" class="pilcrow">¶</a></p>
 <p id="section-2.2-3">"String" - a JSON string type<a href="#section-2.2-3" class="pilcrow">¶</a></p>
 <p id="section-2.2-4">"UnsignedInt" - a positive JSON integer as defined in section 1.3 of <span>[<a href="#JMAP" class="cite xref">JMAP</a>]</span>.<a href="#section-2.2-4" class="pilcrow">¶</a></p>
@@ -3483,6 +3486,14 @@ application/vcon
 <a href="#section-7.1" class="section-number selfRef">7.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
         </h3>
 <dl class="references">
+<dt id="CBOR">[CBOR]</dt>
+        <dd>
+<span class="refAuthor">Bormann, C.</span> and <span class="refAuthor">P. Hoffman</span>, <span class="refTitle">"Concise Binary Object Representation (CBOR)"</span>, <span class="seriesInfo">STD 94</span>, <span class="seriesInfo">RFC 8949</span>, <span class="seriesInfo">DOI 10.17487/RFC8949</span>, <time datetime="2020-12" class="refDate">December 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8949">https://www.rfc-editor.org/rfc/rfc8949</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="CDDL">[CDDL]</dt>
+        <dd>
+<span class="refAuthor">Birkholz, H.</span>, <span class="refAuthor">Vigano, C.</span>, and <span class="refAuthor">C. Bormann</span>, <span class="refTitle">"Concise Data Definition Language (CDDL): A Notational Convention to Express Concise Binary Object Representation (CBOR) and JSON Data Structures"</span>, <span class="seriesInfo">RFC 8610</span>, <span class="seriesInfo">DOI 10.17487/RFC8610</span>, <time datetime="2019-06" class="refDate">June 2019</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8610">https://www.rfc-editor.org/rfc/rfc8610</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="GEOPRIV">[GEOPRIV]</dt>
         <dd>
 <span class="refAuthor">Peterson, J.</span>, <span class="refTitle">"A Presence-based GEOPRIV Location Object Format"</span>, <span class="seriesInfo">RFC 4119</span>, <span class="seriesInfo">DOI 10.17487/RFC4119</span>, <time datetime="2005-12" class="refDate">December 2005</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc4119">https://www.rfc-editor.org/rfc/rfc4119</a>&gt;</span>. </dd>
@@ -3552,10 +3563,6 @@ application/vcon
 <a href="#section-7.2" class="section-number selfRef">7.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
         </h3>
 <dl class="references">
-<dt id="CBOR">[CBOR]</dt>
-        <dd>
-<span class="refAuthor">Bormann, C.</span> and <span class="refAuthor">P. Hoffman</span>, <span class="refTitle">"Concise Binary Object Representation (CBOR)"</span>, <span class="seriesInfo">RFC 7049</span>, <span class="seriesInfo">DOI 10.17487/RFC7049</span>, <time datetime="2013-10" class="refDate">October 2013</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7049">https://www.rfc-editor.org/rfc/rfc7049</a>&gt;</span>. </dd>
-<dd class="break"></dd>
 <dt id="CDR">[CDR]</dt>
         <dd>
 <span class="refAuthor">ITU</span>, <span class="refTitle">"Recommendation Q.825: Specification of TMN applications at the Q3 interface: Call detail recording"</span>, <span>n.d.</span>, <span>&lt;<a href="https://www.itu.int/rec/T-REC-Q.825">https://www.itu.int/rec/T-REC-Q.825</a>&gt;</span>. </dd>
@@ -3597,7 +3604,8 @@ application/vcon
       <h2 id="name-vcon-cddl-schema">
 <a href="#appendix-A" class="section-number selfRef">Appendix A. </a><a href="#name-vcon-cddl-schema" class="section-name selfRef">vCon CDDL Schema</a>
       </h2>
-<div class="alignLeft art-text artwork" id="appendix-A-1">
+<p id="appendix-A-1">The following is the <span>[<a href="#CDDL" class="cite xref">CDDL</a>]</span> schema for vCon.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="appendix-A-2">
 <pre>
 vcon = {
     vcon_version_type,
@@ -3816,7 +3824,7 @@ vcon_version_type = (
     "vcon": tstr
   )
 
-</pre><a href="#appendix-A-1" class="pilcrow">¶</a>
+</pre><a href="#appendix-A-2" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
