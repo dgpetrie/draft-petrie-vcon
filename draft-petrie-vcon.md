@@ -739,7 +739,15 @@ The role parameter provides the ability to label the role that the part played i
 
 * role: "String" (optional)
 
-TODO: Should we define a set of tokens for some roles and also let this parameter be open ended?
+The following values for the role parameter MAY be used:
+
+  + "agent"
+  + "customer"
+  + "supervisor"
+  + "sme" (for subjet mater expert)
+  + "thirdparty"
+
+Other values for the role parameter MAY also be used.
 
 ### contact_list
 
@@ -980,6 +988,16 @@ There may also be many interactions for a single conversation or vCon.
 The interaction parameter is used as a label or foreign key in reference to the interaction ID.
 
 * interaction "String" (optional)
+
+### skill
+
+A contact center may service multiple purposes or customers.
+In this scenario it is important to label the conversation segment or dialog.
+The agent or automita which services the dialog are required to have a specific skill.
+To facilitate this in a vCon dialog, the skill parameter is provided.
+The string values of the skill parameter are contact center specific.
+
+* skill "String" (optional)
 
 ## Analysis Object
 
@@ -1343,6 +1361,8 @@ IANA registration of new media subtype: vcon for media type application:
 
 The following is the [CDDL] schema for vCon.
 
+Note: this CDDL schema is not fully verified and needs some stylistic edits.
+
 ~~~
 {::include vcon.cddl}
 ~~~
@@ -1436,4 +1456,6 @@ TODO: group vCon example
 # Acknowledgments
 {:numbered="false"}
 
-TODO: acknowledgements
+  * Thank you to Jonathan Rosenberg and Andrew Siciliano for their input to the vCon container requirements in the form of I-D: draft-rosenberg-vcon-cc-usecases.
+  * Thank you to Rohan Mahy for his help in getting started with the CDDL schema for vCon.
+
