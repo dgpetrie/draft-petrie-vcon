@@ -16,10 +16,10 @@ The following table maps meta-data requirements defined in draft-rosenberg-vcon-
 |Participant UUID| | |Add uuid parameter to Party Object.  Added 4.2.10 |
 |First Name |Party Object: name |4.3.4 ||
 |Last Name |Party Object: name |4.3.4 ||
-|Participant Type | | |Add role parameter to Party Object?  Do we need a defined list of tokens for role types? Added 4.2.11 |
+|Participant Type | | |Add role parameter to Party Object.  Added some defined tokens for role types. Added 4.2.11 |
 |Participant Info |Party Object: tel, stir, mailto, jCard, etc | 4.3.1, 4.2.2, 4.2.3, 4.2.6 and 4.2.X |
 |PII and PCI Information | | |Add type parameter to Redacted Object. Added to 4.1.6 |
-|Skill | | |Add skills parameter to Party Object.  Is this a vCon or Dialog Object property too? |
+|Skill | | |Add skills parameter to dialog Object.  Added to 4.3.14 |
 |Campaign | | |Add campaign parameter to Dialog Object. Added 4.3.12 |
 |Transfer Bit Flag |Dialog Object: Dialog Transfer |4.3.11 ||
 |Conference Bit Flag |Dialog Object: parties |4.3.4 ||
