@@ -1,6 +1,6 @@
-# The JSON format for vCon - Conversation Data Container
+# The CDDL format for vCon - Conversation Data Container
 
-This is the working area for the individual Internet-Draft, "The JSON format for vCon - Conversation Data Container".
+This is the working area for the individual Internet-Draft, "The CDDL format for vCon - Conversation Data Container".
 
 * [Editor's Copy](https://dgpetrie.github.io/draft-petrie-vcon/#go.draft-petrie-vcon.html)
 * [Datatracker Page](https://datatracker.ietf.org/doc/draft-petrie-vcon)
