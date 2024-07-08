@@ -5,8 +5,8 @@
 Network Working Group                                       D. G. Petrie
 Internet-Draft                                                 SIPez LLC
 Intended status: Standards Track                        T. McCarthy-Howe
-Expires: 6 January 2025                                          Strolid
-                                                             5 July 2024
+Expires: 9 January 2025                                          Strolid
+                                                             8 July 2024
 
 
          The CDDL format for vCon - Conversation Data Container
@@ -56,7 +56,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 6 January 2025.
+   This Internet-Draft will expire on 9 January 2025.
 
 Copyright Notice
 
@@ -129,6 +129,7 @@ Table of Contents
        4.3.11. Dialog Transfer
        4.3.12. campaign
        4.3.13. interaction
+       4.3.14. skill
      4.4.  Analysis Object
        4.4.1.  type
        4.4.2.  dialog
@@ -1099,8 +1100,19 @@ Table of Contents
 
    *  role: "String" (optional)
 
-   TODO: Should we define a set of tokens for some roles and also let
-   this parameter be open ended?
+   The following values for the role parameter MAY be used:
+
+   *  "agent"
+
+   *  "customer"
+
+   *  "supervisor"
+
+   *  "sme" (for subjet mater expert)
+
+   *  "thirdparty"
+
+   Other values for the role parameter MAY also be used.
 
 4.2.12.  contact_list
 
@@ -1432,6 +1444,17 @@ A "transfer" type dialog MUST NOT contain the parties, originator, mimetype, fil
    interaction ID.
 
    *  interaction "String" (optional)
+
+4.3.14.  skill
+
+   A contact center may service multiple purposes or customers.  In this
+   scenario it is important to label the conversation segment or dialog.
+   The agent or automita which services the dialog are required to have
+   a specific skill.  To facilitate this in a vCon dialog, the skill
+   parameter is provided.  The string values of the skill parameter are
+   contact center specific.
+
+   *  skill "String" (optional)
 
 4.4.  Analysis Object
 
@@ -2052,6 +2075,9 @@ A "transfer" type dialog MUST NOT contain the parties, originator, mimetype, fil
 Appendix A.  vCon CDDL Schema
 
    The following is the [CDDL] schema for vCon.
+
+   Note: this CDDL schema is not fully verified and needs some stylistic
+   edits.
 
 vcon = {
     vcon_version_type,
@@ -3328,7 +3354,12 @@ B.11.  vCon Group
 
 Acknowledgments
 
-   TODO: acknowledgements
+   *  Thank you to Jonathan Rosenberg and Andrew Siciliano for their
+      input to the vCon container requirements in the form of I-D:
+      draft-rosenberg-vcon-cc-usecases.
+
+   *  Thank you to Rohan Mahy for his help in getting started with the
+      CDDL schema for vCon.
 
 Authors' Addresses
 

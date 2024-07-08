@@ -1043,7 +1043,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Petrie &amp; McCarthy-Howe</td>
-<td class="center">Expires 6 January 2025</td>
+<td class="center">Expires 9 January 2025</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1056,12 +1056,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-petrie-vcon-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-07-05" class="published">5 July 2024</time>
+<time datetime="2024-07-08" class="published">8 July 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2025-01-06">6 January 2025</time></dd>
+<dd class="expires"><time datetime="2025-01-09">9 January 2025</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1114,7 +1114,7 @@ A standardized conversation container enables many applications, establishes a c
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 6 January 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 9 January 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1319,6 +1319,9 @@ A standardized conversation container enables many applications, establishes a c
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.3.2.13">
                     <p id="section-toc.1-1.4.2.3.2.13.1"><a href="#section-4.3.13" class="auto internal xref">4.3.13</a>. <a href="#name-interaction" class="internal xref">interaction</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.3.2.14">
+                    <p id="section-toc.1-1.4.2.3.2.14.1"><a href="#section-4.3.14" class="auto internal xref">4.3.14</a>. <a href="#name-skill" class="internal xref">skill</a></p>
 </li>
                 </ul>
 </li>
@@ -2500,7 +2503,25 @@ The role parameter provides the ability to label the role that the part played i
               <p id="section-4.2.11-2.1.1">role: "String" (optional)<a href="#section-4.2.11-2.1.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
-<p id="section-4.2.11-3">TODO: Should we define a set of tokens for some roles and also let this parameter be open ended?<a href="#section-4.2.11-3" class="pilcrow">¶</a></p>
+<p id="section-4.2.11-3">The following values for the role parameter <span class="bcp14">MAY</span> be used:<a href="#section-4.2.11-3" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-4.2.11-4.1">
+              <p id="section-4.2.11-4.1.1">"agent"<a href="#section-4.2.11-4.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-4.2.11-4.2">
+              <p id="section-4.2.11-4.2.1">"customer"<a href="#section-4.2.11-4.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-4.2.11-4.3">
+              <p id="section-4.2.11-4.3.1">"supervisor"<a href="#section-4.2.11-4.3.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-4.2.11-4.4">
+              <p id="section-4.2.11-4.4.1">"sme" (for subjet mater expert)<a href="#section-4.2.11-4.4.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-4.2.11-4.5">
+              <p id="section-4.2.11-4.5.1">"thirdparty"<a href="#section-4.2.11-4.5.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+<p id="section-4.2.11-5">Other values for the role parameter <span class="bcp14">MAY</span> also be used.<a href="#section-4.2.11-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="contactlist">
@@ -2896,6 +2917,23 @@ The interaction parameter is used as a label or foreign key in reference to the 
 <ul class="normal">
 <li class="normal" id="section-4.3.13-2.1">
               <p id="section-4.3.13-2.1.1">interaction "String" (optional)<a href="#section-4.3.13-2.1.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+</section>
+</div>
+<div id="skill">
+<section id="section-4.3.14">
+          <h4 id="name-skill">
+<a href="#section-4.3.14" class="section-number selfRef">4.3.14. </a><a href="#name-skill" class="section-name selfRef">skill</a>
+          </h4>
+<p id="section-4.3.14-1">A contact center may service multiple purposes or customers.
+In this scenario it is important to label the conversation segment or dialog.
+The agent or automita which services the dialog are required to have a specific skill.
+To facilitate this in a vCon dialog, the skill parameter is provided.
+The string values of the skill parameter are contact center specific.<a href="#section-4.3.14-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-4.3.14-2.1">
+              <p id="section-4.3.14-2.1.1">skill "String" (optional)<a href="#section-4.3.14-2.1.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </section>
@@ -3605,7 +3643,8 @@ application/vcon
 <a href="#appendix-A" class="section-number selfRef">Appendix A. </a><a href="#name-vcon-cddl-schema" class="section-name selfRef">vCon CDDL Schema</a>
       </h2>
 <p id="appendix-A-1">The following is the <span>[<a href="#CDDL" class="cite xref">CDDL</a>]</span> schema for vCon.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="appendix-A-2">
+<p id="appendix-A-2">Note: this CDDL schema is not fully verified and needs some stylistic edits.<a href="#appendix-A-2" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="appendix-A-3">
 <pre>
 vcon = {
     vcon_version_type,
@@ -3824,7 +3863,7 @@ vcon_version_type = (
     "vcon": tstr
   )
 
-</pre><a href="#appendix-A-2" class="pilcrow">¶</a>
+</pre><a href="#appendix-A-3" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
@@ -4952,7 +4991,14 @@ https://raw.githubusercontent.com/vcon-dev/vcon/main/certs/fake_grp.key
       <h2 id="name-acknowledgments">
 <a href="#name-acknowledgments" class="section-name selfRef">Acknowledgments</a>
       </h2>
-<p id="appendix-C-1">TODO: acknowledgements<a href="#appendix-C-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-C-1.1">
+          <p id="appendix-C-1.1.1">Thank you to Jonathan Rosenberg and Andrew Siciliano for their input to the vCon container requirements in the form of I-D: draft-rosenberg-vcon-cc-usecases.<a href="#appendix-C-1.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-C-1.2">
+          <p id="appendix-C-1.2.1">Thank you to Rohan Mahy for his help in getting started with the CDDL schema for vCon.<a href="#appendix-C-1.2.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
 </section>
 </div>
 <div id="authors-addresses">
