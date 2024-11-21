@@ -790,13 +790,13 @@ For audio and video recordings, it is the time which corresponds to the beginnin
 
 ### duration
 
-The duration parameter contains the duration in seconds of the referenced or included piece of dialog.
+The duration parameter contains the duration in milliseconds of the referenced or included piece of dialog.
 For text, if known, it is the time duration from when the party started typing to when they completed typing and the text was sent.
 For recordings, it is the duration of the recording.
 
-* duration: "UnsignedInt" \| "UnsignedFloat" (optional)
+* duration: "UnsignedInt" (optional)
 
-    The value MUST be the dialog duration in seconds.
+    The value MUST be the dialog duration in milliseconds.
 
 ### parties
 
